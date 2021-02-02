@@ -1,0 +1,113 @@
+<div class="courses-info">
+    <div class="certifications-info" style="width: 100%" id="page-carrinho">
+        <div class="title orange-font-color">
+            <span class="fa fa-money-check"></span>
+            Meus Pedidos
+        </div>
+        <div class="horizontal-line1"></div>
+        <p *ngIf="pedidos != undefined && !pedidos.length">
+            <br/>Não há nenhum pedido cadastrado</p>
+        <div class="certificado-container" *ngFor="let item of pedidos">
+            <div class="certificado-outter" style="display:flex;justify-content:space-between;flex-wrap:wrap">
+                <div style="display:flex;">
+                    <div class="certificado-info">
+                        <div class="course-name">Pedido: {{ item.pid }}</div>
+                        <div *ngIf="item.valor_bruto && item.metodo_pagamento != 'gratis'" class="orange-font-color">Valor Total: {{ item.valor_bruto | currency: 'BRL': 'symbol' }}</div>
+                        <div *ngIf="item.metodo_pagamento == 'gratis'" class="orange-font-color">GRÁTIS</div>
+                        <div class="teacher-name" *ngIf="!item.criacao.includes('0000-00-00 00:00:00')">{{ item.criacao | date:'dd/MM/yyyy'}}</div>
+                        <div>
+                            <a style="cursor:pointer" data-toggle="modal" data-target="#detalhesPedido" (click)="changeCurrent(item)">ver detalhes</a>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:40px;display:flex;">
+                    <i style="margin:auto;color:#cecece;padding:0 15px" matTooltip="Assinatura cancelada." *ngIf="mostrarIconeCancelado(item.assinaturas)"
+                        class="fas fa-times"></i>
+                    <i style="cursor:pointer;margin:auto;" [ngStyle]="{'color': defaultColorTheme}" (click)="refazPagamento(item)" matTooltip="Clique aqui para refazer o pedido." *ngIf="mostrarIconeCancelado(item.assinaturas) && item.assinaturas[0] && item.assinaturas[0].renovacao_cancelada"
+                        class="fas fa-check-square"></i>
+                    <i style="margin:auto;color:#f1ce23" matTooltip="{{item.status_titulo}}" *ngIf="item.status == 4 && !mostrarIconeCancelado(item.assinaturas)"
+                        class="fas fa-exclamation-triangle"></i>
+                    <i style="margin:auto;color:#03a84e" matTooltip="{{item.status_titulo}}" *ngIf="item.status == 2 && !mostrarIconeCancelado(item.assinaturas)"
+                        class="far fa-handshake"></i>
+                    <i style="cursor:pointer;margin:auto;color:#f2a628" (click)="refazPagamento(item)" matTooltip="{{item.status_titulo}}. Clique para efetuar pagamento"
+                        *ngIf="item.status == 1 && !mostrarIconeCancelado(item.assinaturas)" class="fas fa-hourglass-half"></i>
+                    <i style="cursor:pointer;margin:auto;color:#fc0404" (click)="refazPagamento(item)" matTooltip="{{item.status_titulo}}. Clique para efetuar pagamento"
+                        *ngIf="item.status == 3 && !mostrarIconeCancelado(item.assinaturas)" class="fas fa-times"></i>
+                    <div  *ngIf="item.status == 2 && mostrarBtnCancelar(item) && !mostrarIconeCancelado(item.assinaturas)" style="margin:auto;width:50px;display:flex;">
+                        <i  id="dropdownMenuButtonCancelar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="fas fa-ellipsis-v" matTooltip="Clique aqui para cancelar a renovação"
+                             style="cursor:pointer;color:#cecece;margin:auto;font-size:20px">
+                        </i>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCancelar">
+                            <a (click)="cancelarAssinatura(item);" class="dropdown-item">Cancelar renovação</a>                           
+                          </div>
+                    </div>
+
+                </div>
+            </div>
+            <hr style="margin-bottom:20px;"/>
+        </div>
+    </div>
+
+    <div id="detalhesPedido" class="modal fade" role="dialog">
+        <div class="modal-dialog" *ngIf="currentDetalhes != undefined">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Pedido {{currentDetalhes.pid}}</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" style="width:100%">
+                    <div class="teacher-name" *ngIf="!currentDetalhes.criacao.includes('0000-00-00 00:00:00')">{{ currentDetalhes.criacao | date:'dd/MM/yyyy'}}</div>
+                    <h3 *ngIf="toNumber(currentDetalhes.valor_desconto) > 0">
+                        Desconto: {{toNumber(currentDetalhes.valor_desconto).toFixed(2) | currency: 'BRL': 'symbol'}}
+                    </h3>
+                    <h3>
+                        Valor total: {{ toNumber(currentDetalhes.valor_bruto - currentDetalhes.valor_desconto).toFixed(2) | currency: 'BRL': 'symbol'
+                        }}
+                    </h3>
+                    <div>Situação: {{currentDetalhes.status_titulo}}</div>
+
+                    <div *ngIf="currentDetalhes.status == 5 && currentDetalhes.metodo_pagamento == 'boleto'" style="padding-bottom: 20px; padding-top: 20px">
+                        <a href="{{currentDetalhes.link_boleto }}" style="color: #f2652a;" target="_blank">Acesse aqui a segunda via do seu boleto.</a>
+                        <span><br>Ou copie e cole o link a seguir em seu navegador <br>{{currentDetalhes.link_boleto }}</span>
+                    </div>
+                    <hr/>
+                    <div *ngFor="let item of currentDetalhes.items">
+                        <div *ngIf="item.curso != null">
+                            <div>
+                                <h3>Curso {{item.curso.titulo}}</h3>
+                                <p>Valor: {{(toNumber(item.valor_bruto) - toNumber(item.valor_desconto)).toFixed(2) | currency:
+                                    'BRL': 'symbol' }}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="item.trilha != null">
+                            <div>
+                                <h3>Trilha de conhecimento {{item.trilha.titulo}}</h3>
+                                <p>Valor: {{(toNumber(item.valor_bruto) - toNumber(item.valor_desconto)).toFixed(2) | currency:
+                                    'BRL': 'symbol' }}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="item.assinatura != null">
+                            <div>
+                                <h3>Assinatura {{item.assinatura.titulo}}</h3>
+                                <p>Valor: {{(toNumber(item.valor_bruto) - toNumber(item.valor_desconto)).toFixed(2) | currency:
+                                    'BRL': 'symbol' }}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="item.evento != null">
+                            <div>
+                                <h3>Assinatura {{item.evento.titulo}}</h3>
+                                <p>Valor: {{(toNumber(item.valor_bruto) - toNumber(item.valor_desconto)).toFixed(2) | currency:
+                                    'BRL': 'symbol' }}</p>
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>

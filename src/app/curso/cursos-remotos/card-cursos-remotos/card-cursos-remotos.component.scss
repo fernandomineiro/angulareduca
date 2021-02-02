@@ -1,0 +1,92 @@
+@mixin line-clampWeb($numLines : 3, $lineHeight: 19.6) {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  max-height: $numLines * $lineHeight;
+}
+
+@mixin line-clampMobile($numLines : 3, $lineHeight: 16.6) {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  max-height: $numLines * $lineHeight;
+}
+
+.list .card-remoto{
+    width:100%;
+}
+
+:host.list,
+:host.list .card-remoto,
+:host.list .card-remoto .course-card{
+    width:100% !important;
+    max-width: 100% !important;
+  }
+  :host.list .card-remoto{
+    min-height: unset !important;
+    
+  }
+  :host.list .card-remoto .course-card.item.box-shadow{
+   height: 280px !important;
+  }
+
+  :host.list.card-remoto .card-remoto .course-card.box-shadow.item.height{
+    height: unset !important;
+  }
+
+  :host.list .box-shadow{
+   display: flex;
+    
+  }
+
+  :host.list .card-bottom{
+    margin-left:20px;
+    position: relative;
+     
+   }
+
+   :host.list .course-payment-info{
+    top: 50px;
+    width: 180px;
+     
+   }
+
+   .card-remoto{
+     margin: auto;
+   }
+ 
+   :host{
+     margin-bottom:10px !important;
+   }
+
+   :host.grid .card-bottom p:not(.info2){
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+
+
+
+  @media(max-width: 992px){
+    :host.grid .card-bottom .course-title{
+      height: 50.4px !important;
+      @include line-clampMobile;
+    }
+  }
+  
+  @media(min-width: 992px){
+    :host.grid .card-bottom .course-title{
+      height: 57.6px !important;
+      @include line-clampWeb;
+    }
+  }

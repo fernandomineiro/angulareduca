@@ -1,0 +1,227 @@
+ <section id="page-agenda" class="page-home-acesso-restrito">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current2="dados-basicos" current1="meu-perfil"></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-12 col-12" style="padding:35px;">
+                <img src="{{ IMG_URL }}/files/usuario/{{ foto }}" style=" width: 135px; margin-top: 30px; cursor:pointer;"
+                     onError="this.onerror = null; this.src = '/assets/img/default_avatar.jpg'; return false;" id="user_avatar"
+                     (click)="triggerInputFile()">
+
+                <div id="editar_foto" class="text-center">
+                    <input name="file" type="file" id="profilePicture" (change)="onFileSelected($event);"
+                           style="display: none;" >
+                    <button type="button" class="orange-font-color"
+                            (click)="onUpload()"
+                            style="background: none;margin-top: 10px;padding: 0px;font-size: 16px;">
+                        Editar Foto
+                    </button>
+                    <div><small>(130 x 130)</small></div>
+                </div>
+
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 col-12" style="max-width:810px; margin-top:80px; display:flex;padding:15px;">
+                <form id="editar-meus-dados" [formGroup]="formDadosBasicos" (ngSubmit)="onSubmitDadosBasicos()" style="width: 100%;padding:15px;">
+                    <h2 class="title orange-font-color">Dados Básicos</h2>
+                    <hr>
+                    <div class="form-group">
+                        <div *ngIf="perfil == 1">
+                            <span class="orange-font-color">Nome *</span>
+                            <input id="nome" type="text"
+                                   [ngClass]="[isFieldValid('nome') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="nome"
+                                   required placeholder="Nome" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('nome')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil == 1">
+                            <span class="orange-font-color">Sobrenome *</span>
+                            <input id="sobrenome" type="text"
+                                   [ngClass]="[isFieldValid('sobrenome') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="sobrenome"
+                                   required placeholder="Sobrenome" />
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('sobrenome')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Titular *</span>
+                            <input id="titular" type="text"
+                                   [ngClass]="[isFieldValid('titular') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="responsavel"
+                                   required placeholder="Titular" />
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('responsavel')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Data de nascimento *</span>
+                            <input id="data_nascimento" type="date"
+                                   [ngClass]="[isFieldValid('data_nascimento') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="data_nascimento"
+                                   required placeholder="Data de nascimento" />
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('data_nascimento')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+
+                        <div >
+                            <span class="orange-font-color" *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">CPF/CNPJ *</span>
+                            <span class="orange-font-color" *ngIf="!(perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10)">CPF Do Titular *</span>
+                            <input id="cpf" type="text"
+                                   [ngClass]="[isFieldValid('cpf') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="cpf"
+                                   required placeholder="CPF Do Titular"
+                                   (keypress)="cpfMask($event);" (change)="cpfMask($event);"
+                                   maxlength="18" />
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('cpf')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Razão Social</span>
+                            <input id="razao_social" type="text"
+                                   [ngClass]="[isFieldValid('razao_social') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="razao_social"
+                                   placeholder="Razão Social" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('razao_social')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div class="row" *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Nome Fantasia</span>
+                            <input id="nome_fantasia" type="text"
+                                   [ngClass]="[isFieldValid('nome_fantasia') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="nome_fantasia"
+                                   placeholder="Nome Fantasia" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('nome_fantasia')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10" >
+                            <span class="orange-font-color">CNPJ</span>
+                            <input id="cnpj" type="text"
+                                   [ngClass]="[isFieldValid('cnpj') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="cnpj"
+                                   placeholder="CNPJ"
+                                   (keypress)="cpfMask($event);" (change)="cpfMask($event);"
+                                   maxlength="18" />
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('cnpj')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Representante Legal</span>
+                            <input id="representante_legal" type="text"
+                                   [ngClass]="[isFieldValid('representante_legal') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="representante_legal"
+                                   placeholder="Representante Legal" />
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('representante_legal')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Profissão *</span>
+                            <input id="profissao" type="text"
+                                   [ngClass]="[isFieldValid('profissao') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="profissao"
+                                   required placeholder="Profissão" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('profissao')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div >
+                            <span class="orange-font-color">Telefone fixo</span>
+                            <input id="telefone_1" type="text"
+                                   [ngClass]="[isFieldValid('telefone_1') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="telefone_1"
+                                   placeholder="Telefone fixo" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('telefone_1')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div >
+                            <span class="orange-font-color">Telefone Celular *</span>
+                            <input id="telefone_2" type="text"
+                                   [ngClass]="[isFieldValid('telefone_2') ? 'is-invalid' : '', 'form-control']"
+                                   formControlName="telefone_2"
+                                   placeholder="Telefone Celular" required />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('telefone_2')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div  *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Facebook</span>
+                            <input id="facebook_link" type="text" placeholder="Facebook"
+                                   formControlName="facebook_link"
+                                   [ngClass]="[isFieldValid('facebook_link') ? 'is-invalid' : '', 'form-control']"
+                                   name="facebook_link" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('facebook_link')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Instagram</span>
+                            <input id="insta_link" type="text" placeholder="Instagram"
+                                   formControlName="insta_link"
+                                   [ngClass]="[isFieldValid('insta_link') ? 'is-invalid' : '', 'form-control']"
+                                   name="insta_link" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('insta_link')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Twitter</span>
+                            <input id="twitter_link" type="text" placeholder="Twitter"
+                                   formControlName="twitter_link"
+                                   [ngClass]="[isFieldValid('twitter_link') ? 'is-invalid' : '', 'form-control']"
+                                   name="twitter_link" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('twitter_link')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div  *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">LinkedIn</span>
+                            <input id="linkedin_link" type="text" placeholder="LinkedIn"
+                                   formControlName="linkedin_link"
+                                   [ngClass]="[isFieldValid('linkedin_link') ? 'is-invalid' : '', 'form-control']"
+                                   name="linkedin_link" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('linkedin_link')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+
+                        <div *ngIf="perfil != 2 && perfil != 9 && perfil != 13 && perfil != 11 && perfil != 22 && perfil != 10">
+                            <span class="orange-font-color">Canal no Youtube</span>
+                            <input id="youteber_link" type="text" placeholder="Canal no Youtube"
+                                   formControlName="youteber_link"
+                                   [ngClass]="[isFieldValid('youteber_link') ? 'is-invalid' : '', 'form-control']"
+                                   name="youteber_link" />
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('youteber_link')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                    <button *ngIf="!loading" type="submit" class="orange-background">atualizar</button>
+                    <button *ngIf="loading" type="submit" class="orange-background">carregando...</button>
+                </form>
+            </div>
+        </div>
+        <div class="row"></div>
+    </section>
+</section>

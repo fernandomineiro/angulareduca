@@ -1,0 +1,38 @@
+<div class="courses-info">
+    <div class="certifications-info" style="width:100%;">
+        <div class="title orange-font-color">
+            <span class="icon icon-medal"></span>
+            Meus Trabalhos
+        </div>
+        <div class="horizontal-line1"></div>
+        <p *ngIf="trabalhos != undefined && !trabalhos.length"><br/>Não há trabalhos enviados</p>
+        <div class="">
+            <div class="certificado-container" *ngFor="let trabalho of trabalhos">
+                <div class="certificado-outter">
+                    <div style="display:flex;">
+                        <div class="image-container">
+                            <img src="{{IMG_URL}}/files/curso/imagem/{{trabalho.imagem_curso}}" width="100%" height="auto" />
+                        </div>
+                        <div class="certificado-info">
+                            <div class="course-name">{{trabalho.nome_curso}}</div>
+                            <div class="teacher-name">{{trabalho.nome_professor}} {{trabalho.sobrenome_professor}}</div>
+                            <div *ngIf="trabalho.corrigido else naocorrigido">
+                                <div class="certificado-status orange-font-color" >Trabalho Corrigido</div>
+                                <div class="certificado-status orange-font-color" >Nota: {{trabalho.nota}}</div>
+                            </div>
+                            <ng-template #naocorrigido >
+                                <div class="certificado-status orange-font-color">Trabalho ainda não corrigido</div>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:25px">
+                        <a [href]="trabalho.downloadPath" download target="_blank" class="orange-font-color" title="Faça o download da correção do seu trabalho">
+                            <span class="icon icon-download"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

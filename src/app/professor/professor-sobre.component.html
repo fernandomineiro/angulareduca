@@ -1,0 +1,214 @@
+<section *ngIf="professor" class="professor-sobre">
+    <div class="container">
+        <h2 class="title" style="font-family: encodeSansCondensed-Regular;">Nossos professores</h2>
+    </div>
+    <section class="teacher orange-background">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                    <div class="teacher-image-container">
+                        <img src="{{ IMG_URL }}/files/usuario/{{ professor.usuario.foto }}"
+                             onError="this.onerror = null; this.src = '/assets/img/default_avatar.jpg'; return false;"
+                             width="198px" heigth="298px"/>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+                    <div id="teacher_name">{{ professor.nome + ' ' + professor.sobrenome }}</div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="margin-right: 0px;">
+                            <div id="teacher_description">
+                                {{ professor.mini_curriculum }}
+                            </div>
+                        </div>
+                        <div class="social-media col-lg-12 col-md-12 col-sm-12 col-12" style="margin-right: 0px;">
+                            <div id="facebook" *ngIf="professor.facebook_link !=null">
+                                <a href="{{professor.facebook_link}}" target="_blank" title="Facebook">
+                                    <span class="icon icon-facebook"></span>&nbsp;{{professor.facebook_link}}
+                                </a>
+                            </div>
+                            <div id="instagram" *ngIf="professor.insta_link !=null">
+                                <a href="{{professor.insta_link}}" target="_blank" title="Instagram">
+                                    <span class="icon icon-instagram"></span>&nbsp;{{professor.insta_link}}
+                                </a>
+                            </div>
+                            <div id="twitter" *ngIf="professor.twitter_link !=null">
+                                <a href="{{professor.twitter_link}}" target="_blank" title="Twitter">
+                                    <span class="icon icon-twitter"></span>&nbsp;{{professor.twitter_link}}
+                                </a>
+                            </div>
+                            <div id="linkedin_link" *ngIf="professor.linkedin_link !=null">
+                                <a href="{{professor.linkedin_link}}" target="_blank" title="LinkedIn">
+                                    <span class="icon icon-linkedin"></span>&nbsp;{{professor.linkedin_link}}
+                                </a>
+                            </div>
+                            <div id="youteber_link" *ngIf="professor.youteber_link !=null">
+                                <a href="{{professor.youteber_link}}" target="_blank" title="Youtube">
+                                    <span class="icon icon-youtube"></span>&nbsp;{{professor.youteber_link}}
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="teacher-courses" id="page-cursos-categoria">
+        <div class="container" id="view_type">
+            <div class="title orange-font-color" *ngIf="countOnline() > 0">Cursos On-line de
+                <span id="courses_teacher_name">{{ professor.nome + ' ' + professor.sobrenome }}</span>
+            </div>
+            <div class="courses-container" *ngIf="countOnline() > 0">
+                <div *ngFor="let curso of cursos">
+                    <app-card-cursos-online class="grid" style="width:220px;" *ngIf="curso.fk_cursos_tipo == 1" [curso]="curso"
+                                            [favorites]="favorites" [cursosAluno]="cursosAluno">
+                    </app-card-cursos-online>
+                </div>
+            </div>
+
+            <div class="title orange-font-color" *ngIf="countPresencial() > 0">Cursos Presenciais de
+                <span id="courses_teacher_name">{{ professor.nome + ' ' + professor.sobrenome }}</span>
+            </div>
+            <div class="courses-container" *ngIf="countPresencial() > 0">
+                <div *ngFor="let curso of cursos">
+                    <app-card-cursos-presenciais style="display:flex;justify-content:center;"
+                                                 *ngIf="curso.fk_cursos_tipo == 2" [curso]="curso"
+                                                 [favorites]="favorites"
+                                                 [cursosAlunoPresencial]="cursosAlunoPresencial"
+                                                 class="grid">
+                    </app-card-cursos-presenciais>
+                </div>
+
+
+            </div>
+
+            <div class="title orange-font-color" *ngIf="countRemoto() > 0">Cursos Remotos de
+                <span id="courses_teacher_name">{{ professor.nome + ' ' + professor.sobrenome }}</span>
+            </div>
+            <div class="courses-container" *ngIf="countRemoto() > 0">
+                <div *ngFor="let curso of cursos">
+                    <app-card-cursos-remotos style="display:flex;justify-content:center;"
+                                              *ngIf="curso.fk_cursos_tipo == 4"
+                                              [curso]="curso" [favorites]="favorites"
+                                              [cursosAlunoPresencial]="cursosAlunoRemoto"
+                                              class="grid">
+                    </app-card-cursos-remotos>
+                </div>
+
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <div data-include="footer"></div>
+
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+    var progressValue = Number($("#progress_chart").attr("progress"));
+    $('#progress_chart').circleProgress({
+        value: progressValue,
+        size: 130,
+        fill: {
+            gradient: ["#D35B30", "#FFF22D"]
+        },
+        reverse: true,
+        thickness: 20,
+        emptyFill: "transparent"
+    });
+
+    $(".slickear").each(function () {
+        $(this).slick(
+            {
+
+                infinite: true,
+                slidesToShow: 5,
+                slidesToScroll: 1,
+                centerMode: true,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: false
+                        }
+                    },
+                    {
+                        breakpoint: 990,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: false
+                        }
+                    },
+                    {
+                        breakpoint: 770,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: false
+                        }
+                    },
+
+                    {
+                        breakpoint: 490,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: false
+                        }
+                    }
+                ]
+            }
+        );
+
+    });
+
+
+    var interval = setInterval(function () {
+        if ($("#topnav_professores").length) {
+            $("#topnav_professores").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+    function activate(el) {
+        console.log(el);
+        if (el == 'grid') {
+            $("#view_type").removeClass('list');
+            $("#view_type").addClass('grid');
+        } else {
+            $("#view_type").addClass('list');
+            $("#view_type").removeClass('grid');
+        }
+    }
+
+    $(window).resize(function () {
+        isMobile();
+    });
+    isMobile();
+
+    function isMobile() {
+        if ($(window).width() <= 991) {
+            activate('list');
+        } else {
+            activate('grid');
+        }
+    }
+
+</script>

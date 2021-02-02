@@ -1,0 +1,129 @@
+<div  *ngIf="aprovado || gabarito">
+        <h2  *ngIf="aprovado" style="margin-bottom:30px;">Parabéns, você foi aprovado no questionário!</h2>
+        <h3 *ngIf="existeCertificado && curso.emite_certificado"  class="orange-font-color">Seu certificado está disponível. <a href="{{PDF_URL}}{{certificado.downloadPath}}" target="_blank" download class="orange-font-color">Clique aqui para acessá-lo</a>.</h3>
+</div>
+
+<mt-cursando-menu [showDuvidas]="true"  [showAulas]="true"  [showQuiz]="false"  [showVoucher]="true" current="questionario">
+</mt-cursando-menu>
+<br />
+<br />
+<div class="questionario">
+    <!--<div *ngIf="!respondido">-->
+    <div class="instructions" style="margin-bottom:30px;" *ngIf="!gabarito">
+        Nessa seção você deverá responder as perguntas sugeridas pelo professor. Lembramos para concluir o curso, todas as questões
+        deverão ser respondidas.
+    </div>
+
+    <div *ngIf="aprovado || gabarito">
+        <h3 *ngIf="progresso && curso && curso.trabalho && !progresso.aprovacao_trabalho && progresso.numero_aulas_presencial == 0"
+            style="margin-bottom:30px;">Você agora deve enviar o Trabalho e aguardar a correção e nota do professor. Após isso, o certificado será enviado por e-mail. O certificado também poderá ser acessado no perfil do aluno.</h3>
+        <h3 *ngIf="progresso && curso && curso.trabalho && !progresso.aprovacao_trabalho && progresso.numero_aulas_presencial != 0"
+            style="margin-bottom:30px;">Você agora deve enviar o Trabalho e aguardar a correção e nota do professor. Após realizar todas as etapas e o professor lançar as presenças, o certificado será enviado por e-mail. O certificado também poderá ser acessado no perfil do aluno. </h3>
+
+
+        <!--<p *ngIf="enviarResponse != undefined && enviarResponse.retornoCertificado.certificado == undefined">Você ainda não concluiu todas as etapas do curso para receber o certificado.</p>
+       <div *ngIf=" enviarResponse != undefined && enviarResponse.retornoCertificado.certificado != undefined">
+            <p> Confira seu certificado abaixo: </p>
+            <div>
+                <object data="{{enviarResponse.retornoCertificado.certificado.downloadPath}}.pdf" type="application/pdf" style="width:100%;height:auto;">
+                    alt :
+                    <a href="{{IMG_URL}}/files/certificado/emitidos/{{enviarResponse.retornoCertificado.certificado.downloadPath}}">{{enviarResponse.retornoCertificado.certificado.downloadPath}}</a>
+                </object>
+            </div>
+        </div>
+
+        <p *ngIf="enviarResponse != undefined && enviarResponse.retornoCertificado.success">Acesse a seção
+            <a routerLink="/perfil/certificados">Meus certificados</a> para ver o certificado do curso</p>-->
+
+
+
+
+        <!--  <button *ngIf="tentativas % 3 == 0">Ver gabarito</button>-->
+    </div>
+    <div class="instructions" style="margin-bottom:30px;" *ngIf="gabarito && aprovado != true">
+        Você optou por ver o gabarito, portanto não poderá responder as questões. Confira as respostas abaixo:
+    </div>
+
+    <div *ngIf="(respondido || aprovado) && !desistiu ">
+        <div class="certificado-info" style="max-width:100%;">
+            <div id="points" class="row">
+                <div id="points_correct" class="col-lg-6 col-md-6 col-sm-12 col-12" style="display:flex;">
+                    <div style="display:flex;margin:auto">
+                        <span class="icon icon-check-filled"></span>
+                        <span *ngIf="situacao[0].acertos == undefined && enviarResponse != undefined" id="correct_amount">{{enviarResponse.data.qtd_acertos}} resposta(s) correta(s)</span>
+                        <span *ngIf="situacao[0].acertos != undefined" id="correct_amount">{{ situacao[0].acertos.length}} resposta(s) correta(s)</span>
+
+                    </div>
+                </div>
+
+                <div id="points_incorrect" class="col-lg-6 col-md-6 col-sm-12 col-12" style="display:flex;">
+                    <div style="display:flex;margin:auto">
+                        <span class="icon icon-cancel-filled"></span>
+                        <span *ngIf="situacao[0].erros == undefined  && enviarResponse != undefined" id="incorrect_amount">{{enviarResponse.data.qtd_erros}} resposta(s) incorreta(s)</span>
+                        <span *ngIf="situacao[0].erros != undefined" id="correct_amount">{{ situacao[0].erros.length}} resposta(s) incorreta(s)</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="!respondido || desistiu">
+        <form id="form_questionario" (ngSubmit)="onSubmit()" *ngIf="quiz.length">
+            <div *ngFor="let questao of quiz; index as i" class="question radio">
+                <div class="enunciado-container" style="display:flex;">
+                    <span class="number">
+                        <b>{{i+1}}.</b>
+                    </span>
+                    <div class="enunciado" style='padding-left:5px;'>
+                        {{questao.questao.titulo}}
+                    </div>
+                </div>
+                <div *ngFor="let alternativa of questao.alternativas" class="options-container">
+                    <div class="option" *ngIf="alternativa.descricao != null">
+                        <span class="radio" style="display: inline-block;">
+                            <input (change)="checkIfAbbleToSubmit()" *ngIf="!gabarito" style="z-index:50 !important;margin-top:5px;cursor:pointer" name="resposta{{i+1}}"
+                                [(ngModel)]="questao.questao.selected" value="{{alternativa.id}}" type="radio">
+                                <span  *ngIf="alternativa.correct" style="border:2px solid #2BA214;border-radius:100%;padding:2px 5px;">
+                                    <label style="color:#2BA214;font-weight:bold" for="resposta{{i+1}}" class="radio-label">{{alternativa.descricao}}</label>
+                                </span>
+                            <label *ngIf="!alternativa.correct && alternativa.selected" style="color:#FC0404;font-weight:bold" for="resposta{{i+1}}"
+                                class="radio-label">{{alternativa.descricao}}</label>
+
+                            <label *ngIf="!alternativa.correct && !alternativa.selected" style="color:#212529;" for="resposta{{i+1}}" class="radio-label">{{alternativa.descricao}}</label>
+                        </span>
+                    </div>
+                </div>
+
+                <hr />
+            </div>
+            <button *ngIf="!gabarito && isAbleToSubmit" type="submit" class="orange-background" type="submit" value="entrar" style="padding: 15px; color: white; border:none;
+                font-family: encodeSansCondensed-Medium; max-width: 157px; width: 100%; margin: 0 5px;">enviar</button>
+        </form>
+
+    </div>
+
+
+
+    <div *ngIf="respondido && !aprovado && !desistiu" style="margin-top:50px;">
+        <h3 style="margin-bottom:30px;">Você não atingiu a quantidade mínima de questões para ser aprovado.
+            <span *ngIf="tentativas % 3 == 0">Você pode tentar novamente ou ver o gabarito. Se optar por ver o gabarito, você não poderá responder o questionário
+                novamente</span>
+        </h3>
+        <div style="display:flex;justify-content:space-around;">
+            <button *ngIf="tentativas % 3 == 0" (click)="verGabarito()" style="padding: 15px; color: white; border:none;
+                font-family: encodeSansCondensed-Medium; max-width: 180px; width: 100%; margin: 0 5px;background-color:#dbdada">Ver gabarito</button>
+            <button (click)="tentarNovamente()" class="orange-background" style="padding: 15px; color: white; border:none;
+                font-family: encodeSansCondensed-Medium; max-width: 180px; width: 100%; margin: 0 5px;">Tentar novamente</button>
+        </div>
+
+
+        <!--  <button *ngIf="tentativas % 3 == 0">Ver gabarito</button>-->
+    </div>
+
+
+
+    <br />
+    <br />
+</div>

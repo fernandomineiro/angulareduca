@@ -1,0 +1,31 @@
+<h2 *ngIf="progresso && progresso.percentualOnline == 100"  class="orange-font-color">Parabéns, você assistiu todos as aulas do curso.</h2>
+<h3 *ngIf="existeCertificado && curso.emite_certificado && !krotonAccess" class="orange-font-color">Seu certificado está disponível. <a href="{{PDF_URL}}{{certificado.downloadPath}}" target="_blank" download class="orange-font-color">Clique aqui para acessá-lo</a>.</h3>
+<mt-cursando-menu  [showDuvidas]="true"  [showAulas]="false"  [showQuiz]="true"  [showVoucher]="true"  current="faca-aulas"></mt-cursando-menu>
+<br />
+<br />
+<div class="instruction" *ngIf="!existeCertificado || (progresso && progresso.percentualOnline != 100)">
+    Nessa seção você terá acesso a todas as aulas do curso. Lembramos que cada aula estará liberada após a conclusão da aula
+    anterior.
+</div>
+
+<div *ngIf="curso && curso.tipo == 4">
+    <div *ngIf="!progresso.datas_agenda_finalizadas">Você precisa aguardar o término das aulas presenciais para responder o Questionário.</div>
+    <div *ngIf="progresso && progresso.datas_agenda_finalizadas && progresso.percentualOnline == 100
+                && !progresso.aprovacao_questionario">Você agora deverá responder o Questionário.</div>
+</div>
+<div *ngIf="curso && curso.tipo == 1 && progresso && progresso.percentualOnline == 100 && !progresso.aprovacao_questionario">Você agora deverá responder o Questionário.</div>
+<div *ngIf="curso && curso.tipo == 2 && progresso && progresso.datas_agenda_finalizada == 100 && !progresso.aprovacao_questionario">Você agora deverá responder o Questionário.</div>
+<div *ngIf="progresso && progresso.aprovacao_questionario && curso.trabalho && !progresso.aprovacao_trabalho">
+    Você agora deve enviar o Trabalho e aguardar a correção e nota do professor. Após isso, o certificado será enviado por e-mail.
+    O certificado também poderá ser acessado no perfil do aluno.
+</div>
+
+
+<app-modulos-list (reloadParent)="reloadParent()" *ngIf="modulos != undefined && assistidos != undefined && curso != undefined"
+[modulos]="modulos"
+[assistidos]="assistidos"
+[curso]="curso"
+[openWhere] = "openWhere"
+[hasAccess]="true"
+[reload]="reload">
+</app-modulos-list>

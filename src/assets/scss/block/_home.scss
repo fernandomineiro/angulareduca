@@ -1,0 +1,82 @@
+#veja_todos_cursos{
+  margin: 30px 0;
+}
+
+#veja_todos_cursos a,
+#veja_todos_cursos_presenciais a,
+#veja_todos_eventos a {
+  display: flex;
+}
+
+#veja_todos_cursos span:not(.icon-phone-computer),
+#veja_todos_cursos_presenciais span:not(.icon-user-check),
+#veja_todos_eventos span:not(.icon-ticket){
+  padding-left: 10px;
+  margin: auto 0;
+}
+
+#veja_todos_cursos_link .icon-phone-computer,
+#veja_todos_cursos_presenciais_link .icon-user-check,
+#veja_todos_eventos .icon-ticket{
+  font-size: 50px;
+}
+
+#home_proximos_cursos{
+  margin-bottom: 20px;
+}
+
+#home_proximos_cursos img{
+  width:100%;
+}
+
+#home_proximos_cursos .course-card-presencial .card-inner,
+#home_proximos_cursos .course-card-presencial .course-card-info{
+  padding: 0;
+}
+
+#home_eventos div{
+  display: flex !important;
+  margin: auto;
+}
+
+#home_eventos img{
+  max-width: 400px !important;
+  height: auto;
+}
+
+#home_eventos .slick-slide,
+#home_nossos_parceiros .slick-slide{
+  text-align: center;
+}
+
+#home_nossos_parceiros .img{
+  max-width: 300px !important;
+  height: auto;
+  width: 100%;
+  margin: auto;
+}
+
+#home_nossos_parceiros div{
+  padding: 10px;
+
+}
+#home_nossos_parceiros .image-parceiros{
+  display: flex;
+  justify-content: center;
+}
+
+#home_nossos_parceiros .image-parceiros img{
+  max-width: 150px !important;
+}
+
+.dropdown-toggle::after{
+  margin-top: 8px;
+}
+
+#teacher_info img{
+  max-width: 100px;
+}
+
+#home_nossos_parceiros{
+  margin-top: 0 !important;
+}

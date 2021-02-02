@@ -1,0 +1,505 @@
+<div *ngIf="configuracoes.layoutHome == undefined ||  (configuracoes.layoutHome != 1  && configuracoes.layoutHome != 4)" (window:resize)="onResized($event)">
+
+  <!-- INÍCIO DO CONTEÚDO -->
+  <section id="section_characteristics" >
+    <div class="container">
+      <div *ngIf="configuracoes.tiposCursosAtivos.ativar_banner_secundario">
+        <div class="row" id="header_characteristics"
+             *ngIf="bannerSecundario && bannerSecundario.tipo_banner == 1"
+             [innerHTML]="bannerSecundario.texto | safe: 'html'" >
+        </div>
+
+        <div *ngIf="bannerSecundario && bannerSecundario.tipo_banner == 2">
+           <div [style.background-image]="'url(' + bannerSecundarioUrl + ')' | safe: 'style'"
+                style="width: 100%; height: 170px; min-height: 170px; background-position: center center;background-repeat: no-repeat;background-size: contain;margin-bottom: 5%;">
+           </div>
+        </div>
+
+        <div *ngIf="bannerSecundario && bannerSecundario.tipo_banner == 3" class="row" style="padding: 5%">
+            <div class="col-md-3">
+              <iframe width="560" height="170" [src]="(src + bannerSecundario.codigo_vimeo_1) | safe:'resourceUrl'" frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+            </div>
+            <div class="col-md-3">
+              <iframe width="560" height="170" [src]="(src + bannerSecundario.codigo_vimeo_2) | safe:'resourceUrl'" frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+            </div>
+            <div class="col-md-3">
+              <iframe width="560" height="170" [src]="(src + bannerSecundario.codigo_vimeo_3) | safe:'resourceUrl'" frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+            </div>
+        </div>
+      </div>
+
+      <div class="row hide-web" id="category_mobile" style="position:relative" *ngIf="configuracoes.layoutHome != 4">
+        <button type="button" class="dropdown-toggle" data-display="static" data-toggle="dropdown" style="background-color: #DBDADA !important;">Selecione uma categoria</button>
+
+        <ul class="dropdown-menu" id="mobile_dropdown_category" style="top: 40px;width: 100%;max-width:100%;background-color: #DBDADA !important;">
+          <li *ngFor="let categoria of categorias">
+            <a routerLink="/cursos-categoria/{{categoria.slug_categoria}}">{{ categoria.titulo }}</a>
+          </li>
+        </ul>
+        <br />
+      </div>
+    </div>
+  </section>
+
+  <section id="section_content">
+    <div class="container">
+      <div class="horizontal-line2 container"  [ngStyle]="{'left':offsetLeftContainer+'px','width': (widthContainer + offsetLeftContainer) + 'px'}" *ngIf="configuracoes.tiposCursosAtivos.ativar_banner_secundario"></div>
+
+
+      <div class="row" style="display:flex;" *ngIf="configuracoes.layoutHome == 0">
+        <div class="col-lg-3" id="sidebar">
+          <mt-sidebar [hasSearchBox]="true" [totalTipos]="total_tipos"></mt-sidebar>
+        </div>
+
+        <!-- /.col-lg-3 -->
+        <div class="col-lg-9 main-content" style="position:unset;">
+
+          <section #section2
+                   *ngIf="cursos_promocoes != undefined &&
+                          cursos_promocoes.length &&
+                          configuracoes.tiposCursosAtivos.ativar_cursos_online">
+            <h2 class="orange-font-color" style="margin-top: 30px; font-weight: 900;">Promoções imperdíveis</h2>
+
+            <div *ngFor="let array of cursos_promocoes">
+              <ngx-slick-carousel
+                      id="home_promocoes_imperdiveis"
+                      class="slickear1 carousel type1"
+                      #slickModal="slick-carousel"
+                      [config]="returnSlideConfig(section2, isMobile ? 146 : 200)">
+                <app-card-cursos-online
+                        class="grid"
+                        [ngStyle]="{'width': isMobile ? '166px' : '220px'}"
+                        ngxSlickItem
+                        *ngFor="let curso of array"
+                        [curso]="curso"
+                        [favorites]="favorites"
+                        [cursosAluno]="cursosAluno$ | async">
+                </app-card-cursos-online>
+              </ngx-slick-carousel>
+            </div>
+
+            <h3 class="orange-font-color" id="veja_todos_cursos" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online">
+              <a [routerLink]="['/todos-os-cursos/1']" id="veja_todos_cursos_link">
+                <span class="orange-font-color">
+                  <b><span class="icon icon-phone-computer" style="margin-right:10px;font-size:30px"></span>Veja todos os cursos on-line</b>
+                </span>
+              </a>
+            </h3>
+
+            <div *ngIf="cursos_recentes != undefined && configuracoes.tiposCursosAtivos.ativar_cursos_online"
+                 class="horizontal-line2 container"
+                 [ngStyle]="{'left':offsetLeftContainer+'px','width': widthContainer + 'px'}">
+            </div>
+          </section>
+
+          <section #section *ngIf="cursos_recentes != undefined && cursos_recentes.length && configuracoes.tiposCursosAtivos.ativar_cursos_online">
+            <h1 class="orange-font-color">Cursos on-line</h1>
+            <h3 class="orange-font-color">Adicionados recentemente</h3>
+
+            <div *ngFor="let array of cursos_recentes">
+              <ngx-slick-carousel
+                      id="home_adicionados_recentemente"
+                      class="slickear1 carousel type1"
+                      #slickModal="slick-carousel"
+                      [config]="returnSlideConfig(section, isMobile ? 146 : 200)">
+                <app-card-cursos-online
+                        class="grid"
+                        [ngStyle]="{'width': isMobile ? '166px' : '220px'}"
+                        ngxSlickItem *ngFor="let curso of array"
+                        [curso]="curso"
+                        [favorites]="favorites"
+                        [cursosAluno]="cursosAluno$ | async">
+                </app-card-cursos-online>
+              </ngx-slick-carousel>
+            </div>
+          </section>
+
+          <div *ngIf="cursos_presenciais != undefined && cursos_presenciais.length && configuracoes.tiposCursosAtivos.ativar_cursos_presenciais">
+            <section #section3>
+              <h1 class="orange-font-color">Cursos presenciais</h1>
+              <h3 class="orange-font-color" style="margin-top: 30px;">Próximos cursos</h3>
+              <div *ngFor="let array of cursos_presenciais">
+                <ngx-slick-carousel id="home_proximos_cursos" class="slickear2 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(section3,  isMobile ? 180 : 325)">
+                  <app-card-cursos-presenciais class="grid" style="display:flex;justify-content:center;" ngxSlickItem *ngFor="let curso of array"
+                    [curso]="curso" [favorites]="favorites" [cursosAlunoPresencial]="cursosAlunoPresencial">
+                  </app-card-cursos-presenciais>
+
+
+                </ngx-slick-carousel>
+              </div>
+              <h3 *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais" class="orange-font-color" id="veja_todos_cursos_presenciais"
+                style="margin-bottom:30px;">
+                <a [routerLink]="['/todos-os-cursos/2']" id="veja_todos_cursos_presenciais_link">
+                  <span class="orange-font-color">
+                    <b>
+                      <span class="icon icon-user-check" style="margin-right:10px;font-size:30px"></span>Veja todos os cursos presenciais</b>
+                  </span>
+                </a>
+              </h3>
+
+            </section>
+
+          </div>
+
+          <div *ngIf="cursos_remotos != undefined && cursos_remotos.length && configuracoes.tiposCursosAtivos.ativar_cursos_hibridos == 1"
+            style="max-width:100%;" class="horizontal-line2 container" [ngStyle]="{'left':offsetLeftContainer+'px','width': widthContainer + 'px'}"></div>
+
+          <section #section4 *ngIf="cursos_remotos != undefined && cursos_remotos.length && configuracoes.tiposCursosAtivos.ativar_cursos_hibridos == 1">
+            <h1 class="orange-font-color">Cursos remotos</h1>
+            <div *ngFor="let array of cursos_remotos">
+              <ngx-slick-carousel style="margin-bottom:30px;" id="home_cursos_remotos" class="slickear1 carousel type1" #slickModal="slick-carousel"
+                [config]="returnSlideConfig(section4, isMobile ? 147 : 325)">
+                <app-card-cursos-remotos class="grid" style="display:flex;justify-content:center;" ngxSlickItem *ngFor="let curso of array"
+                  [curso]="curso" [favorites]="favorites" [cursosAlunoPresencial]="cursosAlunoRemoto">
+                </app-card-cursos-remotos>
+
+
+              </ngx-slick-carousel>
+            </div>
+            <h3 *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos" class="orange-font-color" id="veja_todos_cursos_presenciais"
+              style="margin-bottom:30px;">
+              <a [routerLink]="['/todos-os-cursos/4']" id="veja_todos_cursos_remotos_link">
+                <span class="orange-font-color">
+                  <b>
+                    <span class="icon icon-phone-computer" style="font-size:30px"></span>
+                    <span style="margin-right:10px;font-size:30px" class="icon icon-user-check"></span>Veja todos os cursos remotos</b>
+                </span>
+              </a>
+            </h3>
+          </section>
+
+          <section #section5
+                   *ngIf="trilhas != undefined && trilhas.length &&
+                            configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento == 1">
+            <div class="horizontal-line2 container" [ngStyle]="{'left':offsetLeftContainer+'px','width': widthContainer + 'px'}"></div>
+            <br/>
+            <h1 class="orange-font-color" style="margin-top:0 !important;">Trilhas de Conhecimento</h1>
+
+            <ngx-slick-carousel
+                    style="margin-bottom: 20px;"
+                    id="trilhaConhecimento"
+                    class="slickear2 carousel"
+                    #slickModal="slick-carousel"
+                    [config]="returnSlideConfig(section5, 300)">
+              <app-card-trilha-conhecimento
+                      class="grid"
+                      *ngFor="let trilha of trilhas"
+                      ngxSlickItem
+                      [categoria]="trilha"
+                      [favorites]="trilhaFavorites">
+              </app-card-trilha-conhecimento>
+            </ngx-slick-carousel>
+
+            <h3 class="orange-font-color" id="veja_todas_trilhas_conhecimento" style="margin-bottom:30px;">
+              <a [routerLink]="['/trilhas-conhecimento']" id="veja_todos_trilha_link">
+                <span class="orange-font-color">
+                  <b>
+                    <span style="margin-right:10px;font-size:30px" class="icon icon-share"></span>Veja todas as trilhas de conhecimento</b>
+                </span>
+              </a>
+            </h3>
+          </section>
+
+          <div *ngIf="cursos_recentes != undefined" [ngStyle]="{'left':offsetLeftContainer+'px','width': widthContainer + 'px'}" class="horizontal-line2 container"></div>
+
+          <!--
+        <div *ngIf="cursos_recentes != undefined" class="horizontal-line2"></div>
+
+        <section *ngIf="proximosEventos">
+          <h1 class="orange-font-color">Eventos</h1>
+          <h3 class="orange-font-color" style="margin-top: 30px;">Próximos eventos</h3>
+  
+          <ngx-slick-carousel id="home_eventos" class="slickear4 carousel" #slickModal="slick-carousel"
+            [config]="slide4Config">
+            <div ngxSlickItem class="padding-5" *ngFor="let evento of proximosEventos">
+              <img src="../assets/img/evento1.png" width="100%" />
+            </div>
+          </ngx-slick-carousel>
+  
+          <h3 class="orange-font-color" id="veja_todos_eventos" style="margin:30px 0">
+            <a routerLink="/eventos" id="veja_todos_eventos_link">
+              <span class="orange-font-color icon-ticket"></span>
+              <span class="orange-font-color">Veja todos os eventos</span>
+            </a>
+          </h3>          
+        </section>
+        -->
+        </div>
+
+
+
+        <!-- /.col-lg-9 -->
+      </div>
+      <div class="row" style="display:flex;" *ngIf="configuracoes.layoutHome == 2">
+
+        <div class="col-lg-12 main-content" style="position:unset;" *ngIf="cursosLayout2 != undefined">
+          <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online &&
+                      cursosLayout2.items.online && cursosLayout2.items.online.length"
+                      #section>
+
+            <div id="page-cursos" class="sort-order" style="display:flex;flex-wrap:wrap;">
+              <div style="width:200px !important;margin-right:15px">
+                <div class="" id="category" style="width:100% !important;margin:0 !important">
+                  <div class="dropdown" style="margin:0 !important;width:100% !important;">
+                    <button href="#" class="nav-link dropdown-toggle" data-display="static" data-toggle="dropdown" style="padding:5px 10px;">categorias
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let categoria of categorias">
+                        <a href="javascript:void(0)" routerLink="/cursos-categoria/{{categoria.slug_categoria}}">{{ categoria.titulo }}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div id="sort" style="width:200px !important;margin-right:15px">
+                <div class="dropdown" style="width:100% !important;margin:0 !important">
+                  <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                    <span class="caret"></span>
+                  </button>
+                  <div class="dropdown-menu" style="height:200px;">
+                    <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                      <div class="radio">
+                        <input (change)="findCursos('az')" id="sort_az" name="sort" type="radio">
+                        <label for="sort_az" class="radio-label">A-Z</label>
+                      </div>
+                      <div class="radio">
+                        <input (change)="findCursos('za')" id="sort_za" name="sort" type="radio">
+                        <label for="sort_za" class="radio-label">Z-A</label>
+                      </div>
+                      <div class="radio">
+                        <input (change)="findCursos('maisvendidos')" id="sort_mais_vendidos" name="sort" type="radio">
+                        <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                      </div>
+                      <div class="radio">
+                        <input (change)="findCursos('mais recentes')" id="sort_mais_recente" name="sort" type="radio">
+                        <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                      </div>
+                      <div class="radio">
+                        <input (change)="findCursos('promocoes')" id="sort_promocoes" name="sort" type="radio">
+                        <label for="sort_promocoes" class="radio-label">promoções</label>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+              <div style="width:300px !important;margin-right:15px">
+                <app-caixa-de-pesquisa></app-caixa-de-pesquisa>
+              </div>
+
+            </div>
+
+            <h1 class="orange-font-color">Cursos on-line</h1>
+            <div *ngFor="let categoria of cursosLayout2.items.online">
+              <h3 class="orange-font-color">{{categoria.categoria.titulo}}</h3>
+              <div>
+                <ngx-slick-carousel id="home_adicionados_recentemente" class="slickear1 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(section, isMobile ? 146 : 215)">
+                  <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" ngxSlickItem *ngFor="let curso of categoria.cursos"
+                    [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno$ | async">
+                  </app-card-cursos-online>
+                </ngx-slick-carousel>
+              </div>
+              <div style="margin-bottom:30px">
+                <a routerLink="/cursos-categoria/{{categoria.categoria.slug_categoria}}" id="veja_todos_cursos_link">
+                  <span class="orange-font-color">
+                    <b>
+                      Veja todos os cursos de {{categoria.categoria.titulo}}</b>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais &&
+                      cursosLayout2.items.presencial && cursosLayout2.items.presencial.length"
+                      #section3>
+
+            <h1 class="orange-font-color">Cursos presenciais</h1>
+
+            <div *ngFor="let categoriaPresencial of cursosLayout2.items.presencial">
+              <h3 class="orange-font-color">{{ categoriaPresencial.categoria.titulo }}</h3>
+              <div>
+                <ngx-slick-carousel id="home_cursos_presencial"
+                                    class="slickear2 carousel type1"
+                                    #slickModal="slick-carousel"
+                                    [config]="returnSlideConfig(section3,  isMobile ? 180 : 325)">
+                  <app-card-cursos-presenciais class="grid" style="display:flex;justify-content:center;" ngxSlickItem *ngFor="let curso of categoriaPresencial.cursos"
+                    [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAlunoPresencial">
+                  </app-card-cursos-presenciais>
+                </ngx-slick-carousel>
+              </div>
+
+              <div style="margin-bottom:30px">
+                <a routerLink="/cursos-categoria/{{ categoriaPresencial.categoria.slug_categoria}}" id="veja_todos_cursos_presencial_link">
+                <span class="orange-font-color">
+                  <b>
+                    Veja todos os cursos de {{ categoriaPresencial.categoria.titulo }}</b>
+                </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos &&
+                      cursosLayout2.items.remoto && cursosLayout2.items.remoto.length"
+                      #section4>
+
+            <h1 class="orange-font-color">Cursos Remotos</h1>
+            <div *ngFor="let categoria of cursosLayout2.items.remoto">
+              <h3 class="orange-font-color">{{categoria.categoria.titulo}}</h3>
+              <div>
+                <ngx-slick-carousel style="margin-bottom:30px;" id="home_cursos_remotos" class="slickear1 carousel type1" #slickModal="slick-carousel"
+                  [config]="returnSlideConfig(section4, isMobile ? 147 : 325)">
+                  <app-card-cursos-remotos class="grid" style="display:flex;justify-content:center;" ngxSlickItem *ngFor="let curso of categoria.cursos"
+                    [curso]="curso" [favorites]="favorites" [cursosAlunoPresencial]="cursosAlunoRemoto">
+                  </app-card-cursos-remotos>
+                </ngx-slick-carousel>
+              </div>
+              <div style="margin-bottom:30px">
+                <a routerLink="/cursos-categoria/{{categoria.categoria.slug_categoria}}" id="veja_todos_cursos_link">
+                  <span class="orange-font-color">
+                    <b>
+                      Veja todos os cursos de {{categoria.categoria.titulo}}</b>
+                  </span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row" *ngIf="configuracoes.layoutHome == 3">
+        <div class="col-lg-3" id="sidebar">
+          <mt-sidebar [hasSearchBox]="true" [totalTipos]="total_tipos"></mt-sidebar>
+        </div>
+        <div class="col-lg-9" id="calculateWidth" #layout3>
+          <div *ngIf="cursosLayout3 != undefined && cursosLayout3.cursosOnline != undefined && cursosLayout3.cursosOnline.items.data.length">
+            <h1 class="orange-font-color">Cursos on-line</h1>
+            <div style="display:flex;flex-wrap:wrap;">
+              <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" *ngFor="let curso of cursosLayout3.cursosOnline.items.data"
+                [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno$ | async">
+              </app-card-cursos-online>
+            </div>
+            <div style="margin-bottom:30px">
+              <a [routerLink]="['/todos-os-cursos/1']" id="veja_todos_cursos_link">
+                <span class="orange-font-color">
+                  <b>
+                    <span class="icon icon-phone-computer" style="margin-right:10px;font-size:30px"></span>Veja todos os cursos on-line</b>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="cursosLayout3 != undefined && cursosLayout3.cursosPresenciais != undefined && cursosLayout3.cursosPresenciais.items.data.length">
+            <h1 class="orange-font-color">Cursos presenciais</h1>
+            <div style="display:flex;flex-wrap:wrap;">
+              <app-card-cursos-presenciais class="grid" style="display:flex;justify-content:center;" *ngFor="let curso of cursosLayout3.cursosPresenciais.items.data"
+                [curso]="curso" [favorites]="favorites" [cursosAlunoPresencial]="cursosAlunoPresencial">
+              </app-card-cursos-presenciais>
+            </div>
+            <div style="margin-bottom:30px">
+              <a [routerLink]="['/todos-os-cursos/2']" id="veja_todos_cursos_link">
+                <span class="orange-font-color">
+                  <b>
+                    <span class="icon icon-user-check" style="margin-right:10px;font-size:30px"></span>Veja todos os cursos presenciais</b>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="cursosLayout3 != undefined && cursosLayout3.cursosRemotos != undefined && cursosLayout3.cursosRemotos.items.data.length">
+            <h1 class="orange-font-color">Cursos Remotos</h1>
+            <div style="display:flex;flex-wrap:wrap;">
+              <app-card-cursos-remotos class="grid" style="display:flex;justify-content:center;" *ngFor="let curso of cursosLayout3.cursosRemotos.items.data"
+                [curso]="curso" [favorites]="favorites" [cursosAlunoPresencial]="cursosAlunoRemoto">
+              </app-card-cursos-remotos>
+            </div>
+            <div style="margin-bottom:30px">
+              <a [routerLink]="['/todos-os-cursos/4']" id="veja_todos_cursos_link">
+                <span class="orange-font-color">
+                  <b>
+                    <span class="icon  icon-user-check icon-phone-computer" style="margin-right:10px;font-size:30px"></span>Veja todos os cursos remotos</b>
+                </span>
+              </a>
+            </div>
+          </div>
+
+
+
+            <h3 *ngIf="shouldShow(layout3)">Nã há mais cursos</h3>
+
+          <div style="width:100%;display:flex;justify-content:center">
+            <div *ngIf="changePageForm.get('pageNumber').value > 1">
+              <button class="orange-background" style="color:white;border:none;margin-right:10px;padding:10px;" (click)="prevPage()">página anterior</button>
+            </div>
+            <form [formGroup]="changePageForm" (ngSubmit)="changePage()" style="width:50px;border:1px solid black; overflow:hidden">
+              <input formControlName="pageNumber" style="width:80px;border:none" type="number" />
+            </form>
+            <div>
+              <button class="orange-background" style="color:white;border:none;margin-left:10px;padding:10px;" (click)="nextPage()">próxima página</button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <app-parceiros [isMobile]="isMobile" *ngIf="(configuracoes.tiposCursosAtivos.ativar_parceiros || environmentTemplate.faculdade_id == 7) && configuracoes.layoutHome != 4"></app-parceiros>
+    </div>
+  </section>
+
+
+  <section id="call_1" style="display:none">
+    <ngx-slick-carousel #slickModal="slick-carousel" [config]="slide6Config" *ngIf="configuracoes.tiposCursosAtivos.ativar_membership == 1">
+      <div class="yellow-light-background" ngxSlickItem>
+        <a href="" class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:flex;padding:30px 20px;font-family:encodeSansCondensed-Medium;">
+          <div style="width:80%;font-size:20px;padding:0 50px;">Conheça as vantagens de ser um assinante EducAZ</div>
+          <div style="width:10%">
+            <span style="font-size:50px;" class="icon-user-card"></span>
+          </div>
+        </a>
+      </div>
+      <div class="yellow-dark-background" ngxSlickItem *ngIf="configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento == 1">
+        <a href="" class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:flex;padding:30px 20px;font-family:encodeSansCondensed-Medium;">
+          <div style="width:80%;font-size:20px;padding:0 50px;">Descubra as trilhas de conhecimento em diversas áreas</div>
+          <div style="width:10%">
+            <span style="font-size:50px;" class="icon-share"></span>
+          </div>
+        </a>
+      </div>
+      <div class="orange-light-background" ngxSlickItem>
+        <a [routerLink]="['/seja-um-professor']" class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:flex;padding:30px 20px;font-family:encodeSansCondensed-Medium;">
+          <div style="width:80%;font-size:20px;padding:0 50px;">Compartilhe seu conhecimento como um professor EducAz</div>
+          <div style="width:10%">
+            <span style="font-size:50px;" class="icon-graduation-hat"></span>
+          </div>
+        </a>
+      </div>
+      <div class="orange-background" ngxSlickItem>
+        <a routerLink="/autenticar-certificado" href="" class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:flex;padding:30px 20px;font-family:encodeSansCondensed-Medium;">
+          <div style="width:80%;font-size:20px;padding:0 50px;">Confira o código de autenticidade do seu certificado aqui</div>
+          <div style="width:10%">
+            <span style="font-size:50px;" class="icon fas fa-qrcode"></span>
+          </div>
+        </a>
+      </div>
+    </ngx-slick-carousel>
+
+
+  </section>
+  <!-- FIM DO CONTEÚDO -->
+</div>
+
+<div *ngIf="configuracoes.layoutHome == 1">
+  <app-itv></app-itv>
+</div>
+
+<div *ngIf="configuracoes.layoutHome == 4">
+  <app-perennials></app-perennials>
+</div>

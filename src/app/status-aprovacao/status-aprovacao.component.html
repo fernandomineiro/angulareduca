@@ -1,0 +1,96 @@
+<div id="page-agenda" class="page-meus-cursos page-criar-curso page-status-aprovacao">
+
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='status_aprovacao'></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:80px;">
+        <div class="title orange-font-color">Status de aprovação
+        </div>
+        <mat-accordion id="accordion" *ngIf="statusAprovacao != undefined">
+
+          <mat-expansion-panel (opened)="panelOpenState[i] = true" (closed)="panelOpenState[i] = false" hideToggle
+            *ngFor="let status of statusAprovacao; let i = index" class="accordion-item">
+
+            <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'" >
+              <mat-panel-title style="display: block !important;" class="accordion-item">
+                <hr />
+                <h5 class="mb-0 course row">
+                  <div class="image-container col-lg-3 col-md-3 col-sm-6 col-6">
+                    <img src="http://34.229.110.237/files/curso/imagem/{{status.imagem}}" width="auto" height="90px" />
+                  </div>
+                  <div class="course-info col-lg-5 col-md-5 col-sm-6 col-6">
+                    <div class="course-name">{{status.name}}</div>
+
+                    <div class="publish-info">
+                      <small><span>Enviado em {{status.criacao}}</span></small>
+                     <!-- <small> {{status.publishDate == null ? 'Enviado' : 'Publicado'}} em
+                        <span id="date">{{status.publishDate == null ? status.sentDate : status.publishDate}}</span>
+                      </small>-->
+                      <br />
+                    </div>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-6 col-6 number-info">
+                    <div *ngIf="!panelOpenState[i] && status.status == 0 " class="description">conteúdo enviado</div>
+                    <div *ngIf="!panelOpenState[i] && status.status == 1 " class="description">em análise</div>
+                    <div *ngIf="!panelOpenState[i] && status.status == 2 " class="description">aguardando ajustes</div>
+                    <div *ngIf="!panelOpenState[i] && status.status == 3 " class="description">aprovado</div>
+                    <div *ngIf="!panelOpenState[i] && status.status == 4 " class="description">publicado</div>
+                  </div>
+
+                  <a class="col-lg-2 col-md-2 col-sm-6 col-6 orange-font-color"                    
+                    class="orange-font-color">
+                    <span class="text-button">{{panelOpenState[i] ? 'fechar' : 'ver'}} detalhes</span>
+                  </a>
+
+                </h5>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+
+            <div class="card-body row">
+              <div class="nivel1">
+                <div class="yellow-light-background nivel"></div>
+                <div class="text">Conteúdo enviado</div>
+              </div>
+              <div class="nivel2" *ngIf="status.status >= 1">
+                <div class="yellow-dark-background nivel"></div>
+                <div class="text">O curso está sendo analisado pelos nossos gestores</div>
+              </div>
+              <div class="nivel2" *ngIf="status.status >= 2">
+                <div class="orange-light-background nivel"></div>
+                <div class="text">Clique
+                  <a routerLink="/aprovacao-ajustes/{{status.id}}" class="orange-font-color">aqui</a> e confira os ajustes necessários</div>
+              </div>
+              <div class="nivel2" *ngIf="status.status >= 3"> 
+                <div class="orange-medium-background nivel"></div>
+                <div class="text">Parabéns! o seu curso foi aprovado. Clique
+                  <a  class="orange-font-color">aqui</a> para publicá-lo</div>
+              </div>
+              <div class="nivel2" *ngIf="status.status >= 4">
+                <div class="orange-background nivel"></div>
+                <div class="text">
+                  <b>O seu curso foi publicado com sucesso. Acompanhe os acessos e vendas pela página
+                    "Meus cursos"</b>
+                </div>
+              </div>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+
+      </div>
+    </div>
+
+
+
+  </section>
+
+
+
+
+</div>

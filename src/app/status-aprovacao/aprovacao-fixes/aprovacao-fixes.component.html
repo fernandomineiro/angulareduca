@@ -1,0 +1,18 @@
+<div id="page-agenda" class="page-meus-cursos page-criar-curso page-status-aprovacao">
+
+    <section id="main_content">
+      <div class="row" style="width:100%;">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+          <app-acesso-restrito-sidebar current1='status_aprovacao'></app-acesso-restrito-sidebar>
+        </div>
+        <div *ngIf="fixes != undefined" class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:80px;">
+          <div class="title orange-font-color">Ajustes
+          </div>
+          <h4>{{fixes.courseName}}</h4>
+          <ul>
+            <li *ngFor="let fix of fixes.fixes">{{fix}}</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>

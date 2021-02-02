@@ -1,0 +1,16 @@
+#section_content {
+  & .content{
+    position: relative;
+  }
+
+  & h1:not(.my-4){
+    font-family: $encode-Sans-Condesed-Black;
+    font-size: 45px;
+    margin-top: 3rem !important;
+  }
+
+  & h3 {
+    font-family: $encode-Sans-Condesed-SemiBold;
+    font-size: 20px;
+  }
+}

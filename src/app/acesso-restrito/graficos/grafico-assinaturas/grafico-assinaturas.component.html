@@ -1,0 +1,129 @@
+<div id="page-agenda">
+
+
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='relatorios_graficos' current2='assinaturas'></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="margin-top:30px;padding:20px;display:flex;justify-content:flex-start;"
+        id="page-cadastro">
+        <div style="max-width:1090px;width:100%;">
+          <div class="title orange-font-color" style="margin-bottom:20px;">Gráfico de Assinaturas
+          </div>         
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="typeAssinatura">
+            <mat-radio-button style="margin-right:10px;" class="example-radio-button" [selected]="true" value="other">Abandonadas, canceladas e realizadas</mat-radio-button>
+            <mat-radio-button class="example-radio-button" value="ativa">Ativas</mat-radio-button>
+          </mat-radio-group>
+          <div [hidden]="typeAssinatura != 'other'">
+              <div>
+                  <form (ngSubmit)="submitSearch()" style="margin:50px 0;">
+                    <div class="row">
+                      <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+                        <label>Período</label>
+                        <br/>
+                        <div style="display:flex;">
+                          <input type="date" #periodoInicial style="max-width:150px;width:100%" />
+                          <span style="padding: 0 5px"> a </span>
+                          <input type="date" #periodoFinal style="max-width:150px;width:100%" />
+                        </div>
+      
+                      </div>
+                      <div class="col-lg-2 col-md-2 col-sm-6 col-6">
+                        <label>Agrupamento</label>
+                        <br/>
+                        <select #agrupamento style="background-color:#e1e1e1;width:100%;border:none;">
+                          <option value="semana">semana</option>
+                          <option value="mes">mês</option>
+                          <option value="ano">ano</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-6" style="display: flex;flex-direction: column;justify-content: flex-end;">
+                        <button type="button" (click)="viewAsList = !viewAsList" class="orange-background" style="color:white;border:none;padding:10px;width:100%">
+                          <b>visualizar em {{viewAsList ? 'gráfico' : 'lista'}}</b>
+                        </button>
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-6 col-6" style="display: flex;flex-direction: column;justify-content: flex-end;">
+                        <button type="submit" class="orange-background" style="color:white;border:none;padding:10px;width:100%">
+                          <b>filtrar</b>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+      
+                </div>
+      
+                <div class="wrapper" [hidden]="viewAsList">
+                  <div class="element">
+                    <div id="vendas" class="mini-chart">
+      
+                    </div>
+                  </div>
+      
+                </div>
+      
+                <div [hidden]="!viewAsList">
+                  <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-2">
+      
+                    </div>
+                    <div class="col-lg-10">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-center">
+                          <b>Abandonadas</b>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-center">
+                          <b>Canceladas</b>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-center">
+                          <b>Realizadas</b>
+                        </div>
+                      </div>
+      
+                    </div>
+                    <div class="col-lg-12">
+                      <hr />
+                    </div>
+                  </div>
+                  <div class="row" *ngFor="let item of range; let i = index">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-2">
+                      <h3 *ngIf="agrupamento.value == 'semana'">Semana {{item}}</h3>
+                      <h3 *ngIf="agrupamento.value == 'mes'">Mês {{item}}</h3>
+                      <h3 *ngIf="agrupamento.value == 'ano'">Semana {{item}}</h3>
+                    </div>
+                    <div class="col-lg-10">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-center">
+                          {{dataAbandonadasList[i]}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-center">
+                          {{dataCanceladasList[i]}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-center">
+                          {{dataRealizadasList[i]}}
+                        </div>
+                      </div>
+      
+                    </div>
+                    <div class="col-lg-12">
+                      <hr />
+                    </div>
+      
+                  </div>
+      
+                </div>
+          </div>
+
+          <div [hidden]="typeAssinatura == 'other'">
+            <app-assinaturas-ativas></app-assinaturas-ativas>
+          </div>
+          
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </section>
+</div>

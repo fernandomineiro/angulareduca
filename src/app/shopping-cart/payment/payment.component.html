@@ -1,0 +1,470 @@
+<div [hidden]="!termosComponentFlag">
+    <app-termos></app-termos>
+    <div class="container">
+        <div class="row">
+            <div (click)="termosCondicoesHide()" class="btn-PaymentTerms col-lg-12 col-md-12 col-sm-12 col-12">
+                Voltar
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div [hidden]="termosComponentFlag">
+    <div *ngIf="cartEmpty == false" id="page-cadastro">
+        <div class="main-row">
+            <form id="cadastro_form" [formGroup]="formCadastro" (ngSubmit)="confirmarPagamento()">
+                <section id="page-carrinho">
+                    <div class="container not-border">
+                        <div class="row not-border" style="justify-content:space-between;">
+                            <div [hidden]="step != 0 || step == -1" class="col-lg-6 col-md-6 col-sm-12 col-12" style="margin-top:0 !important;">
+
+                                <div class="not-border" id="dadosPessoais" style="margin-top:0 !important;">
+                                    <section id="page-cadastro">
+                                        <section>
+                                            <div class="row main-row not-border" style="margin-top:0 !important;">
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 main-form not-border" style="margin-top:0 !important;">
+                                                    <h2 class="orange-font-color" style="margin-top:0">Dados pessoais</h2>
+
+                                                    <div class="not-border">
+                                                        <div [ngStyle]='{"border-color" :  formCadastro.controls.nome.status == "INVALID" &&  submitted ? "#FC0404" : "#ddd" }'>
+                                                            <span class="orange-font-color">*<small  style="color:#FC0404">(É necessário preencher seu nome completo para fins de certificação)</small></span><br/>
+                                                            <input maxlength="30" id="name" type="text" formControlName="nome" required placeholder="Nome" />
+                                                        </div>
+                                                        <div class="not-border" *ngIf="  formCadastro.controls.nome.status == 'INVALID' &&   submitted">
+                                                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                                                        </div>
+                                                        <div [ngStyle]='{"border-color" :  formCadastro.controls.sobre_nome.status == "INVALID" &&  submitted ? "#FC0404" : "#ddd" }'>
+                                                            <span class="orange-font-color">* <small  style="color:#FC0404">(É necessário preencher seu nome completo para fins de certificação)</small></span> <br/>
+                                                            <input maxlength="60" id="last_name" type="text" formControlName="sobre_nome" required placeholder="Sobrenome" />
+                                                        </div>
+                                                        <div class="not-border" *ngIf="  formCadastro.controls.sobre_nome.status == 'INVALID' &&   submitted">
+                                                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                                                        </div>
+                                                        <div [ngStyle]='{"border-color" :  formCadastro.controls.cnpjcpf.status == "INVALID" &&  submitted ? "#FC0404" : "#ddd" }'>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input [isCnpj]="true" id="cpf" appNumberMask="{{formCadastro.get('cnpjcpf').value.length <= 11 ? '999.999.999-99' : '99.999.999/9999-99'}}"
+                                                                type="text" formControlName="cnpjcpf" required placeholder="CPF/CNPJ"
+                                                            />
+                                                        </div>
+                                                        <div class="not-border" *ngIf="  formCadastro.controls.cnpjcpf.status == 'INVALID' &&   submitted">
+                                                            <p *ngIf="formCadastro.controls.cnpjcpf.errors.required" style="color:#FC0404">Este campo é obrigatório</p>
+                                                            <p *ngIf="formCadastro.controls.cnpjcpf.errors.validateCPF.valid ==false && formCadastro.get('cnpjcpf').value != null && formCadastro.get('cnpjcpf').value != ''"
+                                                                style="color:#FC0404">{{formCadastro.controls.cnpjcpf.errors.validateCPF.message}}</p>
+                                                        </div>
+                                                        <div [ngStyle]='{"border-color" :  formCadastro.controls.rg.status == "INVALID" &&  submitted ? "#FC0404" : "#ddd" }'>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input id="rg" type="text" formControlName="rg" required placeholder="RG" />
+                                                        </div>
+                                                        <div class="not-border" *ngIf="  formCadastro.controls.rg.status == 'INVALID' &&   submitted">
+                                                            <p *ngIf="formCadastro.controls.rg.errors.required" style="color:#FC0404">Este campo é obrigatório</p>
+                                                        </div>
+                                                        <div [ngStyle]='{"border-color" :  formCadastro.controls.data_nascimento.status == "INVALID" &&  submitted ? "#FC0404" : "#ddd" }'>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input id="birthday" type="date" formControlName="data_nascimento" required placeholder="Data de nascimento" />
+                                                        </div>
+                                                        <div class="not-border" *ngIf="  formCadastro.controls.data_nascimento.status == 'INVALID' &&   submitted">
+                                                            <p *ngIf="formCadastro.controls.data_nascimento.errors.required" style="color:#FC0404">Este campo é obrigatório</p>
+                                                            {{formCadastro.controls.data_nascimento.errors.validateBirthdate}}
+                                                            <p *ngIf="formCadastro.controls.data_nascimento.errors.validateBirthdate == false && formCadastro.get('data_nascimento').value != null && formCadastro.get('data_nascimento').value != ''"
+                                                                style="color:#FC0404">{{formCadastro.controls.data_nascimento.errors.validateBirthdate.message}}</p>
+                                                        </div>
+
+                                                        <div [ngStyle]='{"border-color" :  formCadastro.controls.cep.status == "INVALID" &&  submitted ? "#FC0404" : "#ddd" }'>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input (focusout)="findCep($event)" appNumberMask="99999-999" min="1" max="99999999" id="cep" type="text" formControlName="cep"
+                                                                required placeholder="CEP" />
+                                                        </div>
+                                                        <div class="not-border" *ngIf="  formCadastro.controls.cep.status == 'INVALID' &&   submitted">
+                                                            <p *ngIf="formCadastro.controls.cep.errors.required" style="color:#FC0404">Este campo é obrigatório</p>
+                                                            <p *ngIf="formCadastro.controls.cep.errors.validateCEP && formCadastro.controls.cep.errors.validateCEP.valid == false && formCadastro.get('cep').value != null && formCadastro.get('cep').value != ''"
+                                                                style="color:#FC0404">{{formCadastro.controls.cep.errors.validateCEP.message}}</p>
+                                                        </div>
+                                                        <div>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input id="address_street" type="text" formControlName="logradouro" required placeholder="Rua" />
+                                                        </div>
+                                                        <div>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input id="address_number" type="text" formControlName="numero" required placeholder="Número" />
+                                                        </div>
+                                                        <div class="not-border" *ngIf="  formCadastro.controls.numero.status == 'INVALID' &&   submitted">
+                                                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                                                        </div>
+                                                        <div>
+                                                            <span class="orange-font-color"></span>
+                                                            <input id="address_complemento" type="text" formControlName="complemento" placeholder="Complemento" />
+                                                        </div>
+                                                        <div>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input id="address_bairro" type="text" formControlName="bairro" required placeholder="Bairro" />
+                                                        </div>
+                                                        <div>
+                                                            <span class="orange-font-color">*</span>
+                                                            <select formControlName="fk_estado_id" class="form-control" required (change)="buscarCidades();">
+                                                                <option [ngValue]="null">Selecione</option>
+                                                                <option [value]="estado.id" *ngFor="let estado of estados">
+                                                                    {{ estado.descricao_estado | titlecase}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <span class="orange-font-color">*</span>
+                                                            <select formControlName="fk_cidade_id" class="form-control" required>
+                                                                <option [ngValue]="null">Selecione</option>
+                                                                <option [value]="cidade.id" *ngFor="let cidade of cidades">
+                                                                    {{ cidade.descricao_cidade | titlecase }}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <input [isCnpj]="true" id="telefone_1" appNumberMask="(99) 9999-9999" type="text" formControlName="telefone_1" placeholder="Telefone Fixo"
+                                                            />
+                                                        </div>
+                                                        <div [ngStyle]='{"border-color" :  formCadastro.controls.telefone_2.status == "INVALID" &&  submitted ? "#FC0404" : "#ddd" }'>
+                                                            <span class="orange-font-color">*</span>
+                                                            <input [isCnpj]="true" id="telefone_2" appNumberMask="(99) 9 9999-9999" type="text" required formControlName="telefone_2"
+                                                                placeholder="Telefone Celular" />
+                                                        </div>
+
+                                                        <div class="not-border">
+                                                            <small>* preenchimento obrigatório</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </section>
+                                        <!-- Page Content -->
+
+
+                                        <!-- /.container -->
+
+                                    </section>
+                                </div>
+
+                            </div>
+                            <div [hidden]="step != 0 || step == -1" class="col-lg-6 col-md-6 col-sm-12 col-12" style="margin-top:0 !important;">
+                                <!--<div class="col-lg-6 col-md-6 col-sm-12 col-12" style="margin-top:0 !important;">-->
+
+                                <!--                                <div id="aditional_info" class="not-border" style="margin-top:0 !important">-->
+                                <!--                                    <h2 class="orange-font-color" style="margin-top:0">Informações adicionais</h2>-->
+                                <!--                                    <div id="graduation_info" style="height:26px;">-->
+                                <!--                                        <span style="opacity:.6;font-family: encodeSansCondensed-Regular;">Fazendo curso superior? </span>-->
+                                <!--                                        <span class="radio">-->
+                                <!--                                            <input id="graduation_yes" (change)="hasCurso = true" [checked]="hasCurso == true" name="curso_superior" type="radio" value="yes">-->
+                                <!--                                            <label for="graduation_yes" class="radio-label">sim</label>-->
+                                <!--                                        </span>-->
+                                <!--                                        <span class="radio">-->
+                                <!--                                            <input id="graduation_no" (change)="hasCurso = false" [checked]="hasCurso == false" name="curso_superior" type="radio" value="no">-->
+                                <!--                                            <label for="graduation_no" class="radio-label">não</label>-->
+                                <!--                                        </span>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div *ngIf="hasCurso" [ngStyle]='{"border-color" :(formCadastro.get("universidade").value == null || formCadastro.get("universidade").value == "") &&   submitted ? "#FC0404" : "#ddd"}'>-->
+                                <!--                                        <select formControlName="universidade" class="form-control" required (change)="buscarCursos($event.target.value);">                                            <option [ngValue]="null">Selecione</option>-->
+                                <!--                                            <option [value]="faculdade.id" *ngFor="let faculdade of faculdades">-->
+                                <!--                                                {{ faculdade.nome_faculdade }}-->
+                                <!--                                            </option>-->
+                                <!--                                        </select>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="not-border" *ngIf="hasCurso && (formCadastro.get('universidade').value == null || formCadastro.get('universidade').value == '') &&   submitted">-->
+                                <!--                                        <p style="color:#FC0404">Este campo é obrigatório</p>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div *ngIf="hasCurso" [ngStyle]='{"border-color" :(formCadastro.get("curso").value == null || formCadastro.get("curso").value == "") &&   submitted ? "#FC0404" : "#ddd"}'>-->
+                                <!--                                        <select formControlName="curso" class="form-control" required >-->
+                                <!--                                            <option [ngValue]="null">Selecione</option>-->
+                                <!--                                            <option [value]="curso.id" *ngFor="let curso of cursos">-->
+                                <!--                                                {{ curso.titulo }}-->
+                                <!--                                            </option>-->
+                                <!--                                        </select>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="not-border" *ngIf="hasCurso && (formCadastro.get('curso').value == null || formCadastro.get('curso').value == '') &&   submitted">-->
+                                <!--                                        <p style="color:#FC0404">Este campo é obrigatório</p>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div *ngIf="hasCurso" [ngStyle]='{"border-color" :(formCadastro.get("semestre").value == null || formCadastro.get("semestre").value == "") &&   submitted ? "#FC0404" : "#ddd"}'>-->
+                                <!--                                        <input id="semester" type="text" formControlName="semestre" placeholder="Semestre" />-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="not-border" *ngIf="hasCurso && (formCadastro.get('semestre').value == null || formCadastro.get('semestre').value == '') &&   submitted">-->
+                                <!--                                        <p style="color:#FC0404">Este campo é obrigatório</p>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div *ngIf="hasCurso" [ngStyle]='{"border-color" :(formCadastro.get("ra").value == null || formCadastro.get("ra").value == "") &&   submitted ? "#FC0404" : "#ddd"}'>-->
+                                <!--                                        <input id="ra" type="text" formControlName="ra" placeholder="RA" />-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="not-border" *ngIf="hasCurso && (formCadastro.get('ra').value == null || formCadastro.get('ra').value == '') &&   submitted">-->
+                                <!--                                        <p style="color:#FC0404">Este campo é obrigatório</p>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <button class="not-border" (click)="this.cancelaPagamento($event)" style="max-width:200px;text-align:center;background-color:#dbdada;margin-top: 30px;padding: 15px 60px;font-family: encodeSansCondensed-Bold;color: white;font-size: 20px;border: none;cursor: pointer;margin:15px;">
+                                    cancelar
+                                </button>
+                                <button type="submit" class="btn-paymentNext" style="padding: 15px 60px;">
+                                    {{loading ? 'aguarde...' : 'próximo'}}
+                                </button>
+
+                            </div>
+                            <div [hidden]="(step != 1 || step == -1) && !success" class="col-lg-8 col-md-8 col-sm-12 col-12 not-border" style="max-width:600px">
+                                <!--<div class="col-lg-8 col-md-8 col-sm-12 col-12 not-border" style="max-width:600px">-->
+
+                                <h2 class="orange-font-color" style="margin-top:20px;">Pagamento</h2>
+                                <form id="form_payment_credit_card">
+
+
+                                    <div class="radio not-border">
+                                        <input id="cartao_de_credito" (change)="currentPayment = 'cartao_de_credito'" name="payment" type="radio">
+                                        <label for="cartao_de_credito" class="radio-label">Cartão de crédito</label>
+                                    </div>
+                                    <div class="row not-border">
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 card-payment-outter not-border">
+                                            <div class="card-container not-border">
+                                                <img src="../assets/img/cartao_hipercard.png" width="100%" height="auto" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 card-payment-outter not-border">
+                                            <div class="card-container not-border">
+                                                <img src="../assets/img/cartao_visa.png" width="100%" height="auto" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 card-payment-outter not-border">
+                                            <div class="card-container not-border" style="max-width:70px !important;">
+                                                <img src="../assets/img/cartao_mastercard.png" width="100%" height="auto" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 card-payment-outter not-border">
+                                            <div class="card-container not-border">
+                                                <img src="../assets/img/cartao_elo.png" width="100%" height="auto" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="input-outter">
+                                        <input id="cartaoNome" type="text" placeholder="Nome como está no cartão" />
+
+                                    </div>
+                                    <div class="input-outter">
+                                        <input id="cartaoCPF" type="text" maxlength="14" (keypress)="cpfMask($event);" (change)="cpfMask($event);" placeholder="CPF do titular do cartão"
+                                        />
+
+                                    </div>
+                                    <div class="input-outter">
+                                        <input id="cartaoBirthdate" type="date" placeholder="Data de nascimento do titular" />
+
+                                    </div>
+                                    <div class="input-outter">
+                                        <input id="cartaoNumero" type="text" placeholder="Número do cartão" />
+
+                                    </div>
+                                    <div class="input-outter">
+                                        <input id="cartaoValidade" appNumberMask="99/99" min="1" max="9999" type="text" placeholder="Validade (mm/aa)" />
+
+                                    </div>
+                                    <div class="input-outter">
+                                        <input id="cartaoCSC" type="text" placeholder="CVV" />
+
+                                    </div>
+																		
+																		<div class="input-outter">
+																			<input id="ccPhone" type="number" maxlength="11" (keypress)="validarTamanhoCampo()" (keyup)="validarTamanhoCampo()" (keydown)="validarTamanhoCampo()" (blur)="atribuirDDDeTelefoneCartaoCredito()" placeholder="Telefone (somente números. Ex: 11988887777 ou 1144443333)" />
+																		</div>
+																		
+																		<div class="not-border">
+                                        <input id="cartaoDDD" style="width:20%;" type="hidden" placeholder="DDD" />
+                                        <input id="cartaoPhone" style="width:80%;" type="hidden" placeholder="Telefone" />
+                                    </div>
+
+                                    <div style="margin-top:30px; display: none;" class="not-border">
+                                        <input id="cartaoSalvarDados" type="checkbox" name="form_payment_save_data" style="width:unset;" />
+                                        <span> Quero salvar os dados do meu cartão para as próximas compras</span>
+                                    </div>
+
+
+                                    <hr />
+                                    <div style="cursor:not-allowed"  class="radio not-border" *ngIf="!isAssinatura">
+                                        <input disabled id="debito_online" (change)="currentPayment = 'debito_online'" name="payment" type="radio">
+                                        <label for="debito_online" class="radio-label">Débito on-line <strong>Banco Itaú</strong>
+                                            <span style="padding-left:20px;" class="orange-font-color">EM BREVE</span>
+                                        </label>
+                                    </div>
+                                    <!-- <div class="row not-border" *ngIf="!isAssinatura">
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 card-payment-outter not-border">
+                                            <div class="card-container not-border">
+                                                <img src="../assets/img/itau.png" width="100%" height="auto" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 card-payment-outter not-border">
+                                            <div style="max-width:80px;" class="card-container not-border">
+                                                <img src="../assets/img/bradesco.png" width="100%" height="auto" />
+                                            </div>
+                                        </div>
+                                        <hr />
+                                    </div> -->
+
+
+                                    <div class="radio not-border" *ngIf="!isAssinatura">
+                                        <input id="boleto" name="payment" (change)="currentPayment = 'boleto'" type="radio">
+                                        <label for="boleto" class="radio-label">Pagamento com boleto</label>
+                                    </div>
+                                    <div style="padding-left:20px;" class="not-border" *ngIf="!isAssinatura">
+                                        <small>
+                                            Você poderá imprimir ou visualizar o boleto após a finalização da compra. A data de vencimento é 3 dias após a data de compra.
+                                            Após esse período, o boleto perderá a validade.
+                                        </small>
+                                        <br />
+                                        <small>
+                                            Os cursos pagos com boleto bancário estarão disponíveis após 48h da confirmação do pagamento.
+                                        </small>
+                                        <hr />
+                                    </div>
+
+
+                                    <div style="cursor:not-allowed" class="radio not-border">
+                                        <input disabled id="pay_pal" (change)="currentPayment = 'pay_pal'" name="payment" type="radio">
+                                        <label for="pay_pal" class="radio-label">Paypal Express
+                                            <span style="padding-left:20px;" class="orange-font-color">EM BREVE</span>
+                                        </label>
+                                    </div>
+                                    <div class="row not-border">
+                                        <div class="col-lg-3 col-md-3 col-sm-6 col-6 card-payment-outter not-border">
+                                            <div style="margin-left:20px;" class="card-container not-border">
+                                                <img src="../assets/img/pay_pal.png" width="100%" height="auto" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr />
+
+                                </form>
+
+                                <div (click)="voltar()" class="btn-PaymentTerms">
+                                    voltar
+                                </div>
+                            </div>
+
+                            <div [hidden]="(step != 1 || step == -1) && !success" class="col-lg-4 col-md-4 col-sm-12 col-12 not-border" style="border-left:1px solid #e0e0e0"
+                                id="resumo">
+                                <!--<div  class="col-lg-4 col-md-4 col-sm-12 col-12 hide-mobile not-border" style="border-left:1px solid #e0e0e0">-->
+
+
+                                <div id="pedido_resumo">
+                                    <h3>Resumo do pedido</h3>
+                                    <div class="row">
+                                        <div class="col-lg-7 col-md-7 col-sm-12 col-12 not-border">
+                                            Subtotal (
+                                            <span id="subtotal_amount">{{ items.length }} </span>itens)
+
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-12 not-border text-right">
+
+                                            <span id="subtotal_value">{{ total() | currency: 'BRL': 'symbol' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row not-border">
+                                        <!--<div class="col-lg-12 col-md-12 col-sm-12 col-12 not-border cupom">
+                                            Tem cupom de desconto?
+                                        </div>-->
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 not-border" style="background-color:#F2EFEF;">
+                                            <span style="width:50%;">Cupom de desconto</span>
+                                            <input class="text-right" type="text" id="pedido_cupom" name="pedido_cupom" style="background-color:transparent;width:unset;width:50%;float:right"
+                                                disabled placeholder="{{cupomDesconto.nome}}" />
+                                        </div>
+                                    </div>
+                                    <div class="row not-border">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 not-border">
+                                            <span style="float:right;border-bottom:1px solid #e0e0e0;padding:10px 0;">
+
+                                                <span id="pedido_cupom_value">{{cupomDesconto.valor | currency: 'BRL': 'symbol' }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row not-border">
+                                        <div class="col-lg-7 col-md-7 col-sm-12 col-12 not-border">
+                                            <b>Total</b>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-12 not-border text-right">
+                                            <b>
+                                                <span id="total_value">{{ total() - cupomDesconto.valor | currency: 'BRL': 'symbol' }}</span>
+                                            </b>
+                                        </div>
+                                    </div>
+                                    <div class="row not-border">
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-12 not-border">
+
+                                        </div>
+                                        <div class="col-lg-7 col-md-7 col-sm-12 col-12 not-border text-right">
+                                            <span *ngIf="!isAssinatura && currentPayment == 'cartao_de_credito'" id="installment_amount">
+                                                <select (change)="changeParcelas($event)" id="parcelamentoSelect">
+                                                    <option *ngFor="let parcela of maxParcelas" value="{{parcela.parcela}}">{{parcela.parcela}}</option>
+                                                </select> x
+                                            </span>
+                                            <span *ngIf="!isAssinatura && currentPayment == 'cartao_de_credito'">{{ (total() - cupomDesconto.valor + (total() * (getJuros())))/parcelas | currency:
+                                                'BRL': 'symbol' }}</span>
+                                            <span *ngIf="!isAssinatura && currentPayment != 'cartao_de_credito'">{{ (total() - cupomDesconto.valor) / parcelas | currency: 'BRL': 'symbol' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row not-border">
+                                        <div class="col-lg-7 col-md-7 col-sm-12 col-12 not-border">
+
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-12 col-12 not-border text-right">
+                                            <span id="installment_type">
+                                                <small>no cartão de crédito</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top:30px;" class="not-border termos_invalid" [ngClass]="{'termos_invalid' : !termosAccepted }" id="termos_condicoes_div">
+                                    <input (change)="termosAccepted = $event.target.checked;" id="termos_condicoes" type="checkbox" name="termos_condicoes" style="width:unset;" required />
+                                    <span> Li e aceito os
+                                        <a (click)="termosCondicoesShow()">
+                                            <h5 style="display: inline; cursor: pointer;">termos e condições</h5>
+                                        </a>
+                                    </span>
+                                </div>
+                                <button (click)="pedidoConcluido()" id="button_submit_confirm" [disabled]="processandoPagamento">
+                                    confirmar pagamento
+                                </button>
+                                <div class="alert-info error" *ngIf="showErrorMessage">
+                                    Erro ao processar compra
+                                    <p>Motivos</p>
+                                    {{ errors }}
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </section>
+            </form>
+        </div>
+
+
+    </div>
+    <div *ngIf="cartEmpty == true" class="alert-info alert">
+
+        <h4>Seu carrinho está vazio.</h4>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+    var interval = setInterval(function () {
+        if ($("#topnav_shop").length) {
+            $("#topnav_shop").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+</script>
+<style>
+    #page-carrinho .navbar {
+        background-color: #DBDADA !important;
+    }
+
+    #mobile_navbar {
+        background-color: #DBDADA !important;
+    }
+</style>

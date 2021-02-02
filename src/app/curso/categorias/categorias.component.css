@@ -1,0 +1,5 @@
+@media (max-width:991px){
+    #page-cursos-categoria .grid.view_type{
+        justify-content: space-around !important;
+    }
+  }

@@ -1,0 +1,109 @@
+<div *ngIf="hasAccess && moduloLiberado">
+    <div class="row" style="width:100%" *ngIf="curso != undefined">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:flex;justify-content:space-between">
+            <div style="padding:15px;">
+                <h3 class="orange-font-color" style="font-family: encodeSansCondensed-Bold;">{{curso.nome_curso}}</h3>
+                <h4 *ngIf="modulos != undefined" style="font-family: encodeSansCondensed-Regular;">{{modulo[0].titulo}}</h4>
+            </div>
+            <div style="padding:15px;">
+                <a routerLink="/meu-curso/{{curso.id}}/faca-aulas" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                    <span style="background-color:#787878" class="send-grades">voltar</span>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="position:relative;display:flex;min-height:500px;">
+            <div id="video" style="width:100%;" *ngIf="modulo[0].url_video != null">
+                <div>
+                    <iframe id="vimeoIframe" *ngIf="modulo != undefined && moduloLiberado" title="vimeo-player" [src]="src" width="640" height="360"
+                        frameborder="0" autoplay="false" allowfullscreen>
+
+                    </iframe>
+                </div>
+            </div>
+            <div id="podcast" style="width:100%;" *ngIf="modulo[0].isPodcast" style="display:flex;width:100%">
+                <audio (ended)="marcarAssistido(modulo[0].id)" controls style="margin:auto;width:100%" id="podcast">
+                    <source src="{{IMG_URL}}/files/modulo/modulos/{{modulo[0].url_arquivo}}" type="audio/ogg">
+                    <source src="{{IMG_URL}}/files/modulo/modulos/{{modulo[0].url_arquivo}}" type="audio/mpeg"> Your browser does not support the audio element.
+                </audio>
+            </div>
+            <div *ngIf="hasEnded.ended || modulo[0].url_video == null && (modulo[0].isPodcast && hasEnded.ended)" style="position:absolute;background-color:rgba(0,0,0,.5);display:flex;width:100%;height:100%;">
+                <div *ngIf="modulo[0].url_video != null || modulo[0].isPodcast" style="width:100%;display:flex;flex-direction:column">
+                    <div style="display:flex;margin:auto;">
+                        <div *ngIf="!firstVideo.value" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                            <span style="background-color:#787878" class="send-grades" (click)="goToPrevVideo()">aula anterior</span>
+                        </div>
+                        <div *ngIf="!lastVideo.value" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                            <span class="send-grades" (click)="goToNextVideo()">próxima aula</span>
+                        </div>
+                        <div *ngIf="lastVideo.value" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                            <span class="send-grades" (click)="concluirModulos()">concluir aulas</span>
+                        </div>
+                    </div>
+                    <div *ngIf="!firstVideo.value" style="margin:auto;">
+                        <p style="color:white;">Próxima aula em {{timeToNextModulo.time}}.
+                            <a href="javascript:void(0)" style="color:white;" (click)="cancelNextModulo">Cancelar</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="modulo[0].url_video == null && !modulo[0].isPodcast && modulo[0].aula_ao_vivo != 1" style="position:absolute;background-color:rgba(0,0,0,.5);display:flex;width:100%;height:100%;">
+                <div style="margin:auto;font-size:50px;display:flex;flex-direction:column;">
+                    <span class="button-to-download">Clique no ícone abaixo para fazer o download do arquivo.</span>
+                    <a href="{{IMG_URL}}/files/modulo/modulos/{{modulo[0].url_arquivo}}" download target="_blank" style="display:flex;">
+                        <span class="icon icon-download orange-font-color" (click)="hasDownloaded = true" style="cursor:pointer;margin:auto;"></span>
+                    </a>
+                    <div *ngIf="hasDownloaded" class="button-send-div" style="height:80px !important;margin-top: 90px;justify-content: center;">
+                        <span class="send-grades" (click)="finishModulo()">concluir aula</span>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="modulo[0].url_video == null && !modulo[0].isPodcast && modulo[0].aula_ao_vivo == 1" style="position:absolute;background-color:rgba(0,0,0,.5);display:flex;width:100%;height:100%;">
+                <div style="margin:auto;font-size:50px;display:flex;flex-direction:column;">
+                    <span *ngIf="showLinkAoVivo" class="button-to-download">Esta é uma aula ao vivo e está sendo transmitida em <a class="orange-font-color" (click)="marcarAssistido(modulo[0].id)" href="{{modulo[0].link_aula_ao_vivo}}" target="_blank">{{modulo[0].link_aula_ao_vivo}}</a>.</span>
+                    <span *ngIf="!showLinkAoVivo" class="button-to-download">Esta é uma aula ao vivo e será transmitida em {{modulo[0].data_aula_ao_vivo | date:'dd/MM/yyyy'}} às {{modulo[0].hora_aula_ao_vivo}}.</span>
+                    <div style="display:flex;margin:auto;" *ngIf="(hasEnded.ended && showLinkAoVivo) || !showLinkAoVivo">
+                        <div *ngIf="!firstVideo.value" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                            <span style="background-color:#787878" class="send-grades" (click)="goToPrevVideo()">aula anterior</span>
+                        </div>
+                        <div *ngIf="!lastVideo.value" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                            <span class="send-grades" (click)="goToNextVideo()">próxima aula</span>
+                        </div>
+                        <div *ngIf="lastVideo.value" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                            <span class="send-grades" (click)="concluirModulos()">concluir aulas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12" style="overflow-y:scroll;">
+            <app-modulos-list [reload]="reload" (reloadParent)="reloadParent()" id="modulos_assistidos" style="position:absolute;width:95%;" *ngIf="modulos != undefined && assistidos != undefined && curso != undefined"
+                [modulos]="modulos" [assistidos]="assistidos" [curso]="curso" [openWhere]="openWhere" [hasAccess]="true">
+            </app-modulos-list>
+
+
+        </div>
+
+    </div>
+    <div class="row" style="width:100%;">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12" style="display:flex;">
+            <div *ngIf="modulosComplete && curso.quiz_id != null" class="button-send-div" style="height:80px !important;margin-top:50px;margin-right:40px;margin:auto;">
+                <a routerLink="/meu-curso/{{cursoId}}/questionario/{{curso.quiz_id}}">
+                    <span class="send-grades">responder questionário</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div *ngIf="!hasAccess && hasAccess != undefined">
+    <h4 style="text-align:center;margin:50px 0;">Você não tem acesso a esse curso.</h4>
+</div>
+<div *ngIf="(hasAccess && !moduloLiberado) && moduloLiberado != undefined">
+    <h4 style="text-align:center;margin:50px 0;">Esta aula ainda não está liberada</h4>
+</div>

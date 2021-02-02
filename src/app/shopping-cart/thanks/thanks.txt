@@ -1,0 +1,15 @@
+<script type="text/javascript">
+	window._st_account = 5825;
+	window._cv_data = {
+		'order_id': 0,      // Número do pedido
+		'valor': 0          // Valor do pedido
+	};
+	(function () {
+		var ss = document.createElement('script');
+		ss.type = 'text/javascript';
+		ss.async = true;
+		ss.src = '//app.shoptarget.com.br/js/tracking.js';
+		var sc = document.getElementsByTagName('script')[0];
+		sc.parentNode.insertBefore(ss, sc);
+	})();
+</script>

@@ -1,0 +1,125 @@
+<section id="page-agenda" class="page-meus-cursos page-criar-curso page-relatorios">
+    <div id="page-cadastro">
+        <section id="main_content">
+            <div class="row" style="width:100%;">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                    <app-acesso-restrito-sidebar current1='relatorios_graficos'></app-acesso-restrito-sidebar>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:30px;">
+                    <div class="title  orange-font-color">Relatórios e gráficos</div>
+
+                    <form id="form_info">
+                        <div class="row main-row">
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-6 item" style="padding-top:15px;">
+                                <span>Mês </span>
+                                <select id="mes" name="mes" class="col-lg-9 col-md-8 col-sm-6 col-6" [(ngModel)]="currentMonth" (change)="ngOnInit()">
+                                    <option selected disabled value="">Selecionar mês</option>
+                                    <option value="0">Janeiro</option>
+                                    <option value="1">Fevereiro</option>
+                                    <option value="2">Março</option>
+                                    <option value="3">Abril</option>
+                                    <option value="4">Maio</option>
+                                    <option value="5">Junho</option>
+                                    <option value="6">Julho</option>
+                                    <option value="7">Agosto</option>
+                                    <option value="8">Setembro</option>
+                                    <option value="9">Outubro</option>
+                                    <option value="10">Novembro</option>
+                                    <option value="11">Dezembro</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-6 item" *ngIf="!hideIES && hideIESFromIES" style="padding-top:15px;">
+                                <span>IES </span>
+                                <select id="ies" name="ies" class="col-lg-9 col-md-8 col-sm-6 col-6" [(ngModel)]="selectedIES" (change)="ngOnInit()">
+                                    <option selected disabled value="">Selecionar IES</option>
+                                    <option *ngFor="let parceiro of parceiros" value="{{parceiro.id}}">{{parceiro.nome_faculdade}}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-6" style="padding-top:15px;">
+                                <button id="visualizar" class="orange-background" style="width:100%;" (click)="viewAsList = !viewAsList">{{viewAsList ? 'visualizar em gráfico' : 'visualizar em lista'}}</button>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-6" style="padding-top:15px;">
+                                <button id="exportar" (click)="exportarRelatorios()"   target="_blank" download class="orange-background" style="width:100%;">exportar</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <hr/>
+                    <div class="row charts" [hidden]="viewAsList==true" style="padding:15px;">
+                        <div class="chart-type col-lg-12 col-md-12 col-sm-12 col-12 orange-font-color">Vendas</div>
+                        <div class="chart-description col-lg-12 col-md-12 col-sm-12 col-12">Total do mês:
+                            <span>{{totalVendas | currency: 'BRL': 'symbol' }}</span>
+                        </div>
+                        <div class="chart col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div id="vendas" class="mini-chart">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row charts fatura" *ngIf="relatoriosData != undefined && relatoriosData.fatura.cursos.length">
+                        <div class="chart-type col-lg-12 col-md-12 col-sm-12 col-12 orange-font-color">{{viewAsList == false ? 'Fatura' : 'Vendas'}}</div>
+                        <div *ngIf="viewAsList == false" class="chart-description col-lg-12 col-md-12 col-sm-12 col-12">Total a receber:
+                            <span>{{relatoriosData.fatura.totalFatura | currency: 'BRL' : 'symbol'}}</span>
+                        </div>
+                        <div *ngIf="viewAsList == true" class="chart-description col-lg-12 col-md-12 col-sm-12 col-12">Total do mês:
+                            <span>{{totalVendas | currency: 'BRL': 'symbol' }}</span>
+                        </div>
+
+                        <div class="row" *ngFor="let curso of relatoriosData.fatura.cursos">
+                            <hr/>
+                            <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+                                <div class="course-name">{{curso.curso}}</div>
+                                <div *ngIf="curso.publicacao != undefined">Publicado em
+                                    <span class="date">{{curso.publicacao.split(' ')[0] | date  }}, {{curso.publicacao.split(' ')[1]}}</span>
+                                </div>
+                                <div *ngIf="viewAsList == false" class="orange-font-color amount">
+                                    <span class="amount-courses">{{curso.vendas}}</span> cursos vendidos
+                                </div>
+                            </div>
+                            <div *ngIf="viewAsList == false" class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="line">
+                                    <div class="left">venda</div>
+                                    <div class="right value">{{curso.valor | currency: 'BRL' : 'symbol'}}</div>
+                                </div>
+                                <div class="line">
+                                    <div class="left">taxas e impostos</div>
+                                    <div class="right value">{{curso.impostos | currency: 'BRL' : 'symbol'}}</div>
+                                </div>
+                                <hr/>
+                                <div class="line">
+                                    <div class="left">
+                                        <b>total a receber</b>
+                                    </div>
+                                    <div class="right value">
+                                        <b>{{curso.total_receber | currency: 'BRL' : 'symbol'}}</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="viewAsList == true" class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="line">
+                                    <div class="left"></div>
+                                    <div class="right value">{{getTotal(curso) | currency: 'BRL' : 'symbol'}}</div>
+                                </div>                             
+                            </div>
+                        </div>                       
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+
+        </section>
+
+
+    </div>
+</section>

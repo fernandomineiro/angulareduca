@@ -1,0 +1,100 @@
+@mixin line-clampWeb($numLines : 3, $lineHeight: 19.6) {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  height: $numLines * $lineHeight;
+}
+
+@mixin line-clampMobile($numLines : 3, $lineHeight: 16.6) {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  height: $numLines * $lineHeight;
+}
+
+.list .card-presencial{
+    width:100%;
+}
+
+:host.list,
+:host.list .card-presencial,
+:host.list .card-presencial .course-card{
+    width:100% !important;
+    max-width: 100% !important;
+  }
+  :host.list .card-presencial{
+    min-height: unset !important;
+  }
+
+  :host.list .card-presencial .course-card.item.box-shadow{
+    height: 280px !important;
+   }
+
+   :host.grid .card-image-presencial{
+    max-width:100% !important
+   }
+
+   :host.list .course-card-info{
+    width:100%;
+  }
+  :host.list .course-payment-info{
+    right: 0;
+    top: 10px;
+  }
+
+  :host.list .course-payment-info{
+    min-width: 250px !important;
+  }
+
+  :host.list .box-shadow{
+    height: unset !important;
+  }
+
+  :host{
+    margin-bottom:10px !important;
+  }
+
+  :host.grid .course-card-info p{
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+
+  :host.list .course-card-info p{
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+
+  
+  @media(max-width: 992px){
+    :host.grid .course-card-info .course-title{
+      height: 50.4px !important;
+      @include line-clampMobile;
+    }
+    :host.list .course-card-info .course-title{
+      height: 50.4px !important;
+      @include line-clampMobile;
+    }
+  }
+  
+  @media(min-width: 992px){
+    :host.grid .course-card-info .course-title{
+      height: 57.6px !important;
+      @include line-clampWeb;
+    }
+    :host.list .course-card-info .course-title{
+      height: 57.6px !important;
+      @include line-clampWeb;
+    }
+  }

@@ -1,0 +1,360 @@
+<section id="page-cursos-sobre" class="trilha-conhecimento-sobre"  style="margin-top:30px;">
+
+  <div data-include="topnav"></div>
+
+  <div #container class="container">
+    <h2 class="container title">Trilhas de conhecimento</h2>
+  </div>
+
+
+
+  <section *ngIf="trilha">
+    <div class="container">
+      <div class="header-trilha-sobre col-12" [ngStyle]="{'width': 'calc(100% - '+container.offsetLeft+'px - 15px)'}">
+        <div class="container" style="margin-left:0;display:flex;">
+            <div class="row" style="width:100%;margin:auto 0;">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+                    <span class="title col-6" style="padding:0">{{trilha.titulo}}</span>
+                    <div id="social_media" *ngIf="trilha.link">
+                      <a href="{{trilha.link.socialMediaLinks.facebook}}" id="facebook_link">
+                        <span class="icon-facebook"></span>
+                      </a>
+                      <a href="{{trilha.link.twitter}}" id="twitter_link">
+                        <span class="icon-twitter"></span>
+                      </a>
+                      <a href="{{trilha.link.linkedin}}" id="linkedin_link">
+                        <span class="icon-linkedin"></span>
+                      </a>
+                      <a href="{{trilha.link.instagram}}" id="instagram_link">
+                        <span class="icon-instagram"></span>
+                      </a>
+                      <a href="{{trilha.link.googlePlus}}" id="google_plus_link">
+                        <span class="icon-google-plus"></span>
+                      </a>
+                    </div>
+                </div>
+              </div>  
+        </div>
+            
+      </div>
+      <div class="row reverse col-lg-12 col-md-12 col-sm-12 col-12">
+
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12 reversed-bottom">
+
+          <section id="long_description">
+            <div class="container">
+              <div class="row" id="about" *ngIf="trilha.descricao != null">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+                  <span class="icon-share"></span>
+                </div>
+                <div class="col-lg-11 col-md-10 col-sm-9 col-9">
+                  <div class="container title orange-font-color">
+                    Sobre a trilha de conhecimento
+                  </div>
+
+                </div>
+
+                <div class="col-lg-1 hide-mobile">
+
+                </div>
+                <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+                  <div id="text_description">
+                    <div [innerHtml]="trilha.descricao | safe: 'html'"></div>
+                  </div>
+
+                  <hr/>
+                </div>
+
+              </div>
+
+
+
+            </div>
+
+          </section>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12 reversed-top" id="short_description">
+          <div class="square"></div>
+          <div style="box-shadow: unset !important" class="box-shadow" id="not_bought">
+            <span class="title">Trilha do conhecimento</span>
+            <br>
+            <span class="title" id="trilha_name">{{categorias}}</span>
+            <br/>
+            <div *ngIf="trilha.starRate != null">
+              <span class="fa-star" [ngClass]="{'filled fas':categoria.starRate >= 1, 'empty far': categoria.starRate < 1 }"></span>
+              <span class="fa-star" [ngClass]="{'filled fas':categoria.starRate >= 2, 'empty far': categoria.starRate < 2 }"></span>
+              <span class="fa-star" [ngClass]="{'filled fas':categoria.starRate >= 3, 'empty far': categoria.starRate < 3 }"></span>
+              <span class="fa-star" [ngClass]="{'filled fas':categoria.starRate >= 4, 'empty far': categoria.starRate < 4 }"></span>
+              <span class="fa-star" [ngClass]="{'filled fas':categoria.starRate >= 5, 'empty far': categoria.starRate < 5 }"></span>
+            </div>
+            <br/>
+            <br/>
+            <div class="row" id="infos">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="trilha.language">
+                <span class="icon-comments icon"></span>
+                <span>&nbsp; Idioma: </span>
+                <span id="language">{{trilha.language}}</span>
+              </div>             
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <span style="color: #212529;    font-size: 18px;" class="icon-phone-computer"></span>
+                <span>&nbsp;Cursos on-line: </span>
+                <span id="online_amount">{{totalOnline}}</span>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                  <span class="icon-user-check icon"></span>
+                  <span>&nbsp;Cursos presenciais: </span>
+                  <span id="presencial_amount">{{totalPresencial}}</span>
+                </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <span style="color: #212529;    font-size: 18px;" class="icon-phone-computer"></span>
+                <span>&nbsp;Cursos Remotos: </span>
+                <span id="remoto_amount">{{totalRemoto}}</span>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="trilha.total_minutos != null">
+                <span class="icon-clock icon"></span>
+                <span>&nbsp;Total de horas: </span>
+                <span id="duration">{{trilha.total_minutos}}</span>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="trilha.total_minutos == null">
+                <span class="icon-clock icon"></span>
+                <span>&nbsp;Total de horas: </span>
+                <span id="duration">0</span>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <button id="buy" (click)="inserirNoCarrinho(trilha)" *ngIf="!trilha.gratis">
+                  <div id="total_price">
+                    <div><small><strike>{{trilha.valor | currency: 'BRL' : 'symbol'}}</strike></small></div>
+                    <div>
+                        <span>compre por </span>
+                        <span id="price">{{trilha.valor_venda | currency: 'BRL': 'symbol' }}</span>
+                        <br/>
+                      </div>
+                      <div id="installment" *ngIf="trilha.parcelado != null">
+                        ou
+                        <span id="parcel_amount">{{trilha.parcelaAmount}}</span> x R$
+                        <span id="parcel_value">{{trilha.parcelaValue}}</span>
+                      </div>
+                    </div>
+                    
+                </button>
+                <button id="buy" (click)="inserirNoCarrinho(trilha)" *ngIf="trilha.gratis">
+                    <div id="total_price">
+                      <span>GRÁTIS</span>
+                     
+                    </div>                   
+                  </button>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12 economy" style="line-height:18px;">
+                <br/>
+                <span>economize
+                  <span id="economy_value"><b>{{trilha.valor - trilha.valor_venda | currency: 'BRL': 'symbol' }}</b></span> comprando a trilha completa</span>
+              </div>
+            </div>
+            <div class="row subscribe" *ngIf="configuracoes.tiposCursosAtivos.ativar_membership == 1">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:flex;justify-content:center;">
+                <a [routerLink]="['/assinaturas']" id="be_subscriber_link">
+                  <span>Seja um assinante </span>
+                  <span class="img-educaz">
+                    <app-mt-logotipo></app-mt-logotipo>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12" id="content">
+
+          <div class="row" id="cursos_online" *ngIf="cursos != null && totalOnline > 0">
+            <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+              <span class="icon-phone-computer"></span>
+            </div>
+            <div class="col-lg-11 col-md-10 col-sm-9 col-9">
+              <div class="container title orange-font-color">
+                Cursos on-line
+              </div>
+
+            </div>
+            <div class="col-lg-1 hide-mobile">
+
+            </div>
+            <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+              <div class="row grid slickear">
+                <div *ngFor="let curso of cursos"  [ngStyle]="{'display': curso.tipo == 1 ? 'block' : 'none'}">
+                  <app-card-cursos-online class="grid" *ngIf="curso.tipo == 1" [curso]="curso" [favorites]="favoritos" [cursosAluno]="cursosAluno">
+                  </app-card-cursos-online>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" id="cursos_presenciais" *ngIf="cursos != null && totalPresencial >0 ">
+              <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+                <span class="icon-user-check"></span>
+              </div>
+              <div class="col-lg-11 col-md-10 col-sm-9 col-9">
+                <div class="container title orange-font-color">
+                  Cursos presenciais
+                </div>
+  
+              </div>
+              <div class="col-lg-1 hide-mobile">
+  
+              </div>
+              <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+                <div id="page-cursos-presenciais" class="grid slickear row">
+                  <div *ngFor="let curso of cursos" [ngStyle]="{'display': curso.tipo == 2 ? 'block' : 'none'}">
+                    <app-card-cursos-presenciais class="grid" [curso]="curso" [favorites]="favoritos" *ngIf="curso.tipo == 2">
+                    </app-card-cursos-presenciais>
+                  </div>
+                </div>
+                <hr *ngIf="cursos != null" />
+              </div>
+  
+            </div>
+
+          <div class="row" id="cursos_remoto" *ngIf="cursos != null && totalRemoto > 0">
+            <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+              <span class="icon-phone-computer"></span>
+            </div>
+            <div class="col-lg-11 col-md-10 col-sm-9 col-9">
+              <div class="container title orange-font-color">
+                Cursos Remotos
+              </div>
+
+            </div>
+            <div class="col-lg-1 hide-mobile">
+
+            </div>
+            <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+              <div class="row grid slickear">
+                <div *ngFor="let curso of cursos" [ngStyle]="{'display': curso.tipo == 4 ? 'block' : 'none'}">
+                  <app-card-cursos-remotos class="grid" *ngIf="curso.tipo == 4" [curso]="curso" [favorites]="favoritos" [cursosAluno]="cursosAluno">
+                  </app-card-cursos-remotos>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+     
+
+          <div class="row" id="teachers" *ngIf="cursos != null" style="margin-top:30px;">
+
+            <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+              <span class="icon-graduation-hat"></span>
+            </div>
+            <div class="col-lg-11 col-md-10 col-sm-9 col-9">
+              <div class="container title orange-font-color">
+
+                Instrutores
+              </div>
+
+            </div>
+            <div class="col-lg-1 hide-mobile">
+
+            </div>
+            <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+              <div id="teacher_container">
+                <div class="row grid slickear curso-p" style="justify-content:space-around;">
+                  <div class="teacher" *ngFor="let teacher of professores">
+                    <a routerLink="/professor/{{teacher.id_professor}}">
+                      <div class="card-image">
+                        <img src="{{ IMG_URL }}/files/usuario/{{ teacher.foto_professor }}" width="auto" height="auto" />
+                      </div>
+                      <span class="teacher-name orange-font-color">{{teacher.nome_professor}} {{teacher.sobrenome_professor}}</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <hr *ngIf="trilha.regras != null" />
+            </div>
+
+          </div>
+
+
+          <div class="row" id="rules" *ngIf="trilha.regras != null">
+            <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+              <span class="icon-notebook"></span>
+            </div>
+            <div class="col-lg-11 col-md-10 col-sm-9 col-9">
+              <div class="container title orange-font-color">
+                Regras e informações
+              </div>
+
+            </div>
+            <div class="col-lg-1 hide-mobile">
+
+            </div>
+            <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+              <div id="instructions">
+                <p>{{trilha.regras}}</p>
+
+              </div>
+              <hr *ngIf="trilha.commnets != null" />
+            </div>
+
+          </div>
+
+
+          <div class="row" id="comments" *ngIf="trilha.commnets != null">
+            <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+              <span class="icon-comments"></span>
+            </div>
+            <div class="col-lg-11 col-md-10 col-sm-9 col-9">
+              <div class="container title orange-font-color">
+                O que dizem sobre o curso
+              </div>
+
+            </div>
+            <div class="col-lg-1 hide-mobile">
+
+            </div>
+            <div class="col-lg-11 col-md-12 col-sm-12 col-12">
+              <div *ngFor="let comment of trilha.comments" class="comment">
+                <div class="user-info">
+                  <div class="user-photo">
+                    <img src="{{comment.imgSrc}}" width="100%" height="auto" />
+                  </div>
+                  <span class="user-evaluation">
+                    <div class="group">
+                      <i class="fa-star" [ngClass]="{'filled fas':comment.starsRate >= 1, 'empty far': comment.starsRate < 1 }"></i>
+                      <i class="fa-star" [ngClass]="{'filled fas':comment.starsRate >= 2, 'empty far': comment.starsRate < 2 }"></i>
+                      <i class="fa-star" [ngClass]="{'filled fas':comment.starsRate >= 3, 'empty far': comment.starsRate < 3 }"></i>
+                      <i class="fa-star" [ngClass]="{'filled fas':comment.starsRate >= 4, 'empty far': comment.starsRate < 4 }"></i>
+                      <i class="fa-star" [ngClass]="{'filled fas':comment.starsRate >= 5, 'empty far': comment.starsRate < 5 }"></i>
+                      <div class="user-name">{{comment.name}}</div>
+                    </div>
+                  </span>
+
+                </div>
+                <div class="user-comment">
+                  {{comment.comment}}
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <div data-include="footer"></div>
+
+
+
+</section>

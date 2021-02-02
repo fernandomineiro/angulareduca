@@ -1,0 +1,32 @@
+<div id="page-agenda" class="page-criar-curso page-perfil-acesso-restrito" style="margin:40px 0;">
+    <section id="main_content">
+      <div class="row" style="width:100%;">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+          <app-acesso-restrito-sidebar current1='mentoria_meusCursos'></app-acesso-restrito-sidebar>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:1090px;width:100%;" id="page-cadastro">
+            <div class="title orange-font-color">Meus cursos
+                
+              </div>
+
+              <div class="course-container" *ngIf="cursos && cursos.length" style="display:flex;flex-wrap:wrap">
+                  <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" [curso]="curso" [favorites]="favorites"
+                  [cursosAluno]="cursosAluno" *ngFor="let curso of cursos | filterObj:filterStatusPublicado">
+                </app-card-cursos-online>
+              </div>
+              <div class="course-container" *ngIf="cursos && !cursos.length" style="display:flex;flex-wrap:wrap">
+                <p style="color:black;">Você ainda não possui cursos publicados</p>
+              </div>
+        </div>
+      </div>
+      <div class="row">
+  
+      </div>
+  
+  
+    </section>
+  
+  
+  
+  
+  </div>

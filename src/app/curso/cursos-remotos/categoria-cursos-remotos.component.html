@@ -1,0 +1,135 @@
+<section id="page-cursos-categoria" class="cursos-presenciais-categoria">
+    <section id="page-cursos-presenciais">
+        <div class="container cursos-remotos-categoria cursos-remotos" id="page-cursos">
+            <div class="row sort-order">
+                <div class="col-lg-2 col-md-12 col-sm-12 col-12" id="category">
+                    <div class="dropdown">
+                        <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">categorias
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                                <li *ngFor="let categoria of categorias"><a href="#">{{ categoria.titulo }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12 col-12" id="sort">
+                    <div class="dropdown">
+                        <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <form id="form_curso_sort_order_dropdown">
+                                <div class="radio">
+                                    <input id="sort_az" name="sort-az" type="radio" checked>
+                                    <label for="sort_az" class="radio-label">A-Z</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_za" name="sort-az" type="radio">
+                                    <label for="sort_za" class="radio-label">Z-A</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_mais_vendidos" name="sort-other" type="radio" checked>
+                                    <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_mais_recente" name="sort-other" type="radio">
+                                    <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_promocoes" name="sort-other" type="radio">
+                                    <label for="sort_promocoes" class="radio-label">promoções</label>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-6 col-sm-12 col-12">
+                    <div class="dropdown">
+                        <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">preço
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <form id="form_curso_sort_price_dropdown">
+                                <div class="range-slider">
+                                    <input id="rs-range-line" class="rs-range" type="range" value="0" min="0" max="1000">
+                                    <span id="rs-bullet" class="rs-label">0</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12 col-12">
+                    <button>trilha do conhecimento</button>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 col-12 search-div">
+                    <form id="form_curso_sort_order_search">
+                        <input placeholder="pesquisar" />
+                        <span class="icon-search"></span>
+                    </form>
+                </div>
+                <div class="col-lg-1 col-md-6 col-sm-6 col-6 view-options hide-mobile">
+                    <button onclick="activate('list')"
+                        style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                        <span class="icon-hamburger-menu-1"></span>
+                    </button>
+                </div>
+                <div class="col-lg-1 col-md-6 col-sm-6 col-6 hide-mobile">
+                    <button onclick="activate('grid')"
+                        style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                        <span id="button_grid" class="icon-plus-filled active"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="row" id="search_criteria">
+                <p class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <span id="order1">A-Z</span>,
+                    <span id="order2">mais vendidos</span>, de R$
+                    <span id="value1">12,00</span> a R$
+                    <span>65,00</span>
+                </p>
+            </div>
+            <div class="row grid" id="view_type">
+                
+                <app-card-cursos-remotos [favorites]="favorites"  [curso]="curso" [cursosAluno]="cursosAluno" *ngFor="let curso of cursosRemotos"></app-card-cursos-remotos>
+            </div>
+
+            <div class="row" id="pagination">
+                <div class="col-lg-3 col-md-3 col-sm-0 col-0"></div>
+                <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+                    <button id="pagination_prev">página anterior</button>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+                    <form id="form_pagination">
+                        <input placeholder="1" name="page" />
+                        <span>de</span>
+                        <span id="pagination_total_pages">125</span>
+                    </form>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+                    <button id="pagination_next">página anterior</button>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-0 col-0"></div>
+            </div>
+            <div class="row" id="load_more" style="margin-top: 60px;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <a href="">carregar mais cursos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Page Content -->
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+</section>

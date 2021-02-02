@@ -1,0 +1,42 @@
+.editar-perfil input {
+    width: 100%!important;
+    border: none;
+}
+.main-form .row {
+    padding-top: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.row i {
+    align-self: center;
+    font-size: larger;
+    position: absolute;
+    right: 17px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+.edit-profile-picture {
+    position: absolute;
+    top: 95px;
+    margin-left: 14px;
+    width: 30%;
+    text-align: center;
+    opacity: 0;
+    transition: .5s ease;
+    font-weight: bold;
+}
+
+.picture-container:hover .edit-profile-picture {
+    opacity: 1;
+}
+
+    .editar-perfil .avatar-info, #editar_foto{
+      display: block !important; 
+    }
+    #page-cadastro .main-row button{
+        padding:0 !important;
+    }
+
+    #page-cadastro{
+        padding-top: 30px;
+    }

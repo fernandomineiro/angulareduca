@@ -1,0 +1,112 @@
+@mixin line-clampWeb($numLines : 3, $lineHeight: 19.2px) {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  max-height: $numLines * $lineHeight;
+}
+
+@mixin line-clampMobile($numLines : 3, $lineHeight: 16.6px) {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  max-height: $numLines * $lineHeight;
+}
+
+
+.list .card-online{
+    width:100%;
+}
+
+:host.list,
+:host.list .card-online,
+:host.list .card-online .course-card{
+    width:100% !important;
+    max-width: 100% !important;
+  }
+  :host.list .card-online{
+    min-height: unset !important;
+  }
+
+.course-card .course-title{
+  height: unset !important;
+}
+
+:host.list .course-card{
+  max-width:100% !important;
+}
+
+:host.list .course-payment-info{
+ width:150px;
+}
+
+:host.list .card-online{
+  height: unset !important;
+ }
+
+.list .cursos-frist-square,
+.list #cursos_adicionados_recentemente_link,
+.list #cursos_promocoes_link,
+.list #cursos_mais_vendidos_link{
+  width:100% !important;
+}
+
+:host.grid .card-bottom{
+  max-width: 168px !important;
+}
+
+:host.grid .card-bottom p{
+  white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+
+:host.list .card-bottom p{
+  white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+@media(max-width: 992px){
+  :host.grid .card-bottom .course-title{
+    height: 50.4px !important;
+    @include line-clampMobile;
+  }
+  :host.list .card-bottom .course-title{
+    height: 50.4px !important;
+    @include line-clampMobile;
+  }
+}
+
+@media(min-width: 992px){
+  :host.grid .card-bottom .course-title{
+    height: 57.6px !important;
+    @include line-clampWeb;
+  }
+  :host.list .card-bottom .course-title{
+    height: 57.6px !important;
+    @include line-clampWeb;
+  }
+}
+
+
+:host.list .course-payment-info{
+  margin: -80px 0 0 -20px;
+  right: 50px !important;
+}
+
+.card-image{
+  overflow: hidden;
+}
+
+

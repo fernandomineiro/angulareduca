@@ -1,0 +1,34 @@
+<div class="voucher">
+  <div *ngIf="pedidos !=undefined" class="right" style="width:100%;">
+      <mt-cursando-menu [showDuvidas]="true"  [showAulas]="true"  [showQuiz]="true"  [showVoucher]="false" current="voucher"></mt-cursando-menu>
+      <br/>
+      <br/>
+      <div class="instructions">
+        <div *ngIf="existeCertificado">Seu certificado está disponível. <a href="{{PDF_URL}}{{certificado.downloadPath}}" target="_blank" download class="orange-font-color">Clique aqui para acessá-lo</a>.</div>
+        <br/>
+        <br/>
+         <div class="voucher">
+             <div class="imageCourse">
+                <img src="{{IMG_URL}}/files/curso/imagem/{{curso.curso.imagem}}" />
+             </div>
+             <div class="info">
+                 <div>
+                        <h3>{{curso.curso.titulo}}</h3>
+                        <p>{{curso.curso.endereco_presencial}}</p>
+                 </div>               
+                 <div class="icons">
+                        <a *ngIf="curso.fk_curso != null" href="{{IMG_URL}}/api/print-voucher/{{cursoPedido.pid}}-curso-{{curso.id}}" target="_blank"><span class="icon icon-printer"></span></a>
+                        <a *ngIf="curso.fk_curso != null" href="{{IMG_URL}}/api/voucher-pdf/{{cursoPedido.pid}}/curso/{{curso.id}}" download target="_blank"><span class="icon icon-download"></span></a>
+                        <a style="display:none" *ngIf="curso.fk_curso != null" (click)="sendEmail()"><span class="icon icon-envelope"></span></a>
+
+                        <a *ngIf="curso.fk_trilha != null" href="{{IMG_URL}}/api/print-voucher/{{cursoPedido.pid}}-trilha-{{curso.id}}-{{cursoPedido.id}}" target="_blank"><span class="icon icon-printer"></span></a>
+                        <a *ngIf="curso.fk_trilha != null" href="{{IMG_URL}}/voucher-pdf/vouchers/{{cursoPedido.pid}}/trilha/{{curso.id}}/{{cursoPedido.id}}" download target="_blank"><span class="icon icon-download"></span></a>
+                        <a style="display:none" *ngIf="curso.fk_trilha != null" (click)="sendEmail()"><span class="icon icon-envelope"></span></a>                
+                     </div>
+             </div>
+           
+         </div>
+      </div>
+    
+  </div>
+</div>

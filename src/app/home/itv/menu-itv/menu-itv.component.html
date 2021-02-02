@@ -1,0 +1,52 @@
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-2" style="margin-bottom: 10px;">
+            <div class="box-menu-grad" routerLink="/"
+                 routerLinkActive="orange-background"
+                 [routerLinkActiveOptions]="{ exact: true }"
+            >
+                <span class="material-icons custom-menu-icons"> assignment </span> Estrutura
+            </div>
+        </div>
+
+        <div class="col-lg-2" style="cursor: pointer;">
+            <div class=" box-menu-grad" routerLinkActive="orange-background" routerLink="/perfil">
+                <span class="material-icons custom-menu-icons">collections_bookmark</span>
+                Meus Cursos
+            </div>
+        </div>
+
+        <div class="col-lg-2" style="margin-bottom: 10px;">
+            <div class="box-menu-grad"
+                 routerLink="/calendario"
+                 routerLinkActive="orange-background"
+                 [routerLinkActiveOptions]="{ exact: true }"
+            >
+                <span class="material-icons custom-menu-icons"> event_note </span> Agenda
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-2 hidden" style="display: none;">
+            <div class=" box-menu-grad">
+                <span class="material-icons custom-menu-icons">note_add</span>
+                Cursos Livres
+            </div>
+        </div>
+
+        <div class="col-lg-2" style="display: none;">
+            <div class=" box-menu-grad">
+                <span class="material-icons custom-menu-icons">school</span>
+                Fórum
+            </div>
+        </div>
+
+        <div class="col-lg-2" style="display: none;">
+            <div class="box-menu-grad">
+                <span class="material-icons custom-menu-icons">chat</span>
+                Chat
+            </div>
+        </div>
+    </div>
+</div>

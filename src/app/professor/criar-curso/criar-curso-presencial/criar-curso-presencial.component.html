@@ -1,0 +1,526 @@
+<div id="page-agenda" class="page-criar-curso page-perfil-acesso-restrito" style="padding-right: 5%;">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current1='criar_curso' current2='criar_presencial'></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:1050px;margin-top:30px;padding:20px;" id="page-cadastro">
+                <div class="title orange-font-color">Criar curso
+                    <span>Presencial</span>
+                </div>
+                <br/>
+                <div class="type" style="text-align:left !important;">
+
+                    <mat-accordion id="accordion">
+
+                        <mat-expansion-panel hideToggle class="accordion-item">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="mb-0">
+                                        <a class="orange-font-color">
+                                            <i class="icon icon-arquivo_preto"></i> Rascunhos</a>
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="card-body row messages">
+                                <div style="width:100%;cursor:pointer" *ngFor="let rascunho of rascunhos" (click)="getValues(rascunho, true)">
+                                    <hr/>
+                                    <div class="course-name">{{rascunho.nome_curso}}</div>
+                                    <div class="course-date">{{rascunho.data_atualizacao | date: 'medium'}}</div>
+
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel hideToggle class="accordion-item">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="mb-0">
+                                        <a class="orange-font-color">
+                                            <i class="icon icon-arquivo_preto"></i> Enviados</a>
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="card-body row messages">
+                                <div style="width:100%;cursor:pointer" *ngFor="let enviado of enviados" (click)="getValues(enviado, true)">
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-lg-11 col-md-11 col-sm-11 col-11">
+                                                <div class="course-name">{{enviado.nome_curso}}</div>
+                                                <div class="course-date">{{enviado.data_atualizacao | date: 'medium'}}</div>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel hideToggle class="accordion-item">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="mb-0">
+                                        <a class="orange-font-color">
+                                            <i class="icon icon-arquivo_preto"></i> Publicados</a>
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="card-body row messages">
+                                <div style="width:100%;cursor:pointer" *ngFor="let publicado of publicados" (click)="getValues(publicado, true)">
+                                    <hr/>
+                                    <div class="course-name">{{publicado.nome_curso}}</div>
+                                    <div class="course-date">{{publicado.data_atualizacao | date: 'medium'}}</div>
+
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <br/>
+
+                    <br/>
+
+                </div>
+                <br/>
+                <hr/>
+                <br/>
+                <div id="mensagem-retorno">
+                    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                    <div *ngIf="success" class="alert alert-success">
+                        <!-- Registro salvo com sucesso! -->
+                        {{success}}
+                    </div>
+                </div>
+                <div class="title1 orange-font-color">Novo curso</div>
+                <small>Campos com * são de preenchimento obrigatório</small>
+                <form id="form_create_course_online" [formGroup]="newRecord" (ngSubmit)="onFormSubmit()">
+                    <div class="item row" >
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Título <small>*</small></div>
+                        <input formControlName="titulo" class="col-lg-9 col-md-8 col-sm-6 col-6" id="titulo" name="titulo" type="text" maxlength="60"
+                               placeholder="Máximo 60 caracteres" [ngStyle]='{"border-color" :   newRecord.controls.titulo.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'/>
+                        <div class="not-border" *ngIf="  newRecord.controls.titulo.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Sobre o curso / Disciplina<small>*</small></div>
+                        <textarea formControlName="descricao" class="col-lg-9 col-md-8 col-sm-6 col-6" id="descricao" name="descricao" maxlength="800"
+                                  [ngStyle]='{"border-color" :   newRecord.controls.descricao.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                                  placeholder="Máximo 800 caracteres"></textarea>
+                        <div class="not-border" *ngIf="  newRecord.controls.descricao.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Objetivo Do Curso / Disciplina </div>
+                        <textarea formControlName="objetivo_descricao" class="col-lg-9 col-md-8 col-sm-6 col-6"
+                                  [ngStyle]='{"border-color" :   newRecord.controls.objetivo_descricao.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                                  id="objetivocurso" name="descricao" maxlength="800"
+                                  placeholder="Máximo 800 caracteres"></textarea>
+                        <div class="not-border" *ngIf="  newRecord.controls.objetivo_descricao.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+
+                    <div class="item row" >
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Público-alvo </div>
+                        <textarea formControlName="publico_alvo" class="col-lg-9 col-md-8 col-sm-6 col-6" id="publico_alvo" name="descricao" maxlength="100"
+                                  [ngStyle]='{"border-color" :   newRecord.controls.publico_alvo.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                                  placeholder="Máximo 100 caracteres"></textarea>
+                        <div class="not-border" *ngIf="  newRecord.controls.publico_alvo.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Idioma <small>*</small></div>
+                        <select formControlName="idioma" id="idioma" name="idioma" class="col-lg-9 col-md-8 col-sm-6 col-6"
+                                [ngStyle]='{"border-color" :   newRecord.controls.idioma.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                        >
+                            <option selected disabled value="">Selecionar idioma</option>
+                            <option value="Português">Português</option>
+                            <option value="Espanhol">Espanhol</option>
+                            <option value="Inglês">Inglês</option>
+                        </select>
+                        <div class="not-border" *ngIf="  newRecord.controls.idioma.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+                    <div class="item row padding-5">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Teaser (Código Vimeo)</div>
+                        <input formControlName="teaser" class="col-lg-9 col-md-8 col-sm-6 col-6" id="teaser" name="teaser"
+                               [ngStyle]='{"border-color" :   newRecord.controls.teaser.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                               type="text" (change)="teaserCurso()"/>
+                        <div class="not-border" *ngIf="  newRecord.controls.teaser.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+                    <div class="item row" id="preview-curso-video" *ngIf="teaser != null">
+                        <div [innerHtml]="teaser"></div>
+                    </div>
+                    <div class="item row" style="padding-bottom: 2%;">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Local</div>
+                        <input formControlName="endereco_presencial" class="col-lg-9 col-md-8 col-sm-6 col-6"
+                               id="endereco_presencial" name="endereco_presencial" autocorrect="off" autocapitalize="off"
+                               spellcheck="off" type="text" #search/>
+                    </div>
+                    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" style="width:100%;height:400px; margin-top: 5%;">
+                        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+                                    ></agm-marker>
+                    </agm-map>
+
+                    <div formArrayName="fk_cursos_categoria" *ngFor="let cat of formCategoria.controls; let i=index">
+                        <div [formGroupName]="i">
+                            <div class="item row">
+                                <div class="type col-lg-3 col-md-2 col-sm-6 col-6">Categoria <small *ngIf="i == 0">*</small></div>
+                                <select formControlName="fk_categoria" id="categoria" name="categoria"
+                                        class="col-lg-9 col-md-8 col-sm-6 col-6"
+                                        [ngStyle]='{"border-color" :   cat.status == "INVALID" && submitted ? "#FC0404" : "#ddd" }'
+                                >
+                                    <option selected disabled value="">Selecionar categoria</option>
+                                    <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.titulo}}</option>
+                                </select>
+                                <a style="cursor:pointer;margin-left:10px;" matTooltip="Adicionar Categoria" (click)="addCategoria()">
+                                    <i class="fas fa-plus orange-font-color"></i>
+                                </a>
+
+                                <a style="cursor:pointer;margin-left:10px;" matTooltip="Remover Categoria" *ngIf="i > 0" (click)="removeCategoria(i)">
+                                    <i class="fas fa-minus orange-font-color"></i>
+                                </a>
+                            </div>
+                            <div class="not-border" *ngIf="  cat.status == 'INVALID' &&   submitted">
+                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-6 col-sm-6 col-6">Número Máximo De Alunos:</div>
+                        <input formControlName="numero_maximo_alunos" class="col-lg-9 col-md-6 col-sm-6 col-6" id="numero_maximo_alunos" name="numero_maximo_alunos" type="text"/>
+                    </div>
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-6 col-sm-6 col-6">Número Mínimo De Alunos:</div>
+                        <input formControlName="numero_minimo_alunos" class="col-lg-9 col-md-6 col-sm-6 col-6" id="numero_minimo_alunos" name="numero_minimo_alunos" type="text"/>
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Curso possui trabalho? <small>*</small></div>
+                        <select formControlName="trabalho" id="trabalho" name="trabalho" class="col-lg-9 col-md-8 col-sm-6 col-6"
+                                [ngStyle]='{"border-color" :   newRecord.controls.trabalho.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                        >
+                            <option selected disabled value="">Selecione</option>
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                        <div class="not-border" *ngIf="  newRecord.controls.trabalho.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+
+                    <div class="item row" *ngIf="newRecord.get('trabalho').value == 1">
+                        <div class="type col-lg-4 col-md-4 col-sm-6 col-6">Nota de Corte do Trabalho</div>
+                        <select formControlName="nota_trabalho" name="nota_trabalho" id="nota_trabalho" class="col-lg-8 col-md-8 col-sm-2 col-2">
+                            <option selected value="">Esse curso não possui trabalho</option>
+                            <option value="0">Possui trabalho sem nota de corte</option>
+                            <option *ngFor="let cont of listaAprovacaoT" value="{{cont.value}}">{{cont.showOff}}</option>
+                        </select>
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Responderá as dúvidas? <small>*</small></div>
+                        <select formControlName="professor_responde_duvidas" id="professor_responde_duvidas"
+                                [ngStyle]='{"border-color" :   newRecord.controls.professor_responde_duvidas.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                                name="professor_responde_duvidas" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                            <option selected disabled value="">Selecione</option>
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                        <a href="javascript:void(0);" style="margin-left: 10px;" title="Caso seja selecionada a opção Não, significa que não será mais exibido ao Aluno, nesse Curso, o botão Dúvidas, para que o mesmo possa postar suas dúvidas ao Professor" class="btn btn-xs btn-info"> ? </a>
+                        <div class="not-border" *ngIf="  newRecord.controls.professor_responde_duvidas.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div formGroupName="faculdade">
+                        <div class="not-border" *ngIf="  newRecord.controls.faculdade.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Verifique os campos de preenchimento obrigatórios nessa seção do formulário</p>
+                        </div>
+                        <div class="item row">
+                            <div class="type col-lg-3 col-md-2 col-sm-6 col-6">Projeto</div>
+                            <select formControlName="fk_faculdade" id="fk_faculdade" name="fk_faculdade" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                                <option *ngFor="let projeto of projetos" value="{{projeto.id}}">{{projeto.nome_faculdade}}</option>
+                            </select>
+                        </div>
+
+                        <div class="item row">
+                            <div class="type col-lg-3 col-md-6 col-sm-6 col-6">Prazo para cursar:</div>
+                            <input formControlName="duracao_dias" class="col-lg-9 col-md-6 col-sm-6 col-6" id="duracao_dias" name="duracao_dias" type="text"/>
+                        </div>
+
+                        <div class="item row">
+                            <div class="type col-lg-3 col-md-2 col-sm-6 col-6">Opções de Certificado <small>*</small></div>
+                            <select formControlName="fk_certificado" id="fk_certificado" name="fk_certificado" class="col-lg-9 col-md-8 col-sm-6 col-6" >
+                                <option selected value="">Selecione</option>
+                                <option value="0">Este curso não emite certificado</option>
+                                <option *ngFor="let certificado of certificados" value="{{certificado.id}}">{{certificado.titulo}}</option>
+                            </select>
+                        </div>
+
+                        <div class="item row">
+                            <div class="type col-lg-4 col-md-4 col-sm-6 col-6">Frequência Mínima</div>
+                            <select formControlName="frequencia_minima" name="frequencia_minima" id="frequencia_minima" class="col-lg-8 col-md-8 col-sm-2 col-2">
+                                <option selected disabled value="">Selecionar % frequência</option>
+                                <option *ngFor="let cont of listaAprovacao" value="{{cont}}">{{cont}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="item row">
+                        <button style="margin-left:15px;background-color:#B2B1B1;color:white;max-width:485px;margin-top:20px;margin-bottom:20px;"
+                                class="col-lg-12 col-md-12 col-sm-12 col-12" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            Enviar imagem do curso (jpg ou png) <br><small>(730x377px)</small>
+                        </button>
+                        <div class="dropdown-menu" style="max-width:485px;background-color:#B2B1B1;color:white">
+                            <input class="col-lg-12 col-md-12 col-sm-12 col-12"
+                                   (change)="onFileSelected($event.target.files)"  type="file" id="upload_image_course"
+                                   name="upload_image_course" placeholder="Enviar imagem"
+                            />
+                        </div>
+                        <div [ngStyle]='{"border-color" :   newRecord.controls.imagem.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }' *ngIf="  newRecord.controls.imagem.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+
+                    <div *ngIf="newRecord.get('imagem').value != ''">
+                        <img id="output" src="{{ IMG_URL }}/files/curso/imagem/{{ newRecord.get('imagem').value }}" style="width: 730px; height: 377px" >
+                    </div>
+
+                    <hr>
+
+                    <div style="margin: 60px 0;" class="toAddDate">
+                        <div class="date" formArrayName="agenda" *ngFor="let data of formDatas.controls; let i = index;">
+                            <div [formGroupName]="i">
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-3 col-sm-6 col-6">Agenda</div>
+                                    <a style="cursor:pointer;margin-left:10px;" matTooltip="Adicionar Agenda" (click)="clickToAddData()">
+                                        <i class="fas fa-plus orange-font-color"></i>
+                                    </a>
+
+                                    <a style="cursor:pointer;margin-left:10px;" matTooltip="Remover Agenda" *ngIf="i > 0" (click)="removeAgenda(i)">
+                                        <i class="fas fa-minus orange-font-color"></i>
+                                    </a>
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-3 col-sm-6 col-6">Descrição</div>
+                                    <input formControlName="descricao_agenda" class="col-lg-3 col-md-3 col-sm-6 col-6" id="descricao_agenda" name="descricao_agenda" type="text" />
+
+                                    <div class="type col-lg-2 col-md-2 col-sm-6 col-6">Data</div>
+                                    <input formControlName="data_inicio" class="col-lg-4 col-md-4 col-sm-6 col-6" id="data1" name="data1" type="date" />
+                                </div>
+
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-3 col-sm-6 col-6">Hora de início</div>
+                                    <input formControlName="hora_inicio" class="col-lg-3 col-md-3 col-sm-6 col-6" id="hora_inicio1" name="hora_inicio1" type="time" (change)="calculaDuracaoAula(data)"
+                                    />
+
+                                    <div class="type col-lg-3 col-md-3 col-sm-6 col-6">Hora de término</div>
+                                    <input formControlName="hora_fim" class="col-lg-3 col-md-3 col-sm-6 col-6" id="hora_termino1" name="hora_termino1" type="time" (change)="calculaDuracaoAula(data)"
+                                    />
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-4 col-md-4 col-sm-6 col-6">Duração Aula (HH:MM)</div>
+                                    <input formControlName="duracao_aula" class="col-lg-8 col-md-8 col-sm-6 col-6 duracao_aula" id="duracao_aula1" name="hora_termino1" type="time"
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr/>
+                    </div>
+
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Duração do curso (HH:MM) <small>*</small></div>
+                        <input formControlName="duracao_total" class="col-lg-9 col-md-8 col-sm-6 col-6" id="duracao"
+                               [ngStyle]='{"border-color" :   newRecord.controls.duracao_total.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                               name="duracao" type="text" />
+                        <div class="not-border" *ngIf="  newRecord.controls.duracao_total.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório e a duração deve ser escrita no formato HH:MM</p>
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Preço </div>
+                        <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}"
+                               formControlName="valor_de" class="col-lg-9 col-md-8 col-sm-6 col-6" id="preco" name="preco"
+                               [ngStyle]='{"border-color" :   newRecord.controls.valor_de.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                        />
+
+                        <div class="not-border" *ngIf="  newRecord.controls.valor_de.status == 'INVALID' &&   submitted">
+                            <p style="color:#FC0404">Este campo é obrigatório</p>
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="type col-lg-4 col-md-4 col-sm-12 col-12">
+                            <div class="title2">Curso Grátis?
+                                <div class="not-border">
+                                    <input style="width:20px;" type="checkbox" formControlName="curso_gratis" name="curso_gratis"/>
+                                </div>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Professor Principal <small>*</small></div>
+                        <div class="dropdown col-lg-9 col-md-8 col-sm-6 col-6">
+                            <select formControlName="fk_professor" style="margin-bottom:20px;"  id="professores"
+                                    name="professores" class="col-lg-9 col-md-8 col-sm-6 col-6"
+                                    [ngStyle]='{"border-color" :   newRecord.controls.fk_professor.status == "INVALID" &&
+                        submitted ? "#FC0404" : "#ddd" }'
+                            >
+                                <option  selected disabled value="">Selecionar professores</option>
+                                <option  *ngFor="let professor of professores" value="{{professor.id}}">{{professor.nome_professor}}</option>
+                            </select>
+                            <div class="not-border" *ngIf="  newRecord.controls.fk_professor.status == 'INVALID' &&   submitted">
+                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div >
+                        <small>Inclua aqui a(s) palavra(s)-chave relacionadas ao curso</small>
+                        <div formArrayName="tags" *ngFor="let tags of formTags.controls; let i = index;">
+                            <div [formGroupName]="i">
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-2 col-sm-6 col-6">Tags</div>
+                                    <input class="col-lg-4 col-md-4 col-sm-6 col-6" id="nome"
+                                           name="nome" formControlName="nome" placeholder="Adicionar Tags" type="text"
+                                    />
+                                    <a style="cursor:pointer;margin-left:10px;" matTooltip="Adicionar Tag" (click)="addTags()">
+                                        <i class="fas fa-plus orange-font-color"></i>
+                                    </a>
+
+                                    <a style="cursor:pointer;margin-left:10px;" matTooltip="Remover Tag" *ngIf="i > 0" (click)="removeTags(i)">
+                                        <i class="fas fa-minus orange-font-color"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="title2">Questionário?
+                        <div class="not-border">
+                            <input style="width:20px;" type="checkbox" [(ngModel)]="question" name="questionario"
+                                   [ngModelOptions]="{standalone: true}"/>
+                        </div>
+                        <br/>
+                        <hr/>
+                    </div>
+                    <div id="quiz_container" *ngIf="question">
+                        <div class="item row">
+                            <div class="type col-lg-2 col-md-2 col-sm-6 col-6">Nota de Corte Questionário</div>
+                            <select formControlName="nota_questionario" name="nota_questionario" id="nota_questionario" class="col-lg-4 col-md-8 col-sm-2 col-2">
+                                <option selected disabled value="">Selecionar aprovação</option>
+                                <option *ngFor="let cont of listaAprovacaoT" value="{{cont.value}}">{{cont.showOff}}</option>
+                            </select>
+                        </div>
+                        <div formGroupName="quiz">
+                            <div formArrayName="questao">
+                                <div style="width: 90%; margin-left: 10%;" *ngFor="let questoes of formQuestao.controls; let i = index;">
+                                    <div [formGroupName]="i">
+                                        <div class="item row">
+                                            <div class="type col-lg-2 col-md-4 col-sm-6 col-6">
+                                                Questão {{i+1}}
+                                            </div>
+                                            <a style="cursor:pointer;margin-left:10px;" matTooltip="Adicionar Questão" (click)="clickToAddQuestao(quiz)">
+                                                <i class="fas fa-plus orange-font-color"></i>
+                                            </a>
+
+                                            <a style="cursor:pointer;margin-left:10px;" matTooltip="Remover Questão" *ngIf="i > 0" (click)="removeQuestao(i)">
+                                                <i class="fas fa-minus orange-font-color"></i>
+                                            </a>
+                                        </div>
+                                        <input formControlName="titulo" class="col-lg-5 col-md-6 col-sm-5 col-5" id="titulo{{i}}" name="titulo{{i}}"
+                                               type="text" placeholder="Questão" />
+                                        <div formGroupName="op">
+                                            <div class="item row">
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-6">Alternativa 1</div>
+                                                <input formControlName="descricao1" class="col-lg-4 col-md-9 col-sm-6 col-6" id="descricao1" name="descricao1" type="text"/>
+                                            </div>
+
+                                            <div class="item row">
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-6">Alternativa 2</div>
+                                                <input formControlName="descricao2" class="col-lg-4 col-md-9 col-sm-6 col-6" id="descricao2" name="descricao2" type="text">
+                                            </div>
+
+                                            <div class="item row">
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-6">Alternativa 3</div>
+                                                <input formControlName="descricao3" class="col-lg-4 col-md-9 col-sm-6 col-6" id="descricao3" name="descricao3" type="text">
+                                            </div>
+
+                                            <div class="item row">
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-6">Alternativa 4</div>
+                                                <input formControlName="descricao4" class="col-lg-4 col-md-9 col-sm-6 col-6" id="descricao4" name="descricao4" type="text">
+                                            </div>
+
+                                            <div class="item row">
+                                                <div class="col-lg-3 col-md-3 col-sm-6 col-6">Alternativa 5</div>
+                                                <input formControlName="descricao5" class="col-lg-4 col-md-9 col-sm-6 col-6" id="descricao5" name="descricao5" type="text">
+                                            </div>
+                                        </div>
+
+                                        <div class="item row">
+                                            <select formControlName="resposta_correta" name="resposta_correta" id="resposta_correta" class="col-lg-10 col-md-10 col-sm-12 col-12">
+                                                <option selected disabled value="">Selecione a alternativa correta</option>
+                                                <option *ngFor="let cont of listaCorretas" value="{{cont}}">{{cont}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <br/>
+                    <div id="page-cadastro">
+                        <div class="main-row">
+                            <button (click)="preSave(1, $event)" *ngIf="!editar" class="yellow-light-background">salvar rascunho</button>
+                            <button type="submit" *ngIf="editar" class="yellow-light-background">salvar</button>
+                            <!--<button (click)="visualizarCurso($event, null)" class="yellow-dark-background">visualizar</button>-->
+                            <button (click)="preSave(2, $event)" *ngIf="perfil != 22 && newRecord.get('status').value != 5" class="orange-background">enviar para workflow</button>
+                            <button (click)="preSave(5, $event)" *ngIf="perfil == 22" class="orange-background">publicar</button>
+                            <!--<button *ngIf="editar" (click)="limpar($event)" class="lightgrey-background">limpar</button>-->
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+
+
+    </section>
+
+
+
+
+</div>

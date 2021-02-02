@@ -1,0 +1,13 @@
+
+.professor-sobre #web_navbar,
+.professor-sobre #mobile_navbar{
+    background-color: #DBDADA !important;
+}
+
+.professor-sobre #page-cursos-categoria .grid div:first-of-type{
+    max-width: 100% !important;
+}
+
+.professor-sobre .courses-container{
+    justify-content: unset !important;
+}

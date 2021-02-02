@@ -1,0 +1,72 @@
+<div id="page-agenda" class="page-meus-cursos page-criar-curso page-presenca">
+
+  <section id="main_content">
+    <div class="row" style="width:101%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='lista_presenca'></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="margin-top:80px;padding-right:0">
+        <div class="inner">
+          <div class="title orange-font-color">Lista de presença</div>
+
+          <div class="outter" *ngFor="let course of listasPresenca; let i = index" >
+            <mat-accordion id="accordion">
+              <mat-expansion-panel (opened)="course.panelOpenState = true" (closed)="course.panelOpenState = false" hideToggle class="accordion-item">
+                <mat-expansion-panel-header (click)="getListStudents(course.courseId,course.selectedAgenda)">
+                  <mat-panel-title>
+                    <h5 class="mb-0 col-lg-8 col-md-8 col-sm-6 col-6 " style="width:100%">
+                      <div class="course-name">{{course.courseName}}</div>
+                      <div>
+                        <select (click)="$event.stopPropagation();" (change)="getListStudents(course, course.selectedAgenda)" [(ngModel)]="course.selectedAgenda">
+                          <optgroup *ngFor="let turma of course.turmas">
+                              <option  value="{{agenda.fk_turma}}/{{agenda.id}}" *ngFor="let agenda of turma.agenda">{{agenda.nome}}</option>
+                          </optgroup>
+                        </select>
+                      </div>
+                      <div class="publish-info local" *ngFor="let line of course.place">
+                        <small>{{line}}</small>
+                      </div>
+                    </h5>
+                    <a class="col-lg-4 col-md-4 col-sm-6 col-6 orange-font-color">
+                      <span class="text-button">{{course.panelOpenState ? 'fechar' : 'ver'}} lista</span>
+                    </a>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                  <div class="card-body">
+                    <div class="row" *ngFor="let studant of course.currentListStudents">
+                      <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                        <input [(ngModel)]="studant.presente" id="cbx{{studant.id}}{{course.courseId}}" name="cbx{{studant.id}}{{course.courseId}}" type="checkbox" class="cbx-id" />
+                        <label class="cbx" for="cbx{{studant.id}}{{course.courseId}}">
+                          <div class="flip not-border">
+                            <div class="front not-border"></div>
+                            <div class="back not-border">
+                              <svg width="10" height="10" viewBox="0 5 16 14">
+                                <path d="M2 8.5L6 12.5L14 1.5"></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </label>
+                        <span class="studantName">{{studant.nome}}</span>
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                        {{studant.rg}}
+                      </div>
+                      <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                        Presença: {{studant.percentual_completo}}%
+                      </div>
+                    </div>
+                  </div>
+                  <div class="button-send-div">
+                    <span class="send-grades" (click)=sendPresence(course)>enviar</span>
+                  </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div class="row"></div>
+          <div class="row" *ngIf="listasPresenca && !listasPresenca.length"><h2>Você não possui nenhum curso do tipo Remoto ou Presencial</h2></div>
+        </div>
+      </div>
+    </div>
+    <div class="row"></div>
+  </section>
+</div>

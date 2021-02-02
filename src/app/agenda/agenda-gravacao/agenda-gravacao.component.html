@@ -1,0 +1,142 @@
+<div id="page-agenda" style="position:relative;" class="page-criar-curso page-meus-cursos page-agenda-gravacao">
+
+
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='agenda_gravacao'></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top: 80px;">
+        <div class="title orange-font-color">Agenda de gravação
+        </div>
+        <hr />
+
+        <div class="new orange-font-color">Nova gravação</div>
+
+        <form  id="form_nova_gravacao" [formGroup]="newRecord" (ngSubmit)="onFormSubmit()">
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Curso
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input [ngStyle]="{'border-color': 
+              newRecord.controls.courseName.errors != null  && 
+              newRecord.controls.courseName.touched &&
+              submited? 'red' :  '#DBDADA'}"
+               required type="text" formControlName="courseName">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Professor
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input 
+              [ngStyle]="{'border-color': 
+                            newRecord.controls.teacher.errors != null  && 
+                            newRecord.controls.teacher.touched &&
+                            submited? 'red' :  '#DBDADA'}" required type="text" formControlName="teacher">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Local
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input 
+              [ngStyle]="{'border-color': 
+                            newRecord.controls.place.errors != null  && 
+                            newRecord.controls.place.touched &&
+                            submited? 'red' :  '#DBDADA'}" required type="text" formControlName="place">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Data
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input 
+              [ngStyle]="{'border-color': 
+                            newRecord.controls.date.errors != null  && 
+                            newRecord.controls.date.touched &&
+                            submited? 'red' :  '#DBDADA'}" required type="date" formControlName="date">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Horário de início
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input 
+              [ngStyle]="{'border-color': 
+                            newRecord.controls.timeStart.errors != null  && 
+                            newRecord.controls.timeStart.touched &&
+                            submited? 'red' :  '#DBDADA'}" required type="time" formControlName="timeStart">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Horário de término
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input 
+              [ngStyle]="{'border-color': 
+                            newRecord.controls.timeEnd.errors != null  && 
+                            newRecord.controls.timeEnd.touched &&
+                            submited? 'red' :  '#DBDADA'}"
+               required type="time" formControlName="timeEnd">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Aulas totais
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input 
+              [ngStyle]="{'border-color': 
+                            newRecord.controls.totalModules.errors != null  && 
+                            newRecord.controls.totalModules.touched &&
+                            submited? 'red' :  '#DBDADA'}" required type="text" formControlName="totalModules">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6 label-form">
+              Aula gravada
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+              <input 
+                [ngStyle]="{'border-color': 
+                            newRecord.controls.recordedModules.errors != null  && 
+                            newRecord.controls.recordedModules.touched &&
+                            submited? 'red' :  '#DBDADA'}" required type="text" formControlName="recordedModules">
+            </div>
+          </div>
+
+          <div id="page-cadastro">
+            <div class="main-row row">
+              <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-6 col-6">
+                <button type="submit" class="orange-background">adicionar</button>
+              </div>
+
+            </div>
+          </div>
+        </form>
+        <hr />
+
+
+        <app-agenda></app-agenda>
+
+      </div>
+    </div>
+  
+
+
+  </section>
+
+
+
+
+</div>

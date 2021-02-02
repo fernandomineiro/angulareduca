@@ -1,0 +1,34 @@
+export class DadosBasicos {
+    id: number;
+    nome: string;
+    // tslint:disable-next-line:variable-name
+    nome_fantasia: string;
+    sobrenome: string;
+    // tslint:disable-next-line:variable-name
+    razao_social: string;
+    cpf: string;
+    cnpj: string;
+    // tslint:disable-next-line:variable-name
+    data_nascimento: string;
+    profissao: string;
+    // tslint:disable-next-line:variable-name
+    telefone_1: string;
+    // tslint:disable-next-line:variable-name
+    telefone_2: string;
+    // tslint:disable-next-line:variable-name
+    telefone_3: string;
+    // tslint:disable-next-line:variable-name
+    facebook_link: string;
+    // tslint:disable-next-line:variable-name
+    insta_link: string;
+    // tslint:disable-next-line:variable-name
+    twitter_link: string;
+    // tslint:disable-next-line:variable-name
+    linkedin_link: string;
+    // tslint:disable-next-line:variable-name
+    youteber_link: string;
+    // tslint:disable-next-line:variable-name
+    representante_legal: string;
+    responsavel: string;
+    titular: string;
+}

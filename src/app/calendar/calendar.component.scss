@@ -1,0 +1,36 @@
+.e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item.e-date-range .e-tbar-btn .e-tbar-btn-text,
+.e-schedule .e-schedule-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn .e-tbar-btn-text,
+.e-control, .e-css {
+    font-family:  'Encode Sans Condensed', sans-serif;
+}
+.e-schedule .e-popup-header .e-edit,
+.e-schedule .e-popup-header .e-delete{
+    display: none !important;
+}
+ejs-schedule {
+    border: none;
+}
+.e-date-header-container{
+    padding: unset !important;
+}
+.e-content-wrap{
+    overflow: unset !important
+}
+.e-schedule .e-month-view .e-current-date .e-date-header, .e-schedule .e-month-agenda-view .e-current-date .e-date-header{
+    color:black;
+}
+.e-appointment-details div{
+    color: white;
+}
+.box-menu-grad {
+    padding: 31px;
+    color: #FFF;
+    font-size: 13px;
+    padding-top: 23px;
+    background-color: rgb(152, 152, 152);
+
+    & .custom-menu-icons {
+        font-size: 50px;
+        display: flex;
+    }
+}

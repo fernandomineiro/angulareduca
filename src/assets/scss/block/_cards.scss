@@ -1,0 +1,128 @@
+.card-image {
+  position: relative;
+  display: flex;
+  height: 124px;
+  width: 130px;
+
+  & img {
+    margin: auto;
+    height: auto;
+    max-height: 124px;
+    max-width: 150px;
+  }
+
+  &-presencial {
+    position: relative;
+    overflow: hidden;
+
+    & &.-city {
+      position: absolute;
+      bottom: 0;
+      background-color: #F1712A;
+      padding: 10px;
+      color: white;
+    }
+  }
+
+  & .card-sticker {
+    position: absolute;
+    left: 0;
+    top:10px;
+
+    & span {
+      color: white;
+      font-family: $encode-Sans-Condesed-Medium;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+  }
+}
+
+.course-card {
+  width:100%;
+  padding: 20px;
+  border: 1px solid #7070701a;
+  max-width: 172px;
+
+  & .course-title {
+    margin-top: 10px;
+    font-family: $encode-Sans-Condesed-SemiBold;
+    font-size: 16px;
+    color: black;
+    height: 39px;
+    overflow: hidden;
+  }
+
+  & .teacher-name {
+    font-family: $encode-Sans-Condesed-Regular;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-height: 25.5px;
+  }
+
+  &-info {
+    padding-left: 10px !important;
+    & .course-title, .course-presencial-date {
+      @extend .course-title;
+    }
+
+    & .teacher-name {
+      @extend .teacher-name;
+    }
+  }
+
+  &-presencial {
+    @extend .course-card;
+    width:100%;
+    padding: 20px;
+    border: 1px solid #7070701a;
+    max-width: 172px;
+    @extend .teacher-name;
+  }
+
+  & .course-price-call {
+    padding:0;
+  }
+
+  & .card-inner {
+    display: flex;
+  }
+
+  & .course-link{
+    margin: auto;
+  }
+
+  & .course-share {
+    font-size: 30px;
+    position:absolute;
+    padding: 0;
+    right: 0;
+    bottom: 0;
+
+    & .icon-share {
+      right: 0;
+      bottom: 6px;
+      position:absolute;
+    }
+  }
+}
+
+.course-payment-info{
+  padding: 0 10px;
+  position: relative;
+}
+
+.course-card .course-price, .course-card-presencial .course-price {
+  font-family: $encode-Sans-Condensed-ExtraBold;
+  font-size: 17px;
+}
+
+.course-card .course-call, .course-card-presencial .course-call{
+  font-size: 15px;
+  font-family: $encode-Sans-Condesed-Medium;
+}
+
+.slick-slide.slick-current.slick-active div:first-child {
+  flex-wrap: wrap;
+}

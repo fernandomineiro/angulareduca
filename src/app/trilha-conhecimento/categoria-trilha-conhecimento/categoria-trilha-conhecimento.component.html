@@ -1,0 +1,150 @@
+<section id="page-cursos-categoria" class="trilha-conhecimento" (window:resize)="onResized($event)"> 
+    <div style="margin-top:170px;">
+
+        <div class="container">
+            <h2 class="title">Trilhas de conhecimento</h2>
+            <div id="banner" *ngIf="categoria">
+                <div class="img" style="overflow:hidden;">
+                    <img style="width:20%;height:100%;" *ngIf="categoria.icone" src="{{ IMG_URL }}/files/categoria/icone/{{categoria.icone}}"
+                    />
+                </div>
+                <span style="font-size:30px;font-family: encodeSansCondensed-Regular;">{{categoria.titulo}}</span>
+            </div>
+        </div>
+
+    </div>
+    <section>
+        <div class="container">
+            <div class="sort-order row" style="justify-content:space-between;">
+                <div id="sort" [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                    <div class="dropdown">
+                        <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                                <div class="radio">
+                                    <input id="sort_az" name="sort-az" value="asc" (change)="filterOrder($event,1)" type="radio">
+                                    <label for="sort_az" class="radio-label">A-Z</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_za" name="sort-az" value="desc" (change)="filterOrder($event,1)" type="radio">
+                                    <label for="sort_za" class="radio-label">Z-A</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_mais_vendidos" value="vendidos" name="sort-az" type="radio" (change)="filterOrder($event,2)">
+                                    <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_mais_recente" name="sort-az" value="recentes" type="radio" (change)="filterOrder($event,2)">
+                                    <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                                </div>
+                                <div class="radio">
+                                    <input id="sort_promocoes" name="sort-az" type="radio" value="promocoes" (change)="filterOrder($event,2)">
+                                    <label for="sort_promocoes" class="radio-label">promoções</label>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                    <div class="dropdown">
+                        <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">preço
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu" style="height:70px">
+                                <div class="range-slider">
+                                    <ng5-slider (userChangeEnd)="filterByPrice($event)" [(value)]="value" [options]="options"></ng5-slider>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+                <div [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                    <div class="" id="category">
+                        <div class="dropdown">
+                            <button href="#" class="nav-link dropdown-toggle" data-display="static" data-toggle="dropdown" style="padding:5px 10px;">categorias
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li *ngFor="let categoria of categorias">
+                                    <!-- <a routerLink="/trilha-lista/{{categoria.id}}">{{ categoria.titulo }}</a> -->
+                                    <a routerLink="/trilha-lista/{{categoria.slug_categoria}}">{{ categoria.titulo }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div [ngClass]="{'col-sm-12 col-12' : isMobile}" [ngStyle]="{'width': isMobile ? '100%' : '450px'}">
+                    <form id="form_sidebar_search">
+                        <div class="simulate-search-box" style="display:flex;width:100% !important;margin-bottom:0 !important;">
+                            <input type="text" placeholder="Pesquisar" #keyword style="margin:auto 0;"
+                            />
+                            <a (click)="search(keyword)" style="margin:auto 0;">
+                                <span class="icon-search" style="font-size:25px;float:right;"></span>
+                            </a>
+                            <!-- <button type="submit" class="icon-search" style="font-size:25px;float:right;">Pesquisar</button> -->
+                            <!--        <button type="submit" class="orange-background">Pesquisar</button>-->
+                        </div>
+                    </form>
+                </div>
+                <div class="view-options hide-mobile">
+                    <button (click)="changeViewType('list')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                        <span class="icon-hamburger-menu-1" [ngClass]="{'active':currentViewType == 'list' ? true : false}"></span>
+                    </button>
+                </div>
+                <div class="hide-mobile">
+                    <button (click)="changeViewType('grid')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                        <span id="button_grid" class="icon-plus-filled" [ngClass]="{'active':currentViewType == 'grid' ? true : false}"></span>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="row" id="search_criteria" *ngIf="categorias != null && categorias.length > 0">
+                <p class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    Escolha a trilha que mais se adequa aos seus objetivos
+                </p>
+            </div>
+
+            <div class="container" *ngIf="categorias != undefined && categorias.length == 0" style="padding:30px 10px;">
+                Não há trilhas com os filtros escolhidos
+            </div>
+            <div class="row" *ngIf="categorias != null && categorias.length > 0" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}"
+                id="view_type">
+                <div class="nivel1" *ngFor="let trilha of trilhas">
+                    <app-card-trilha-conhecimento style="margin:15px;" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}"
+                        [categoria]="trilha" [favorites]="favorites">
+                    </app-card-trilha-conhecimento>
+                </div>
+            </div>
+
+            <!-- <div class="row" id="pagination">
+                <div class="col-lg-3 col-md-3 col-sm-0 col-0"></div>
+                <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+                    <button id="pagination_prev" (click)="changePageNumber($event,'prev')">página anterior</button>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+                    <form id="form_pagination" *ngIf="categorias">
+                        <input (change)="changePageNumber($event,'')" ([ngModel])="currentPageNumber" value="{{currentPageNumber}}" name="page" />
+                        <span>de</span>
+                        <span id="pagination_total_pages">{{categorias?.totalPagesNumber}}</span>
+                    </form>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+                    <button id="pagination_next" (click)="changePageNumber($event,'next')">página anterior</button>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-0 col-0"></div>
+            </div>
+
+            <div class="row" id="load_more" style="margin-top: 60px;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <a href="">carregar mais cursos</a>
+                </div>
+            </div> -->
+            <div class="row">&nbsp;</div>
+        </div>
+    </section>
+</section>

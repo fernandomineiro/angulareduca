@@ -1,0 +1,88 @@
+#banner{
+    width: 100%;
+    img{
+        width: 100%;
+        height: auto;
+    }
+}
+::ng-deep app-mt-logotipo{
+    img{
+        max-height: 50px;
+    }
+}
+
+::ng-deep header{
+    margin-top: 50px !important;
+}
+
+h2{
+    color: #ec5768 !important;
+    font-size: 28px !important
+}
+p{
+    color: #7a7a7a !important;
+}
+
+.sections{
+    margin: 60px 0;
+}
+
+#video{
+    margin-bottom: 30px;
+}
+
+.margin-auto{
+    margin: auto;
+}
+
+.flex{
+    display: flex;
+}
+
+.title h3{
+    color: #0a0a0a !important;
+    font-size: 24px;
+    border-bottom: 2px solid #ec5765;
+    text-align: center;
+    padding-bottom:10px;
+}
+
+.text p{
+    text-align: center;
+}
+
+.icon img{
+    max-width: 80px;
+    margin-bottom: 10px;
+}
+
+#color{
+    background-color: #ec5765;
+    padding: 60px 0;
+    margin-bottom: 0 !important;
+    h2{
+        color: white !important;
+        font-size: 29px !important;
+    }
+    #assine{
+        font-size: 16px;
+        padding: 15px 30px;
+        color: #fff;
+        cursor: pointer;
+        border: 1px solid white;
+        border-radius: 4px;
+    }
+}
+
+::ng-deep footer{
+    margin: 0 !important;
+}
+
+::ng-deep .card-favorite{
+    bottom:0 !important;
+}
+
+::ng-deep app-card-cursos-online .teacher-name{
+    color: black !important;
+}
+

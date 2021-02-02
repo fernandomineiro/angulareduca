@@ -1,0 +1,42 @@
+<div>
+    <iframe id="iframeAulaLive" src="https://player.vimeo.com/video/401617929" style="width: 100%; height: auto; float: left; margin: 0 0 0 0;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <iframe src="https://vimeo.com/live-chat/401617929/" width="400" height="600" frameborder="0"></iframe>
+</div>
+
+<div *ngIf="hasAccess && moduloLiberado">
+    <div class="row" style="width:100%" *ngIf="curso != undefined">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:flex;justify-content:space-between">
+            <div style="padding:15px;">
+                <h3 class="orange-font-color" style="font-family: encodeSansCondensed-Bold;">{{curso.nome_curso}}</h3>
+                <h4 *ngIf="modulos != undefined" style="font-family: encodeSansCondensed-Regular;">{{modulo[0].titulo}}</h4>
+            </div>
+            <div style="padding:15px;">
+                <a routerLink="/meu-curso/{{curso.id}}/faca-aulas" class="button-send-div" style="margin-right:50px;height:80px !important;">
+                    <span style="background-color:#787878" class="send-grades">voltar</span>
+                </a>
+            </div>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="position:relative;display:flex;min-height:500px;">
+            <div id="video" style="width:100%;" *ngIf="modulo[0].url_video != null">
+                <div>
+                    <iframe id="vimeoIframe" *ngIf="modulo != undefined && moduloLiberado" title="vimeo-player" [src]="src" width="640" height="360"
+                        frameborder="0" autoplay="false" allowfullscreen>
+
+                    </iframe>
+                </div>
+            </div>
+            
+        </div>   
+
+    </div>
+
+
+</div>
+
+<div *ngIf="!hasAccess && hasAccess != undefined">
+    <h4 style="text-align:center;margin:50px 0;">Você não tem acesso a esse curso.</h4>
+</div>
+<div *ngIf="(hasAccess && !moduloLiberado) && moduloLiberado != undefined">
+    <h4 style="text-align:center;margin:50px 0;">Esta aula ainda não está liberada</h4>
+</div>

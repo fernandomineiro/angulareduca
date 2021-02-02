@@ -1,0 +1,35 @@
+<div id="tooltip_calendar" class="box-shadow">
+  <div class="square"></div>
+  <div id="title"></div>
+  <div id="date"></div>
+  <div id="local"></div>
+
+</div>
+
+<div class="calendar-container">
+  <div class="select-month-year">
+    <button class="button is-text" (click)="changeDate(-1)">
+      <i class="fa fa-chevron-left" ></i>
+    </button>
+    <h3 class="calendar-header" id="monthAndYear">{{ monthYear }}</h3>
+    <button class="button is-text" (click)="changeDate(1)">
+      <i class="fa fa-chevron-right" ></i>
+    </button>
+  </div>
+  <table class="table table-bordered table-responsive-sm" id="calendar0">
+    <thead>
+      <tr>
+        <th>D</th>
+        <th>S</th>
+        <th>T</th>
+        <th>Q</th>
+        <th>Q</th>
+        <th>S</th>
+        <th>S</th>
+      </tr>
+    </thead>
+    <tbody id="calendar-body">
+
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,30 @@
+nav {
+  &.navbar {
+    padding: 0 !important;
+    position: static;
+
+    &-toggler i {
+      color: black !important;
+    }
+    &-dark .navbar-toggler{
+      border-width: 0 !important;
+
+      &:focus{
+        border-width: 0 !important;
+      }
+    }
+  }
+
+  & .user-link a {
+    font-family: $encode-Sans-Condesed-SemiBold;
+    padding: 1rem 1rem;
+  }
+
+  & mt-user-detail .navbar-custom-menu {
+    margin-top: 5px;
+  }
+}
+
+div[data-include="topnav"] nav {
+  background-color: transparent !important;
+}

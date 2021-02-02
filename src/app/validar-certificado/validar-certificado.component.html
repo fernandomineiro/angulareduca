@@ -1,0 +1,11 @@
+<div class="container">
+  <div>
+    <h3 class="orange-font-color">Autenticação de certificado</h3>
+
+    <div>
+      <p>Digite abaixo o código do certificado para verificar a autenticidade</p>
+      <input type="text" [(ngModel)]="codigo" />
+      <a href="{{IMG_URL}}/api/certificado/autenticaCertificado/{{codigo}}" target="_blank"><span class="orange-background" style="color:white;font-weight:bold;font-size:20px;padding:10px 20px;cursor:pointer;margin-left:10px">verificar</span></a>
+    </div>
+  </div>
+</div>

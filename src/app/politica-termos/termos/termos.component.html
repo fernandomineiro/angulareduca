@@ -1,0 +1,12 @@
+<div id="page-eventos" class="politica">
+  <section id="section_content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngFor="let termo of termos">
+            <h3>Termos e condições de uso</h3>
+          <div style="margin-top: 30px; text-align: justify" [innerHTML]="termo.texto"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

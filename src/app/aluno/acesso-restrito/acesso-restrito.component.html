@@ -1,0 +1,170 @@
+<section id="page-conta">  
+    <!-- Page Content -->
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-12 col-sm-12 col-12 user-info">
+                    <div class="profile_info">
+                        <div class="picture-container">
+                            <img id="user_avatar" src="{{ IMG_URL_SRC }}" width="130px" height="130px" />
+                        </div>
+                        <div id="user_name">{{ perfil.nome }}</div>
+                        <div id="user_email">{{ perfil.email }}</div>
+                        <div><a [routerLink]="['/editar']" class="orange-font-color">editar perfil</a></div>
+                    </div>
+
+                    <div class="estatisticas_info" *ngIf="estatisticas != undefined">
+                        <div class="statistics">Minhas estatísticas</div>
+                        <div id="hours" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online">
+                            <div class="hour-box">
+                                <div class="icon icon-clock orange-font-color"></div>
+                                <div class="amount orange-font-color" *ngIf="estatisticas.horasOnline != undefined && estatisticas.horasOnline >= 0">
+                                    <span id="course_online_hour_amount">{{estatisticas.horasOnline == 0 ? 0 : decimalHoras(estatisticas.horasOnline)}}h{{estatisticas.horasOnline == 0 ? 0 : decimalMinutos(estatisticas.horasOnline)}}m</span>
+                                </div>                                
+                                <div class="type">cursos online</div>
+                            </div>
+                            <div class="hour-box" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais">
+                                <div class="icon icon-clock orange-font-color"></div>
+                                <div class="amount orange-font-color" *ngIf="estatisticas.horasPresenciais != undefined && estatisticas.horasPresenciais >= 0">
+                                    <span id="course_presenciais_hour_amount">{{estatisticas.horasPresenciais == 0 ? 0 : decimalHoras(estatisticas.horasPresenciais)}}h{{estatisticas.horasPresenciais == 0 ? 0 : decimalMinutos(estatisticas.horasPresenciais)}}m</span></div>
+                                <div class="type">cursos presenciais</div>
+                            </div>
+                            <div class="hour-box" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos">
+                                <div class="icon icon-clock orange-font-color"></div>
+                                <div class="amount orange-font-color" *ngIf="estatisticas.horasRemoto != undefined && estatisticas.horasRemoto >= 0">
+                                    <span id="course_remotos_hour_amount">{{estatisticas.horasRemoto == 0 ? 0 : decimalHoras(estatisticas.horasRemoto)}}h{{estatisticas.horasRemoto == 0 ? 0 : decimalMinutos(estatisticas.horasRemoto)}}m</span></div>                                
+                                <div class="type">cursos remotos</div>
+                            </div>
+                        </div>
+                        <div id="goal">
+                            <div class="title-goal">Meu objetivo é atingir:</div>
+                            <div class="amount-goal orange-font-color" *ngIf="estatisticas.totalHoras != undefined && estatisticas.totalHoras >= 0">
+                                <span id="amount_goal">{{estatisticas.totalHoras == 0 ? 0 : decimalHoras(estatisticas.totalHoras)}}h{{estatisticas.totalHoras == 0 ? 0 : decimalMinutos(estatisticas.totalHoras)}}m</span></div>                            
+                            <div class="title-goal">Ainda faltam:</div>
+                            <div class="amount-goal orange-font-color" *ngIf="estatisticas.aindaFaltam != undefined && estatisticas.aindaFaltam >= 0">
+                                <span id="amount_goal_missing">{{estatisticas.aindaFaltam == 0 ? 0 : decimalHoras(estatisticas.aindaFaltam)}}h{{estatisticas.aindaFaltam == 0 ? 0 : decimalMinutos(estatisticas.aindaFaltam)}}m</span></div>                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+                    <div class="buttons" style="flex-wrap: wrap;justify-content:space-around;">
+                        <a style="margin-bottom:20px;" [matTooltipDisabled]="router.url.includes('cursos')" matTooltip="Clique aqui para ver os seus cursos" [ngClass]="{
+                            'orange-background': router.url.includes('cursos'),
+                            'orange-light-background': !router.url.includes('cursos')
+                            }" routerLink='/perfil/cursos'>
+                            <div>
+                                <span class="fa fa-graduation-cap"></span>
+                                <span class="hide-sm">Cursos</span>
+                            </div>
+                        </a>
+                        <a style="margin-bottom:20px;" [matTooltipDisabled]="router.url.includes('favoritos')" matTooltip="Clique aqui para ver os seus cursos e trilhas favoritos" [ngClass]="{
+                            'orange-background': router.url.includes('favoritos'),
+                            'orange-light-background': !router.url.includes('favoritos')
+                            }" routerLink='/perfil/favoritos' *ngIf="configuracoes.itv != 1">
+                            <div >
+                                <span class="fa fa-bookmark"></span>
+                                <span class="hide-sm">Favoritos</span>
+                            </div>
+                        </a>
+                        <a style="margin-bottom:20px;" [matTooltipDisabled]="router.url.includes('trabalhos')" matTooltip="Clique aqui para ver seus trabalhos enviados" [ngClass]="{
+                            'orange-background': router.url.includes('trabalhos'),
+                            'orange-light-background': !router.url.includes('trabalhos')
+                            }" routerLink='/perfil/trabalhos'>
+                            <div>
+                                <span class="fa fa-medal"></span>
+                                <span class="hide-sm">Trabalhos</span>
+                            </div>
+                        </a>
+                        <a style="margin-bottom:20px;" [matTooltipDisabled]="router.url.includes('certificados')" matTooltip="Clique aqui para ver seus certificados disponíveis" [ngClass]="{
+                            'orange-background': router.url.includes('certificados'),
+                            'orange-light-background': !router.url.includes('certificados')
+                            }" routerLink='/perfil/certificados'>
+                            <div>
+                                <span class="fa fa-certificate"></span>
+                                <span class="hide-sm">Certificados</span>
+                            </div>
+                        </a>
+                        <a style="margin-bottom:20px;"  [matTooltipDisabled]="router.url.includes('pedidos')" matTooltip="Clique aqui para ver seus pedidos" [ngClass]="{
+                            'orange-background': router.url.includes('pedidos'),
+                            'orange-light-background': !router.url.includes('pedidos')
+                            }" routerLink='/perfil/pedidos' *ngIf="configuracoes.itv != 1">
+                            <div>
+                                <span class="fa fa-money-check"></span>
+                                <span class="hide-sm">Pedidos</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <router-outlet (activate)="scrollTop($event)"></router-outlet>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+
+	var interval = setInterval(function () {
+		if ($("#topnav_users").length) {
+			$("#topnav_users").addClass("orange-font-color");
+			clearInterval(interval);
+		}
+	}, 100);
+
+	$(".slickear").slick(
+		{
+			infinite: false,
+			slidesToShow: 6,
+			slidesToScroll: 1,
+			responsive: [
+				{
+					breakpoint: 992,
+					settings: {
+						slidesToShow: 4,
+						slidesToScroll: 1,
+						infinite: false,
+						dots: false
+					}
+				},
+				{
+					breakpoint: 771,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 1,
+						infinite: false,
+						dots: false
+					}
+				},
+				{
+					breakpoint: 550,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 1,
+						infinite: false,
+						dots: false
+					}
+				}
+			]
+		}
+	);
+</script>
+<style>
+    #page-conta .navbar {
+        background-color: #DBDADA !important;
+    }
+
+    #mobile_navbar {
+        background-color: #DBDADA !important;
+
+    }
+
+    .slick-slide {
+        display: flex !important;
+        justify-content: center;
+    }
+</style>

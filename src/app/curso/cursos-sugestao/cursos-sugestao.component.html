@@ -1,0 +1,293 @@
+<section id="cursos-sugestao" class="sugestoes">
+
+    <section id="section_content">
+        <div class="container">
+
+            <div class="row main-row" [show]="submitted">
+                Obrigado por nos enviar sua sugestão!
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12" [hidden]="submitted">
+                    <h2 class="orange-font-color">Quero sugestões de cursos</h2>
+                    <br/>
+                    <br/>
+                    <form id="form_sugestao" #sugestaoForm="ngForm" (ngSubmit)="onSubmit()">
+                        <div>
+                            <span class="question">Qual o seu objetivo?</span>
+                            <input name="objetivo" type="text" required [(ngModel)]="sugestao.objetivo"/>
+                        </div>
+                        <div>
+                            <span class="question">Qual a sua profissão?</span>
+                            <input name="profissao" type="text" required [(ngModel)]="sugestao.profissao"/>
+                        </div>
+                        <div>
+                            <span class="question">Qual a sua área de interesse?</span>
+                            <select [(ngModel)]="sugestao.fk_categoria_id" name="fk_categoria_id">
+                                <option  *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.titulo}}</option>
+                            </select>   
+                        </div>
+
+                        <div>                            
+                            <textarea name="categoria" [(ngModel)]="sugestao.categoria" placeholder="Se não aparecer a categoria de seu interesse, digite aqui no que quer completar seu estudo que trabalharemos para lhe atender">
+                            </textarea>
+                        </div>
+
+                        <div>
+                            <span class="question">Quanto tempo tem para estudar por dia?</span>
+                            <input name="tempo_dia" type="text" [(ngModel)]="sugestao.tempo_dia"/>
+                        </div>
+
+                        <div>
+                            <span class="question">Em quanto tempo quer completar os estudos?</span>
+                            <input name="tempo_prazo" type="text" [(ngModel)]="sugestao.tempo_prazo"/>
+
+                        </div>
+
+                        <div>
+                            <span class="question">Você deseja receber um certificado por curso ou um de todos?</span>
+                            <select id="select_certification" [(ngModel)]="sugestao.estado" name="tipo_certificado">
+                                <option [value]="1">Um por curso</option>
+                                <option [value]="2">Um de todos</option>
+                            </select>                             
+    
+                        </div>
+                        <button type="submit">Enviar</button>
+                    </form>
+
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12 hide-sm">
+                    <div class="logo-container">
+                        <img src="../assets/img/educaz_logo.png" width="100%" height="auto" />
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <span class="name orange-font-color">Pacote especial 45hs</span>
+
+                    <div class="horizontal-line1"></div>
+                    <br/>
+                    <br/>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div style="margin-right:20px;" ><b>Total pacote Especial</b></div>
+                        <div>
+                            <b> <span class="total">R$<span class="total-amount"> 80,00</span></span></b>
+                            <div>
+                                <span class="parcelamento-amount">2</span> x R$ <span>40,00</span>
+                            </div>
+                            <div>
+                                no cartão de crédito
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" style="background-color:#FB0616">comprar agora</button>
+
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <span class="name orange-font-color">Pacote Mega 60hs</span>
+
+                    <div class="horizontal-line1"></div>
+                    <br/>
+                    <br/>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="outter row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+                            <img src="../assets/img/course_img_2.png" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-5 pedido-course-name">
+                            <div class="course-title">Concurso Público – Licitações e Contratos Administrativos</div>
+                            <div class="teacher-name">Sergio Nogueira</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-1 pedido-course-name">
+                            <div>
+                                <span class="icon icon-clock orange-font-color"></span>
+                            </div>
+                            <div class="hours-amount orange-font-color">
+                                <span class="amount">15</span>hs</div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-2 pedido-course-price">
+                            <div>
+                                <a href="" class="orange-font-color">excluir esse curso</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div style="margin-right:20px;" ><b>Total pacote Especial</b></div>
+                        <div>
+                            <b> <span class="total">R$<span class="total-amount"> 80,00</span></span></b>
+                            <div>
+                                <span class="parcelamento-amount">2</span> x R$ <span>40,00</span>
+                            </div>
+                            <div>
+                                no cartão de crédito
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" style="background-color:#FB0616">comprar agora</button>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <div data-include="footer"></div>
+
+
+</section>

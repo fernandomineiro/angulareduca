@@ -1,0 +1,17 @@
+:host /deep/ td{    
+    white-space:break-spaces;
+    padding:10px;  
+    width: 7%;  
+}
+
+:host /deep/ td.mat-column-nome,
+:host /deep/ td.mat-column-professor{
+    width: 15% !important;    
+}
+
+:host /deep/ .mat-sort-header-container{
+    justify-content: center;
+}
+
+
+

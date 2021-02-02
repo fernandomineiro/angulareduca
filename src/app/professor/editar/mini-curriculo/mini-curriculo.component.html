@@ -1,0 +1,30 @@
+<section id="page-agenda" class="page-home-acesso-restrito">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current2="mini-curriculo" current1="meu-perfil"></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:30px;display:flex;">
+                <form id="editar-meus-dados" [formGroup]="formMiniCurriculo" (ngSubmit)="onSubmitMiniCurriculo()"   style="width: 100%;padding:15px;">
+                    <h2 class="title orange-font-color">Mini-currículo</h2>
+                    <hr>
+                    <div class="form-group">
+                        <div >
+                            <span class="">Mini-currículo * (máximo 500 caracteres)</span>
+                            <textarea formControlName="mini_curriculum"
+                                      [ngClass]="[isFieldValid('mini_curriculum') ? 'is-invalid' : '', 'form-control']"
+                                      required style="height: 200px; resize: none" maxlength="500" placeholder="Máximo 500 caracteres">
+                            </textarea>
+                            <app-field-error-display
+                                [displayError]="isFieldValid('mini_curriculum')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                    <button *ngIf="!loading" type="submit" class="orange-background">atualizar</button>
+                    <button *ngIf="loading" type="submit" class="orange-background">carregando...</button>
+                </form>
+            </div>
+        </div>
+        <div class="row"></div>
+    </section>
+</section>

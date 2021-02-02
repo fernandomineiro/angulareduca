@@ -1,0 +1,109 @@
+
+<section id="page-cursos-categoria" class="eventos-categoria">
+
+    <!-- Page Content -->
+    <section id="section_content">
+        <div class="container">
+            <div id="cursos_header">
+                <h2 style="color:white;">Eventos</h2>
+                <span class="categoria" *ngIf="categoria != undefined">{{categoria.titulo}}</span>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row sort-order">
+                        <!--<div class="col-lg-2 col-md-6 col-sm-12 col-12">
+                            <select id="select_cidade" class="select_category" (change)="filterByCity($event)">
+                                <option value="-1">cidade</option>
+                                <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+                            </select>
+                        </div>-->
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12" id="sort">
+                            <div class="dropdown">
+                                <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" style="height:200px;">
+                                    <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                                        <div class="radio">
+                                            <input id="sort_az" name="sort-az" value="asc" (change)="filterOrder($event,1)" type="radio">
+                                            <label for="sort_az" class="radio-label">A-Z</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input id="sort_za" name="sort-az" value="desc" (change)="filterOrder($event,1)" type="radio">
+                                            <label for="sort_za" class="radio-label">Z-A</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input id="sort_mais_vendidos" value="vendidos" name="sort-az" type="radio" (change)="filterOrder($event,1)">
+                                            <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input id="sort_mais_recente" name="sort-az" value="recentes" type="radio" checked (change)="filterOrder($event,1)">
+                                            <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                                        </div>
+                                        <!-- Removido até que aja modo de utilizar este filtro
+                                        <div class="radio">
+                                            <input id="sort_promocoes" name="sort-az" type="radio" value="promocoes" (change)="filterOrder($event,1)">
+                                            <label for="sort_promocoes" class="radio-label">promoções</label>
+                                        </div>-->
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12 search-div">
+                            <form id="form_curso_sort_order_search">
+                                <input placeholder="pesquisar" (change)="search($event)" />
+                                <span class="icon-search"></span>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <!--<div class="row" id="search_criteria">
+                            <p  class="col-lg-12 col-md-12 col-sm-12 col-12"> 
+                                <span id="order1">A-Z</span>,
+                                <span id="order2">mais vendidos</span>, de R$
+                                <span id="value1">12,00</span> a R$
+                                <span>65,00</span>
+                            </p>
+                        </div>-->
+
+                    <div id="proximos_eventos" class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            <a *ngFor="let evento of eventos">
+                                <div class="row evento-container">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div class="image-container" style="overflow:hidden;display:flex;">
+                                            <a [routerLink]="['/evento', evento.id, 'detalhe']" style="margin:auto">
+                                                <img style="width: 100%;height: auto;margin: 15px 0;" src="{{IMG_URL}}/files/eventos/imagem/{{evento.imagem}}" [alt]="evento.titulo"
+                                                />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-12" style="display:flex;">
+                                        <h4 class="orange-font-color" style="margin:auto 0;font-family:encodeSansCondensed-Bold;text-align:left">{{evento.titulo}}</h4>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+    var interval = setInterval(function () {
+        if ($("#topnav_eventos").length) {
+            $("#topnav_eventos").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+</script>
+
+<style>
+    #mobile_navbar{ background-color:#DBDADA !important; }
+</style>

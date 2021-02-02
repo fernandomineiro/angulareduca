@@ -1,0 +1,195 @@
+#navbar_Responsive_quemSomos a{
+    color: black !important;
+    font-family: encodeSansCondensed-Semibold !important;
+}
+
+#buttonQueroSerProfessor{
+    padding: 15px;
+    background-color:#F1712A;
+    color:white;
+    font-family: encodeSansCondensed-Semibold !important;
+    max-width: 300px;
+    text-align: center;
+}
+
+#section1{
+    padding: 40px 0;
+    background-color:#F1CE23;
+    text-align: center;
+    color: black;
+    font-family: encodeSansCondensed-Regular !important;
+}
+#section2{
+    padding: 50px 0;
+}
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.section5 h3{
+    color:#f1712a !important;
+    font-size: 40px;
+}
+
+.section5 .section5-items{
+    font-family: encodeSansCondensed-Semibold;
+}
+
+.section5 .section5-items div{
+    padding:10px;
+}
+.section5 .section5-items.items1 span{
+    background-color:#F1CE23;
+    padding:10px; 
+    line-height: 30px;   
+}
+
+.section5 .section5-items.items2 span{
+    background-color:#F2A628;
+    padding:10px;    
+    line-height: 30px;  
+}
+.section5 .section5-items.items3 span{
+    background-color:#F1712A;
+    padding:10px; 
+    line-height: 30px;     
+}
+
+.footerSection1{
+    background-color:#F1712A;
+    padding:50px;
+}
+
+footer{
+    padding:0 !important;
+}
+.footerSection2{
+    background-color:white;
+    padding:20px;
+}
+a{
+    cursor: pointer;
+}
+
+.slickear img{
+    max-width: 130px;
+    width: 100%;
+    height: auto;
+}
+
+.slickear .item{
+    display: flex;
+    height: 100px;
+    overflow: hidden;
+}
+.slickear .item a{
+    margin:auto;
+}
+
+.line{
+    height: 3px;
+    width:70px;
+    background-color:#F1712A;
+    position: absolute;
+    top: 50%;
+    z-index: -1;
+}
+
+@media (max-width:767px) {
+    #section2 p{
+        text-align: center;
+    }
+    .line{
+        left: -18px;
+    }
+    .section5 .row{
+        margin: 0 !important;
+    }
+}
+
+@media (max-width:349px) {
+    #white{
+        top:91px !important;
+        height: 500px !important;
+    } 
+}
+
+@media (min-width:349px) and (max-width:767px) {
+    #white{
+        top:52px !important;
+        height: 500px !important;
+        left: -20px !important;
+    } 
+}
+
+#white{
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    background-color: white;
+    left: -6px;
+    top: 52px;
+}
+
+@media (min-width:767px) and (max-width:1201px){
+    #white{
+        top:52px;
+    } 
+}
+
+@media(max-width:500px){
+    h2{
+        font-size:30px !important;
+    }
+    .section5 a{
+        font-size:20px !important;
+    }
+}
+
+.section5 .text{
+    font-size: 30px;
+    font-family: encodeSansCondensed-Semibold !important;
+    margin-left: 5px;
+}
+
+
+.section5 .number{
+    font-size: 80px;
+    font-family: encodeSansCondensed-ExtraBold !important;
+}
+
+.box1-section5 .text,
+.box1-section5 .number{
+    color: #F1CE23;    
+}
+
+.box2-section5 .text,
+.box2-section5 .number{
+    color: #F2A628;    
+}
+
+.box3-section5 .text,
+.box3-section5 .number{
+    color: #F1712A;    
+}
+
+.section5 img{
+    height: 68px;
+    width: auto;
+    
+}
+
+.color div{
+    font-size:16px !important;
+}

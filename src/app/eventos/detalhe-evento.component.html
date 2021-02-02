@@ -1,0 +1,245 @@
+<section id="page-cursos-sobre" class="eventos" *ngIf="evento">
+        <h2 class="container">Eventos</h2>
+    <section id="short_description">
+        <div class="row" style="width:101%;">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="padding:0" *ngIf="evento && evento.imagem">
+                <img src="{{IMG_URL}}/files/eventos/imagem/{{evento.imagem}}" width="100%" height="auto" />
+            </div>
+            <div class="container">
+                <!--<div class="col-lg-12">
+                    <div id="social_media">
+                        <a href="" id="facebook_link">
+                            <span class="icon-facebook"></span>
+                        </a>
+                        <a href="" id="twitter_link">
+                            <span class="icon-twitter"></span>
+                        </a>
+                        <a href="" id="linkedin_link">
+                            <span class="icon-linkedin"></span>
+                        </a>
+                        <a href="" id="pinterest_link">
+                            <span class="icon-pinterest"></span>
+                        </a>
+                        <a href="" id="google_plus_link">
+                            <span class="icon-google-plus"></span>
+                        </a>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </section>
+
+    <section id="long_description">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-12 order-lg-1 order-md-1 order-sm-2 order-2">
+                    <div [innerHtml]="evento.descricao | safe: 'html'"></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="modulos && modulos.length > 0">
+                        <div class="row" id="table_programacao" *ngFor="let agenda of modulos">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-4 time">
+                                &nbsp;{{agenda.data_inicio | date}}, das {{agenda.hora_inicio.slice(0, -3)}} às {{agenda.hora_final.slice(0, -3)}}
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-8 event">
+                                <span class="palestra">
+                                    <b>{{agenda.descricao}}</b>
+                                </span>
+                                <br />
+                                <span class="teacher">{{agenda.nome_palestrante}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title orange-font-color">
+                            Palestrantes
+                        </div>
+                        <div id="teacher_info" class="row" *ngFor="let palestrante of palestrantes">
+                            <div class="col-lg-3 col-md-12 col-sm-12 col-12 padding-top-30">
+                                <img src="../assets/img/default-avatar.png" width="100%" height="auto" />
+                            </div>
+                            <div class="col-lg-9 col-md-12 col-sm-12 col-12 padding-top-30">
+                                <div id="teacher_name">
+                                    {{palestrante.nome_palestrante}}
+                                </div>
+                                <div id="teacher_description">
+                                    {{palestrante.curriculo}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-md-12 col-sm-12 col-12">
+                        <div id="googleMap" class="wrapper" style="margin-bottom: 50px;width: 100%; height: 400px;" *ngIf="evento && evento.endereco">
+                            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                            </agm-map>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12 col-12 order-lg-2 order-md-2 order-sm-1 order-1">
+                    <div id="not_bought">
+                        <span class="square"></span>
+                        <div style="padding:0 25px 0 55px;margin-top:-30px;">
+                            <span class="text" style="text-transform:capitalize">{{evento.titulo}}</span>
+                            <br />
+                            <br />
+
+
+                            <!--<span class="teacher">Luis Lourenço</span>
+                            <br />
+                            <br />-->
+                            <span class="category">Categoria:
+                                    
+                                            <span>{{evento.categoria}}</span>
+                                            
+                                       
+                            </span>
+                            <br />
+                            <br />
+                            <div class="row" id="infos">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="modulos && modulos.length > 0">
+                                    <span class="icon-notes icon"></span>
+                                    <div style="display: block;margin: 0;">
+                                        <div class="date" *ngFor="let agenda of moduloInicialFinal" style="margin: 0;">
+                                        <span class="date1">
+                                            &nbsp;{{agenda.data_inicio | date}}, das {{agenda.hora_inicio.slice(0, -3)}} às {{agenda.hora_final.slice(0, -3)}}
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="evento && evento.endereco != null">
+                                    <br>
+                                    <br>
+                                    <span class="icon-localization icon"></span>
+                                    <span class="location">
+                                        <span class="location1">&nbsp;{{evento.endereco}}</span>
+                                    </span>
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <button id="buy" (click)="addAllToCart(modulos)">
+                                        <div id="total_price">
+                                            <span>todos os dias por </span>
+                                            <span id="price">{{somaValoresAgenda | currency: 'BRL' : 'symbol'}}</span>
+                                            <br />
+                                        </div>
+                                        <!-- <div id="installment">
+                                            ou
+                                            <span id="parcel_amount">2</span> x R$
+                                            <span id="parcel_value">23,00</span>
+                                        </div> -->
+                                    </button>
+
+                                    <div *ngIf="showCartAdded" style="background-color:#baf6c1;padding:10px;margin-top:10px;border-radius:10px">
+                                        <small style="font-family:encodeSansCondensed-Medium;"><a href="javascript:void(0)" routerLink="/carrinho">Item adicionado ao carrinho de compras. Clique aqui para acessar o carrinho</a></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="modulos && modulos.length > 0">
+                                    <div *ngFor="let agenda of modulos">
+                                        <div id="palestra_name">{{agenda.descricao}}
+                                        </div>
+                                        <div id="palestra_date">{{agenda.data_inicio | date}}, das {{agenda.hora_inicio.slice(0, -3)}} às {{agenda.hora_final.slice(0, -3)}}</div>
+                                        <button id="buy" (click)="addToCart(agenda)">
+                                            <div id="total_price">
+                                                <span>essa palestra por </span>
+                                                <span id="price">{{agenda.agenda_valor | currency: 'BRL' : 'symbol'}}</span>
+                                                <br />
+                                            </div>
+                                            <div id="installment">
+                                                ou
+                                                <span id="parcel_amount">2</span> x R$
+                                                <span id="parcel_value">{{agenda.agenda_valor/2 | currency: 'BRL' : 'symbol'}}</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="next_events">
+        <div class="container">
+            <div class="horizontal-line1"></div>
+
+            <h3 class="orange-font-color" style="padding-top: 40px;">Confira os próximos eventos</h3>
+
+            <div id="home_eventos" class="slickear2">
+                <div class="image-container">
+                    <img src="../assets/img/eventos1.png" />
+                </div>
+                <div class="image-container">
+                    <img src="../assets/img/eventos2.png" />
+                </div>
+                <div class="image-container">
+                    <img src="../assets/img/eventos3.png" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+
+    $(".slickear2").each(function () {
+        $(this).slick(
+            {
+
+                infinite: true,
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                responsive: [
+                    {
+                        breakpoint: 1219,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: false
+                        }
+                    }
+                ]
+            }
+        );
+    }
+    );
+
+
+    var interval = setInterval(function () {
+        if ($("#topnav_eventos").length) {
+            $("#topnav_eventos").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+</script>
+
+<style>
+    #mobile_navbar {
+        background-color: #DBDADA !important;
+
+    }
+    agm-map {
+        height: 400px;
+    }
+</style>

@@ -1,0 +1,11 @@
+footer{
+    padding: 15px 0;
+}
+
+@media (max-width:766px){
+    .container{
+        text-align:center !important;
+    }
+  }
+
+

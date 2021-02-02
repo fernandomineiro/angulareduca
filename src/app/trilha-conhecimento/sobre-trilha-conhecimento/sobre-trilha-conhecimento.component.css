@@ -1,0 +1,74 @@
+#page-cursos-presenciais {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+#page-cursos-presenciais .padding-5 {
+
+    max-width: 300px;
+
+}
+
+#page-cursos-presenciais .course-link {
+
+    width: 100%;
+
+}
+
+
+#page-cursos-sobre.trilha-conhecimento-sobre #short_description .icon-user-check{
+    color: black !important;
+}
+
+#page-cursos-sobre.trilha-conhecimento-sobre #short_description,
+#page-cursos-sobre #short_description{
+    background-color: unset !important;
+}
+
+#page-cursos-sobre .icon-phone-computer, #page-cursos-sobre .icon-papers, #page-cursos-sobre .icon-graduation-hat, #page-cursos-sobre .icon-comments {
+    color: #f2652a;
+    font-size: 50px;
+}
+
+#page-cursos-sobre .grid{
+    justify-content: unset !important;
+}
+
+#cursos_online,
+#cursos_remoto,
+#cursos_presenciais,
+#teachers{
+    margin-top: 50px;
+}
+
+
+@media (max-width:991px){
+    #page-cursos-sobre.trilha-conhecimento-sobre #long_description {
+        margin-top: 250px;    
+    }
+    #page-cursos-sobre.trilha-conhecimento-sobre .header-trilha-sobre span.title{
+        font-size: 30px !important;
+    }
+    #cursos_online .slickear,
+    #cursos_remoto .slickear,
+    #cursos_presenciais .slickear,
+    #teachers .slickear{
+        justify-content: space-around !important;
+    }
+    
+  }
+
+  
+
+@media (max-width:768px){
+   #content{
+       margin-top: 200px;
+   }
+   #long_description{
+       margin-top: 50px !important;
+   }
+  }
+
+

@@ -1,0 +1,120 @@
+<section id="page-agenda" class="page-home-acesso-restrito">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current2="dados-bancarios" current1="meu-perfil"></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:30px;display:flex;">
+                <form id="editar-meus-dados" [formGroup]="formDadosBancarios" (ngSubmit)="onSubmitDadosBancarios()"   style="width: 100%;padding:15px;">
+                    <h2 class="title orange-font-color">Dados bancários</h2>
+                    <hr>
+                    <div class="form-group">
+                        <div>
+                            <span class="orange-font-color">Titular *</span>
+                            <input id="titular" type="text"
+                                   formControlName="titular"
+                                   [ngClass]="[isFieldValid('titular') ? 'is-invalid' : '', 'form-control']"
+                                   required placeholder="Titular" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('titular')"
+                                errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div>
+                            <span class="orange-font-color">Documento (CPF/CNPJ) *</span>
+                            <input id="documento" type="text"
+                                   formControlName="documento"
+                                   [ngClass]="[isFieldValid('documento') ? 'is-invalid' : '', 'form-control']"
+                                   required placeholder="Documento" maxlength="18"
+                                   (keypress)="cpfMask($event);" (change)="cpfMask($event);"/>
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('documento')"
+                                    errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="orange-font-color">Tipo De Conta *</span>
+                                <select requiredIf formControlName="tipo_conta"
+                                        [ngClass]="[isFieldValid('tipo_conta') ? 'is-invalid' : '', 'form-control']">
+                                    <option value="cc">Conta Corrente</option>
+                                    <option value="cp">Conta Poupança</option>
+                                </select>
+                                <app-field-error-display
+                                        [displayError]="isFieldValid('tipo_conta')"
+                                        errorMsg="Campo é obrigatório">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="orange-font-color">Banco *</span>
+                                <select requiredIf formControlName="fk_banco_id"
+                                        [ngClass]="[isFieldValid('fk_banco_id') ? 'is-invalid' : '', 'form-control']">
+                                    <option [ngValue]="null">Banco</option>
+                                    <option [value]="banco.id" *ngFor="let banco of bancos">
+                                        {{ banco.titulo }}
+                                    </option>
+                                </select>
+                                <app-field-error-display
+                                        [displayError]="isFieldValid('fk_banco_id')"
+                                        errorMsg="Campo é obrigatório">
+                                </app-field-error-display>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <span class="orange-font-color">Agência *</span>
+                                <input id="agencia" type="text"
+                                       formControlName="agencia"
+                                       [ngClass]="[isFieldValid('agencia') ? 'is-invalid' : '', 'form-control']"
+                                       required placeholder="Agência" />
+                                <app-field-error-display
+                                        [displayError]="isFieldValid('agencia')"
+                                        errorMsg="Campo é obrigatório">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="orange-font-color">Digito</span>
+                                <input class="form-control"
+                                       id="digita_agencia" type="text"
+                                       formControlName="digita_agencia"
+                                       placeholder="Digito" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <span class="orange-font-color">Conta corrente *</span>
+                                <input id="conta_corrente" type="text"
+                                       formControlName="conta_corrente"
+                                       [ngClass]="[isFieldValid('conta_corrente') ? 'is-invalid' : '', 'form-control']"
+                                       required placeholder="Conta Corrente" />
+                                <app-field-error-display
+                                        [displayError]="isFieldValid('conta_corrente')"
+                                        errorMsg="Campo é obrigatório">
+                                </app-field-error-display>
+                            </div>
+                            <div class="col-md-2">
+                                <span class="orange-font-color">Digito</span>
+                                <input class="form-control"
+                                       id="digita_conta" type="text"
+                                       formControlName="digita_conta"
+                                       placeholder="Digito" />
+                            </div>
+                            <div class="col-md-2">
+                                <span class="orange-font-color">Operação</span>
+                                <input id="operacao" type="text"
+                                       class="form-control"
+                                       formControlName="operacao"
+                                       placeholder="operacao" />
+                            </div>
+                        </div>
+                    </div>
+                    <button *ngIf="!loading" type="submit" class="orange-background">atualizar</button>
+                    <button *ngIf="loading" type="submit" class="orange-background">carregando...</button>
+                </form>
+            </div>
+        </div>
+        <div class="row"></div>
+    </section>
+</section>

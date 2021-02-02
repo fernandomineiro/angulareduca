@@ -1,0 +1,56 @@
+<div id="page-cursos-categoria" class="trilha-conhecimento">
+    <div class="grid" style="display:flex;justify-content:center;margin:auto">
+        <div class="trilha-conhecimento-outter">
+                <div class="box">
+                        <span class="icon-share"></span>
+                        <div class="inner">
+                            <a routerLink="/trilha-sobre/{{categoria.slug_trilha}}" (click)="navigate($event,categoria.slug_trilha)">
+                                <div class="trilha-name" style="position:relative">
+                                    <div id="nomeTrilha" style="max-height:48px;margin:auto;text-align:right;padding-right:10px;">{{categoria.titulo}}</div>
+                                   
+                                </div>
+                                <div class="bottom">
+                                    <div class="course-presencial" *ngIf="categoria.total_curso != null">
+                                        <i class="icon-user-check"></i>
+                                        Total Cursos:
+                                        <span class="course-presencial-numer">{{categoria.total_curso}}</span>
+                                    </div>
+                                    <div class="course-online" *ngIf="categoria.total_minutos != null">
+                                        <i class="icon-phone-computer"></i>
+                                        Total Carga Horária:
+                                        <span class="course-online-numer">{{categoria.total_minutos}}</span>
+                    
+                                    </div>
+                                    <div class="course-online" *ngIf="categoria.total_minutos == null">
+                                        <i class="icon-phone-computer"></i>
+                                        Total Carga Horária:
+                                        <span class="course-online-numer">0</span>
+
+                                    </div>
+                    
+                                </div>
+                            </a>
+                    
+                            <div class="course-payment-info row" style="height:73.75px !important;padding: 25px 0;">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 course-price-call" style="font-size:18px;">
+                                    <span style="font-family: encodeSansCondensed-Bold;" *ngIf="!categoria.gratis" class="course-price orange-font-color">{{ categoria.valor_venda | currency: 'BRL': 'symbol' }}</span>
+                                    <span style="font-family: encodeSansCondensed-Bold;" *ngIf="categoria.gratis" class="course-price orange-font-color">GRÁTIS</span>
+                                    <span style="cursor:pointer;margin-left:10px;" (click)="addToCart(categoria)">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </span>
+                                    <a (click)="favoritar(categoria)" style="cursor:pointer;bottom:0;right:20px;padding:2px 5px;text-align:right;display:flex;justify-content:flex-end" class="card-favorite orange-font-color">
+                                            
+                                            <i *ngIf="!categoria.isFavorite.value" class="far fa-heart"></i>
+                                            <i *ngIf="categoria.isFavorite.value" class="fas fa-heart"></i>
+                                        </a>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+
+
+</div>
+

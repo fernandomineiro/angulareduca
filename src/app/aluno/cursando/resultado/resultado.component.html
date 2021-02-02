@@ -1,0 +1,187 @@
+<section id="page-conta" class="meu-curso questionario aprovado">
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-12 user-info not_print">
+                    <h3 class="course_name">{{ curso.nome_curso }}</h3>
+                    <!--<span id="company_name">{{ curso.nome_faculdade }}</span>-->
+                    <br />
+                    <br />
+                    <div class="category"> Categoria:
+                        <span id="category_name">Economia</span>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="course-info">
+                        <div *ngIf="curso.idioma">
+                            <span class="icon icon-comments"></span>
+                            Idioma:
+                            <span id="language">{{ curso.idioma }}</span>
+                        </div>
+                        <div>
+                            <span class="icon icon-hamburger-menu-1"></span>
+                            Aulas:
+                            <span id="modules_amount">18</span>
+                        </div>
+                        <div>
+                            <span class="icon icon-clock"></span>
+                            Duração:
+                            <span id="duration">20</span>h
+                        </div>
+                        <div>
+                            <span class="icon icon-medal"></span>
+                            Certificado:
+                            <span id="certification">Sim</span>
+                        </div>
+                    </div>
+
+                    <section *ngIf="aprovado">
+                        <div class="" id="chart">
+                            <div id="progress_chart" progress="1">
+                                <div id="inner_chart" class="orange-font-color">
+                                    <span id="percent">100</span>%
+                                    <br />
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="certificado-info">
+                                Resultado do questionário:
+                                <div id="points">
+                                    <div id="points_correct">
+                                        <div style="display:flex;">
+                                            <span class="icon icon-check-filled"></span>
+                                            <span id="correct_amount">82</span>%
+
+                                        </div>
+                                        <div class="type">respostas corretas</div>
+                                    </div>
+                                    <br />
+                                    <div id="points_incorrect">
+                                        <div style="display:flex;">
+                                            <span class="icon icon-cancel-filled"></span>
+                                            <span id="incorrect_amount">18</span>%
+
+                                        </div>
+                                        <div class="type">respostas erradas</div>
+                                    </div>
+
+                                </div>
+                                <div class="aprovado-info">Você foi aprovado!</div>
+                            </div>
+                        </div>
+                    </section>
+                    <section *ngIf="!aprovado">
+                        <div class="time orange-font-color">
+                            Tempo para finalizar o curso:<br />
+                            <div style="font-size:25px;font-weight:bold;"><span id="remaining_time">07</span> dias</div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="col-lg-9 col-md-9 col-sm-12 col-12 right">
+
+                    <section *ngIf="aprovado">
+                        <h3 class="congratz orange-font-color text-center not_print">Parabéns, você foi aprovado!</h3>
+                        <div class="instructions text-center not_print">
+                            Confira seu certificado abaixo. Você poderá imprimir, enviar por email e acessá-lo pela
+                            página
+                            do seu perfil
+                        </div>
+
+                        <div id="certificado">
+                            <h4 class="orange-font-color">Certificado</h4>
+                            <div class="logo-container">
+                                <img src="../assets/img/educaz_logo.png" width="100%" height="auto" />
+                            </div>
+                            <div class="certificado-text">
+                                A Educaz certifica que
+                                <span id="client_name">Maria da Silva</span> concluiu o curso
+                                <span id="course_name">Técnicas de Apresentação</span>, em
+                                <span id="month">fevereiro</span> de
+                                <span id="year">2019</span>, com carga horária de
+                                <span id="time_amount">20</span>h.
+
+                            </div>
+                            <div class="footer-certificado">
+                                <div class="logo-footer-container">
+                                    <app-mt-logotipo [style]="{'width': 'auto', 'height': '50px'}"></app-mt-logotipo>
+                                </div>
+                                <div class="qr-footer-container">
+                                    <img src="../assets/img/teste" width="100%" height="auto" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="action_icons" class="not_print">
+                            <a href=""><span class="icon icon-download orange-font-color"></span></a>
+                            <a href=""><span class="icon icon-envelope orange-font-color"></span></a>
+                            <a href=""><span class="icon icon-printer orange-font-color"></span></a>
+                        </div>
+                    </section>
+
+                    <section *ngIf="!aprovado">
+                        <div class="not-aproved-container">
+                            <h3 class="nao-aprovado orange-font-color text-center not_print">Infelizmente você ainda não
+                                atingiu a pontuação necessária para ser aprovado</h3>
+                            <div>Clique <a href="" class="orange-font-color">aqui</a> para refazer o curso</div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <br />
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+    var interval = setInterval(function () {
+        if ($("#topnav_users").length) {
+            $("#topnav_users").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+    var progressValue = Number($("#progress_chart").attr("progress"));
+    $('#progress_chart').circleProgress({
+        value: progressValue,
+        size: 130,
+        fill: {
+            gradient: ["#D35B30", "#FFF22D"]
+        },
+        reverse: true,
+        thickness: 20,
+        emptyFill: "transparent"
+    });
+
+
+
+</script>
+<style>
+    #page-conta .navbar {
+        background-color: #DBDADA !important;
+    }
+
+    #mobile_navbar {
+        background-color: #DBDADA !important;
+
+    }
+
+    .slick-slide {
+        display: flex !important;
+        justify-content: center;
+    }
+
+    @media print {
+
+        .navbar,
+        #mobile_navbar,
+        footer,
+        .not_print {
+            display: none;
+        }
+    }
+</style>

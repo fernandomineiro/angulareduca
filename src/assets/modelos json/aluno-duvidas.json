@@ -1,0 +1,19 @@
+{
+    "name":"Teo Medina",
+    "courseName":"Direito Penal II - Homicídio Doloso",
+    "profilePicture":"../assets/modelos json/img/teacher_image.png",
+    "messages":[
+        {
+            "type":"other",
+            "sentDate":"27/01/2019",
+            "sentTime":"12:35",
+            "content":"Está sim, Denise, aparentemente tudo está uma gracinha"
+        },
+        {
+            "type":"my",
+            "sentDate":"26/01/2019",
+            "sentTime":"14:22",
+            "content":"Olá, meu nome é Denise e eu estou usando um json mockado para testar a interface de chat com angular na sessão de tutoria. Está tudo certo?"
+        }
+    ]
+}

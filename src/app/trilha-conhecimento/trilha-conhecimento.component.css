@@ -1,0 +1,15 @@
+#line1 .inner{
+    height: 100%;
+}
+
+#line1 .inner .img{
+    height: 67px;
+}
+
+.trilhaConf ::ng-deep *{
+    font-weight: normal !important;
+    color:#707070 !important;
+    font-style: normal !important;
+    font-family: encodeSansCondensed-Regular;
+}
+

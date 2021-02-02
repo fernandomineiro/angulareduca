@@ -1,0 +1,47 @@
+<div id="page-agenda" class="page-meus-cursos page-criar-curso page-presenca">
+
+	<section id="main_content">
+		<div class="row" style="width:101%;">
+			<div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+				<app-acesso-restrito-sidebar current1='lista_espera'></app-acesso-restrito-sidebar>
+			</div>
+			<div class="col-lg-8 col-md-8 col-sm-12 col-12" style="margin-top:80px;padding-right:0">
+				<div class="inner">
+					<div class="title orange-font-color">Lista de Espera</div>
+					<div id="page-cadastro">
+						<div class="row main-row">
+							<div class="col-lg-4 col-md-4 col-sm-6 col-6"></div>
+							<div class="col-lg-4 col-md-4 col-sm-6 col-6"></div>
+							<div class="col-lg-4 col-md-4 col-sm-6 col-6">
+								<button class="orange-background" style="width:100%;" (click)="enviaEmailInteressados()">avisar interessados</button>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div id="mensagem-retorno">
+						<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+						<div *ngIf="success" class="alert alert-success">
+							Alunos avisados com sucesso!
+						</div>
+					</div>
+					<div class="card-body row messages">
+						<div style="width:100%;" *ngFor="let espera of listaEspera; let i = index">
+							<div class="row">
+								<div class="col-lg-10 col-md-10 col-sm-10 col-10">
+									<div class="student-name">{{espera.nome_aluno}} - {{espera.email_aluno}}</div>
+									<div class="course-name">{{espera.titulo}} - {{espera.curso_tipo}} - {{espera.faculdade}}</div>
+									<div class="course-date">{{espera.data_atualizacao | date: 'medium'}}</div>
+								</div>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-2">
+									<input type="checkbox" (change)="selecionaAluno(espera, i, $event)" style="width:unset;"
+												 matTooltip="Adicionar a lista de alunos a ser avisados sobre novas turmas"/>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

@@ -1,0 +1,23 @@
+[
+    {                
+        "id":0,
+        "name":"Jorge Fernando",
+        "rg":"25.587.875-01",
+        "presencePercent":80,
+        "presente":true
+    },
+    {                
+        "id":1,
+        "name":"Denise Calsavara",
+        "rg":"00.000.000-00",
+        "presencePercent":95,
+        "presente":true
+    },
+    {                
+        "id":2,
+        "name":"Fulano de Tal",
+        "rg":"11.111.111-11",
+        "presencePercent":75,
+        "presente":false
+    }
+]

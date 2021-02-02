@@ -1,0 +1,113 @@
+<div [ngStyle]="{'height':isMobile ? '320px' : '350px', 'width': isMobile ? '170px' : '210px'}" style="margin:auto;position:relative;" class="card-online" 
+  (window:resize)="onResized($event)">
+  <div class="padding-5" style="height:100%;display:flex;justify-content:center;">
+    <div class="box-shadow course-card not" [ngStyle]="{'max-width':isMobile ? '146px' : '200px','padding': isMobile ? '6px' : '20px 15px' }"
+      style="height:100%; width:100%!important;">
+      <div class="card-inner" style="position:relative">
+        <a matTooltip="Clique aqui para ver detalhes deste curso" [routerLink]="['/curso-online', curso.slug_curso ? curso.slug_curso : curso.slug_titulo, 'detalhe']" class="course-link"
+          style="width:100%;">
+          <div class="card-image" [ngStyle]="{'height':isMobile ? '108px' : '124px', 'width': isMobile ? 'unset' : '168px'}">
+            <img #image src="{{ IMG_URL }}{{ imagem }}" width="auto" height="auto" style="margin:auto !important;" onError="this.onerror = null; this.src = '../../../../assets/img/az.png';"
+            />
+
+          </div>
+        </a>
+        <a *ngIf="configuracoes.layoutHome == 4" (click)="favoritar(curso)" style="cursor:pointer;bottom:0;right:0;padding:2px 5px;text-align:right;display:flex;justify-content:flex-end"
+          class="card-favorite">
+          <div style="margin-top: -5px;color:white;opacity:0.8;z-index:1">
+            <i class="fas fa-heart"></i>
+          </div>
+          <i style="position:absolute;z-index:1" matTooltip="Clique aqui para favoritar este curso" *ngIf="!isFavorite.value"
+            class="far fa-heart"></i>
+          <i style="position:absolute;z-index:1" matTooltip="Clique aqui para desfavoritar este curso" *ngIf="isFavorite.value"
+            class="fas fa-heart"></i>
+        </a>
+
+      </div>
+      <div class="card-bottom">
+        <div style="height:100px;overflow:hidden;">
+          <a matTooltip="Clique aqui para ver detalhes deste curso" [routerLink]="['/curso-online', curso.slug_curso, 'detalhe']" class="course-link"
+            style="width:100%;">
+            <h4 class="course-title" [ngStyle]="{'font-size':isMobile ? '14px' : '16px'}" style="max-width:168px !important;">{{ curso.nome_curso == undefined ? curso.titulo : curso.nome_curso }}</h4>
+          </a>
+          <!--/professor/{{ curso.id_professor }}-->
+          <a matTooltip="Clique aqui para ver detalhes deste professor" [routerLink]="['/professor', curso.id_professor]" class="course-link"
+            style="width:100%;">
+            <p  *ngIf="configuracoes.layoutHome != 4" class="teacher-name" style="max-width:168px !important;" [ngStyle]="{'font-size':isMobile ? '12px' : '13px', 'color': isMobile ? 'black' : ''}">{{ curso.nome_professor }} {{curso.sobrenome_professor}}</p>
+            <p *ngIf="configuracoes.layoutHome == 4 && curso.professor" class="teacher-name" style="max-width:168px !important;" [ngStyle]="{'font-size':isMobile ? '12px' : '13px', 'color': isMobile ? 'black' : ''}">{{ curso.professor.nome }} {{curso.professor.sobrenome}}</p>
+            <p *ngIf="configuracoes.layoutHome == 4 && curso.professor == undefined" class="teacher-name" style="max-width:168px !important;" [ngStyle]="{'font-size':isMobile ? '12px' : '13px', 'color': isMobile ? 'black' : ''}">{{ curso.nome_professor }}</p>
+
+          </a>
+        </div>
+
+        <div class="course-payment-info" *ngIf="!(bought | async) && configuracoes.layoutHome != 4" style="height:73.75px !important;padding:0 !important;">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 course-price-call" [ngStyle]="{'font-size':isMobile ? '14px' : ''}">
+            <small>
+              <strike *ngIf="curso.valor_de != null && curso.valor != null">{{curso.valor_de | currency: 'BRL' : 'symbol'}}</strike>
+            </small>
+            <br/>
+            <span *ngIf="curso.valor_de != null && curso.valor != null && !curso.gratis" class="course-price orange-font-color">{{ curso.valor | currency: 'BRL': 'symbol' }}</span>
+            <span *ngIf="curso.valor_de != null && curso.valor == null && !curso.gratis" class="course-price orange-font-color">{{ curso.valor_de | currency: 'BRL': 'symbol' }}</span>
+            <span *ngIf="curso.gratis" class="course-price orange-font-color">GRÁTIS</span>
+            <span *ngIf="!shoppingCartService.itemWasAdded(curso) && !curso.indisponivel_venda" matTooltip="Clique aqui para adicionar o curso ao carrinho"
+              style="cursor:pointer;margin-left:10px;" (click)="addToCart(curso,image)">
+              <i class="fas fa-cart-plus"></i>
+            </span>
+            <a *ngIf="shoppingCartService.itemWasAdded(curso) && !curso.indisponivel_venda" matTooltip="Este curso já foi adicionado ao carrinho. Clique aqui para ver."
+              style="cursor:pointer;margin-left:10px;" routerLink="/carrinho">
+              <i style="color:#03a84e;" class="fas fa-shopping-cart"></i>
+            </a>
+            <br />
+            <a *ngIf="curso.indisponivel_venda" matTooltip="Avise-me sobre novas turmas." style="cursor:pointer;" (click)="openWarnMeModal(curso.id)">
+              <span class="course-call orange-font-color" style="font-size:12px;">Avise-me sobre novas turmas.</span>
+            </a>
+            <div *ngIf="!curso.indisponivel_venda && configuracoes.tiposCursosAtivos.ativar_membership == 1">
+              <span *ngIf="!curso.gratis" style="font-family:encodeSansCondensed-Regular"> ou </span>
+              <a *ngIf="!curso.gratis" routerLink="/assinaturas" class="assinatura-link">
+                <span matTooltip="Clique aqui para conhecer os planos de assinatura" class="course-call orange-font-color">Faça sua assinatura
+                  <span style="font-size:18px !important;display:none;" class="icon icon-user-card orange-font-color"></span>
+                </span>
+              </a>
+            </div>
+          </div>
+          <a (click)="favoritar(curso)" style="cursor:pointer;bottom:23px;right:0;padding:2px 5px;text-align:right;display:flex;justify-content:flex-end"
+            class="card-favorite">
+            <div style="margin-top: -5px;color:white;opacity:0.8;z-index:1">
+              <i class="fas fa-heart"></i>
+            </div>
+            <i style="position:absolute;z-index:1" matTooltip="Clique aqui para favoritar este curso" *ngIf="!isFavorite.value"
+              class="far fa-heart"></i>
+            <i style="position:absolute;z-index:1" matTooltip="Clique aqui para desfavoritar este curso" *ngIf="isFavorite.value"
+              class="fas fa-heart"></i>
+          </a>
+        </div>
+        <div class="course-payment-info row" *ngIf="(bought | async) && cursoLiberado && configuracoes.layoutHome != 4" style="height:73.75px !important;">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 course-price-call" style="width:100%;display:flex;">
+            <a matTooltip="Você já possui este curso. Clique aqui para acessá-lo" style="width:100%;display:flex;justify-content:center;"
+              href="javascript:void(0)" routerLink="/meu-curso/{{curso.id}}/faca-aulas">
+              <span style="margin: auto 0">Acesse </span>
+              <i class="fas fa-play-circle" style="color:#03a84e;font-size:40px;margin: auto 0;padding-left:10px"></i>
+            </a>
+          </div>
+        </div>
+        <div class="course-payment-info row" *ngIf="!cursoLiberado && configuracoes.layoutHome != 4" style="height:73.75px !important;">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 course-price-call" style="width:100%;display:flex;">
+              <div *ngIf="tipoLiberacao == 2">Este curso será liberado em  {{ dataInicio }}</div>
+              <div *ngIf="tipoLiberacao == 3">Curso será liberado quando o anterio for concluído.</div>
+              <div *ngIf="tipoLiberacao == 4">
+                  <div *ngIf="currentCourseIndex != 0">
+                      Curso será liberado quando o anterio for concluído e na data {{ dataInicio }}
+                  </div>
+                  <div *ngIf="currentCourseIndex == 0">
+                      Este curso será liberado em  {{ dataInicio }}
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div *ngIf="configuracoes.layoutHome == 4" style="position:absolute;bottom: 15px;">
+          <a [routerLink]="['/curso-online', curso.slug_titulo, 'detalhe']"> <img src="../assets/img/perennials/Grupo 3331.png" /> </a>         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

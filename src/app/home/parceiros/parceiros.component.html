@@ -1,0 +1,13 @@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="allParceiros != undefined && allParceiros.length">
+    <h3 class="orange-font-color" style="margin-top: 30px;">Nossos parceiros</h3>
+    <ngx-slick-carousel  id="home_nossos_parceiros" class="slickear3 carousel" #slickModal="slick-carousel"  [config]="slide2Config">
+      <div *ngFor="let p of allParceiros" ngxSlickItem class="image-parceiros" style="margin:auto 0;">
+        <div [ngStyle]="{'width':isMobile ? '65px' :''}">
+          <a href="{{p.link}}" target="_blank">
+            <img src="{{ IMG_URL }}/files/parceiros/{{p.imagem}}" width="100%" height="auto" />
+          </a>
+        </div>
+      </div>
+    </ngx-slick-carousel>
+
+</div>

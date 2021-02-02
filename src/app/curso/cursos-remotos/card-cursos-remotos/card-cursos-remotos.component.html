@@ -1,0 +1,106 @@
+<div href="" class="outter" style="display:flex;justify-content:center;" class="card-remoto" [ngStyle]="{width: isMobile ? '147px' :'250px'}" (window:resize)="onResized($event)">
+    <div class="box-shadow course-card item height not" style="max-width:240px" [ngStyle]="{'padding': isMobile ? '6px' : '20px 15px', 'height': isMobile ? '400px' : '420px'}">
+        <div class="card-inner" style="position:relative;">
+            <a matTooltip="Clique aqui para ver detalhes deste curso" [routerLink]="['/curso-remoto', curso.slug_curso, 'detalhe']" class="course-link"
+                style="width:100%;">
+                <div class="card-image" style="width:100%;overflow:hidden" [ngStyle]="{height: isMobile ? '105px' :'124px'}">
+                    <img #image src="{{ IMG_URL }}{{ curso.imagem }}" style="width:100% !important;max-width:100% !important;height:auto;overflow:hidden" width="auto"
+                        height="auto" onError="this.onerror = null; this.src = '../../../../assets/img/az.png';" />
+                    <span class="card-sticker" style="display:none;">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            width="70px" height="27.691px" viewBox="0 0 90 27.691" enable-background="new 0 0 90 27.691" xml:space="preserve">
+                            <polygon fill="#F2652A" points="90,0 0,0 0,13.846 0,27.691 90,27.691 82.212,13.846 " />
+                            <foreignObject x="3" y="1" width="80" height="20">
+                                <span xmlns="http://www.w3.org/1999/xhtml" class="cidade">
+                                    São Paulo, SP
+                                </span>
+                            </foreignObject>
+                        </svg>
+                    </span>
+
+                </div>
+            </a>
+          
+        </div>
+        <div class="card-bottom">
+            <div style="height:100px;overflow:hidden;">
+                <a matTooltip="Clique aqui para ver detalhes deste curso" [routerLink]="['/curso-remoto', curso.slug_curso, 'detalhe']" class="course-link"
+                   style="width:100%;">
+                    <h4 class="course-title"  [ngStyle]="{'font-size':isMobile ? '14px' : '16px'}">{{ curso.nome_curso == undefined ? curso.titulo : curso.nome_curso }}</h4>
+                </a>
+                <a matTooltip="Clique aqui para ver detalhes deste professor" [routerLink]="['/professor', curso.id_professor]" class="course-link"
+                   style="width:100%;">
+                    <p class="teacher-name" [ngStyle]="{'font-size':isMobile ? '12px' : '13px', 'color': isMobile ? 'black' : ''}">{{ curso.nome_professor }} {{curso.sobrenome_professor}}</p>
+                </a>
+            </div>
+            <div style="height: 66px; margin-bottom: 20px;" [ngStyle]="{'font-size':isMobile ? '14px' : '16px'}">
+                <p class="info1" *ngIf="curso.primeira_data != null && curso.ultima_data != null"
+                style="font-family: 'encodeSansCondensed-SemiBold'; color: black; font-size: 12px; margin: 0;" >
+                {{ curso.primeira_data | date:'LLLL' }} 
+                <span style="font-family: 'encodeSansCondensed-SemiBold';" 
+                    *ngIf="curso.primeira_data.getFullYear() != curso.ultima_data.getFullYear()">
+                        de {{ curso.primeira_data | date:'yyyy' }} 
+                </span>
+                <span style="font-family: 'encodeSansCondensed-SemiBold';" 
+                    *ngIf="curso.primeira_data.getMonth() != curso.ultima_data.getMonth()">
+                        a {{ curso.ultima_data | date:'LLLL' }} 
+                </span>
+                de {{ curso.ultima_data | date:'yyyy' }}
+                </p>
+            </div>
+            <div class="course-payment-info row" *ngIf="!curso.bought.value" [ngStyle]="{'font-size':isMobile ? '14px' : '16px'}">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12 course-price-call" [ngStyle]="{'padding':isMobile ? '6px' : ''}">
+                    <small><strike *ngIf="curso.valor_de != null && curso.valor != null">{{curso.valor_de | currency: 'BRL' : 'symbol'}}</strike></small>
+                    <a (click)="favoritar(curso)"
+                       style="cursor:pointer;bottom:22px;right:0;padding:2px 5px;text-align:right;display:flex;justify-content:flex-end"
+                    class="card-favorite">
+                    <div style="margin-top: -5px;color:white;opacity:0.8;z-index:1">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <i style="position:absolute;z-index:1" matTooltip="Clique aqui para favoritar este curso" *ngIf="!curso.isFavorite.value"
+                        class="far fa-heart"></i>
+                    <i style="position:absolute;z-index:1" matTooltip="Clique aqui para desfavoritar este curso" *ngIf="curso.isFavorite.value"
+                        class="fas fa-heart"></i>
+
+                </a><br/>
+
+                    <span *ngIf="curso.valor_de != null && curso.valor != null && !curso.gratis" class="course-price orange-font-color">{{ curso.valor | currency: 'BRL': 'symbol' }}</span>
+                    <span *ngIf="curso.valor_de != null && curso.valor == null && !curso.gratis" class="course-price orange-font-color">{{ curso.valor_de | currency: 'BRL': 'symbol' }}</span>
+                    <span *ngIf="curso.gratis" class="course-price orange-font-color">GRÁTIS</span>
+                    <span *ngIf="!shoppingCartService.itemWasAdded(curso) && !curso.indisponivel_venda" matTooltip="Clique aqui para adicionar o curso ao carrinho" style="cursor:pointer;margin-left:10px;"
+                        (click)="addToCart(curso,image)">
+                        <i class="fas fa-cart-plus"></i>
+                    </span>
+                    <a *ngIf="shoppingCartService.itemWasAdded(curso) && !curso.indisponivel_venda" matTooltip="Este curso já foi adicionado ao carrinho. Clique aqui para ver."
+                        style="cursor:pointer;margin-left:10px;" routerLink="/carrinho">
+                        <i style="color:#03a84e;" class="fas fa-shopping-cart"></i>
+                    </a>
+                    <br />
+                      <a *ngIf="curso.indisponivel_venda" matTooltip="Avise-me sobre novas turmas." style="cursor:pointer;"  data-toggle="modal"
+                         data-target="#meavise" (click)="openWarnMeModal(curso.id)">
+                         <span class="course-call orange-font-color" style="font-size:12px">Avise-me sobre novas turmas.</span>
+                      </a>
+                    <a [routerLink]="['/curso-remoto', curso.slug_curso, 'detalhe']" *ngIf="!curso.indisponivel_venda" class="assinatura-link">
+                        <span matTooltip="Clique aqui para ver detalhes deste curso"  style="font-size:12px" class="course-call orange-font-color">Garanta sua vaga!</span>
+                    </a>
+                </div>
+
+            </div>
+            <div class="course-payment-info row" *ngIf="curso.bought.value && cursoLiberado" style="height:73.75px !important;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 course-price-call" style="width:100%;display:flex;">
+                    <a matTooltip="Você já possui este curso. Clique aqui para acessá-lo" style="width:100%;display:flex;justify-content:center;"
+                        href="javascript:void(0)" routerLink="/meu-curso/{{curso.id}}/faca-aulas">
+                        <span style="margin: auto 0">Acesse </span>
+                        <i class="fas fa-play-circle" style="color:#03a84e;font-size:40px;margin: auto 0;padding-left:10px"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="course-payment-info row" *ngIf="!cursoLiberado" style="height:73.75px !important;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 course-price-call" style="width:100%;display:flex;">
+                    Este curso será liberado em {{ dataInicio }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

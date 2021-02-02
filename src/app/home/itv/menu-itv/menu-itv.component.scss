@@ -1,0 +1,13 @@
+.box-menu-grad {
+  padding: 31px;
+  color: #FFF;
+  font-size: 13px;
+  padding-top: 23px;
+  background-color: rgb(152, 152, 152);
+
+  & .custom-menu-icons {
+    font-size: 50px;
+    display: flex;
+    cursor: pointer;
+  }
+}

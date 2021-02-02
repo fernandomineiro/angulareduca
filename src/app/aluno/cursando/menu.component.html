@@ -1,0 +1,137 @@
+<div class="buttons" *ngIf="curso != undefined" style="flex-wrap:wrap;">
+
+    <a [matTooltipDisabled]="!showAulas" matTooltip="Clique aqui para assistir às aulas e acessar os arquivos disponibilizados pelo professor" style="margin-top:20px;" *ngIf="!isPresencial" href="#" routerLink="/meu-curso/{{curso.id}}/faca-aulas" [ngClass]="{'orange-background': current== 'faca-aulas', 'orange-light-background': current!= 'faca-aulas' }">
+        <div>
+            <span class="icon icon-play-square"></span>
+            <span class="hide-sm">Faça as aulas</span>
+        </div>
+    </a>
+    <a  [matTooltipDisabled]="!showQuiz" matTooltip="Clique aqui para responder ao questionário do curso" href="#" style="margin-top:20px;" 
+    *ngIf="curso.quiz_id != null && 
+        ((curso.tipo == 2 && progresso.datas_agenda_finalizadas) || 
+        (curso.tipo == 4 && progresso.datas_agenda_finalizadas && progresso.percentualOnline == 100) || 
+        (curso.tipo == 1 && progresso.percentualOnline == 100))"
+         routerLink="/meu-curso/{{curso.id}}/questionario/{{curso.quiz_id}}" [ngClass]="{'orange-background': current== 'questionario', 'orange-light-background': current!= 'questionario' }">
+        <div>
+            <span class="icon icon-pencil"></span>
+            <span class="hide-sm">Questionário</span>
+        </div>
+    </a>
+    <a  matTooltip="Clique aqui para realizar o upload de seu trabalho" href="" style="margin-top:20px;" class="orange-light-background" data-toggle="modal" data-target="#tccModal" 
+    *ngIf="curso.trabalho &&
+            ((curso.quiz_id != null && progresso.aprovacao_questionario && ((curso.tipo == 2 && progresso.datas_agenda_finalizadas) || 
+            (curso.tipo == 4 && progresso.datas_agenda_finalizadas && progresso.percentualOnline == 100) || 
+            (curso.tipo == 1 && progresso.percentualOnline == 100))) ||
+            curso.quiz_id == null && ((curso.tipo == 2 && progresso.datas_agenda_finalizadas) || 
+            (curso.tipo == 4 && progresso.datas_agenda_finalizadas && progresso.percentualOnline == 100) || 
+            (curso.tipo == 1 && progresso.percentualOnline == 100)))">
+        <div>
+            <span class="icon icon-upload"></span>
+            <span class="hide-sm">Trabalho</span>
+        </div>
+    </a>
+    <a *ngIf="respondeDuvidas" [matTooltipDisabled]="!showDuvidas" id="btn-duvidas" matTooltip="Clique aqui para conversar com o professor" href="#" style="margin-top:20px;" routerLink="/meu-curso/{{curso.id}}/duvidas" [ngClass]="{'orange-background': current== 'duvidas', 'orange-light-background': current!= 'duvidas' }">
+        <div>
+            <span class="icon fas fa-question-circle"></span>
+            <span class="hide-sm">Dúvidas</span>
+        </div>
+    </a>
+    <a [matTooltipDisabled]="!showVoucher" matTooltip="Clique aqui para ver informações sobre o voucher" href="#" style="margin-top:20px;" *ngIf="curso.tipo != 1 && curso.tipo != 4" routerLink="/meu-curso/{{curso.id}}/voucher" [ngClass]="{'orange-background': current== 'voucher', 'orange-light-background': current!= 'voucher' }">
+        <div>
+            <span class="icon fas fa-ticket-alt"></span>
+            <span class="hide-sm">Voucher</span>
+        </div>
+    </a>
+</div>
+
+
+<div id="page-conta" class="meu-curso tcc"  *ngIf="curso != undefined">
+    <div class="modal fade" id="tccModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">X</button>
+                </div>
+                <div class="modal-body">
+                    <div class="inner">
+                        <div class="logo">
+                            <app-mt-logotipo [style]="{'width': 'auto', 'height': '50px'}"></app-mt-logotipo>
+                        </div>
+                        <div class="enviar-title orange-font-color">Enviar Trabalho</div>
+                        <form id="form_upload">
+                            <input type="file" style="display:none;" name="uploadFile" id="upload" required (change)="uploadChange($event)">
+                            <button class="orange-background" type="button" id="upload-fake"
+                                (click)="clickUpload()">
+                                <span *ngIf="!uploaded; else notUploaded">selecionar arquivo</span>
+                                <ng-template #notUploaded>enviar novo arquivo</ng-template>
+                            </button>
+                            <div id="path">{{fileName}}</div>
+                            <div class="card-body row messages" *ngFor="let trabalho of enviados">
+                                <div class="row" style="width:100%;" >
+                                    <div class="col-lg-1 col-md-1 col-sm-1 col-1" style="padding-top: 10px;">
+                                        <div *ngIf="trabalho.corrigido else naocorrigido">
+                                            <span class="fa fa-circle" style="color: green" title="Corrigido" matTooltip="Corrigido"></span>
+                                        </div>
+                                        <ng-template #naocorrigido >
+                                            <span class="fa fa-circle" style="color: red" matTooltip="Correção Pendente" title="Correção Pendente"></span>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                        <a [href]="trabalho.downloadPath" download target="_blank" title="Faça o download da correção do seu trabalho">
+                                            <div class="course-name nome-arquivo">
+                                                {{ getArquivoName(trabalho) }}
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-2">
+                                        {{trabalho.data_atualizacao | date: 'dd/MM/yyyy'}}
+                                    </div>
+                                </div>
+                                <div style="width: 100%;">
+                                    <hr/>
+                                </div>
+                            </div>
+                            <button class="orange-background" type="submit" id="send_file" (click)="uploadTcc()">enviar</button>
+                            <br />
+                            <button style="background-color:#B2B1B1;color:white;font-family: encodeSansCondensed-Bold;"
+                                id="cancel" data-dismiss="modal">cancelar</button>
+                            <br />
+                            <br />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function clickUpload() {
+        $("#upload").click();
+    }
+
+    $("#upload").change(function () {
+        var path = $("#upload").val();
+        $("#path").text($("#upload")[0].files.item(0).name);
+    });
+
+    var interval = setInterval(function () {
+        if ($("#topnav_users").length) {
+            $("#topnav_users").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+    var progressValue = Number($("#progress_chart").attr("progress"));
+    $('#progress_chart').circleProgress({
+        value: progressValue,
+        size: 130,
+        fill: {
+            gradient: ["#D35B30", "#FFF22D"]
+        },
+        reverse: true,
+        thickness: 20,
+        emptyFill: "transparent"
+    });
+</script>

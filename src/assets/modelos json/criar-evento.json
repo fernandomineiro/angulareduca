@@ -1,0 +1,70 @@
+{
+    "projetoId":0,
+    "titulo":"Blá Blá",
+    "descricao":"teste teste teste",
+    "local":"Centro de Convivência de São Paulo",
+    "cidade":"São Paulo",
+    "estado":"SP",
+    "datas":[
+        {
+            "data":"2019-06-07",
+            "diaSemana":"sexta",
+            "horaInicio":"00:00",
+            "horaTermino":"01:00"
+        },
+        {
+            "data":"2019-06-08",
+            "diaSemana":"sabado",
+            "horaInicio":"00:00",
+            "horaTermino":"01:00"
+        }
+    ],
+    "gratuito":true,
+    "atividades":[
+        {
+            "tipo":"workshop",
+            "data":"2019-01-07",
+            "horaInicio":"00:00",
+            "horaTermino":"01:00",
+            "preco":"R$ 150,00",
+            "precoVenda":"R$ 160,00",
+            "categoriaId":1,
+            "certificadoId":0,
+            "professores":[
+                {
+                    "id":0,
+                    "nome":"Fulano de tal"
+                },
+                {
+                    "id":1,
+                    "nome":"Ciclano de tal"
+                }
+            ],
+            "maxAlunos":100,
+            "minAlunos":80
+        },
+        {
+            "tipo":"palestra",
+            "data":"2019-01-07",
+            "horaInicio":"00:00",
+            "horaTermino":"01:00",
+            "preco":"R$ 150,00",
+            "precoVenda":"R$ 160,00",
+            "categoriaId":2,
+            "certificadoId":0,
+            "professores":[
+                {
+                    "id":3,
+                    "nome":"Blá Blá"
+                },
+                {
+                    "id":4,
+                    "nome":"idja aosdijasd"
+                }
+            ],
+            "maxAlunos":100,
+            "minAlunos":80
+        }
+    ]  
+   
+}

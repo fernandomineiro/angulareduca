@@ -1,0 +1,196 @@
+#home_proximos_cursos .padding-5{
+    display: flex !important;
+    justify-content: center;
+}
+
+footer{
+    margin-top: 0 !important;
+}
+
+#web_navbar_quemSomos a{
+    color:black !important;
+}
+
+#navbar_Responsive ul li{
+    margin:0 4px;
+}
+
+.nav-item{
+    display: flex;
+  }
+
+  .nav-link{
+    margin:auto;
+  }
+
+  .dropdown{
+      margin: auto;
+  }
+
+  header{
+    margin-top: 100px;
+    overflow: hidden;
+  }
+
+  #web_navbar,
+  #mobile_navbar{
+      z-index: 2 !important;
+  }
+ #nav_link_shop{
+     position: relative;
+ }
+ #nav_link_shop #cart_amount{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-family: encodeSansCondensed-Bold;
+    border-radius: 100%;
+    text-align: center;
+    right: 0;
+    bottom: 3px;
+    font-size: 11px;
+    line-height: 20px;
+ }
+
+ #web_navbar {
+    display: block !important;
+  }
+
+
+  @media (max-width: 972px){
+    #navbar_Responsive{
+        position: absolute;
+        background-color: white;
+        top: 80px;
+        left: 0;
+        padding: 20px;
+    }
+    #navbar_Responsive .dropdown,
+    #navbar_Responsive .nav-link,
+    #navbar_Responsive mt-user-detail{
+       margin: unset !important;
+    }
+
+    #navbar_Responsive mt-user-detail{
+        width:100%;
+    }
+}
+
+#mobile_navbar #menu{    
+    margin:unset !important;    
+}
+
+@media (min-width: 2031px){
+    #banner_container img{
+        width: 100% !important;
+        height: auto !important;        
+    }
+}
+
+@media (max-width: 1899px){
+    #banner_container{
+        display: flex;
+        justify-content: center;
+        height: unset !important;    
+    }
+}
+
+header{
+    overflow: hidden;
+    margin-top: 70px;
+    margin-bottom: 50px;
+}
+
+#mobile_navbar,
+#mobile_navbar #logo{
+    height: 70px !important;
+   
+}
+
+#mobile_navbar #logo /deep/ img{
+    width: auto !important;
+    height: 100% !important;
+}
+
+#web_navbar .navbar-brand /deep/ img{
+    width: auto !important;
+    height: 70px !important;
+}
+
+/*PROVISÓRIO PARA NÃO CORTAR O BANNER. REMOVER QUANDO TIVERMOS BANNERS PARA CADA TAMANHO DE TELA*/
+@media (max-width: 2030px){
+    #banner_container img{
+        width:100% !important;
+        height: auto !important;
+    }
+    header{
+        height: unset !important;
+        min-height: unset !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+/**********************************************************************************/
+
+
+.fixed-top {
+  margin: 0;
+  position: fixed;
+  z-index: 1030;
+  height: 70px;
+
+  &.scrolled {
+    background-color: #ffffff!important;
+    transition: background-color .2s linear;
+  }
+}
+
+.logged-in {
+  display: flex;
+  position: absolute;
+  right: 80px;
+  top: 10px;
+
+  & .userPhoto {
+    margin-left: 10px;
+  }
+
+  & .vertical-auto {
+    margin: auto 0;
+  }
+
+  & .userContainer {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid #00000021;
+    & img {
+      height: auto;
+      max-width: 50px;
+    }
+  }
+
+  & .dropdown-menu {
+    right: 0!important;
+    float: unset!important;
+    left: unset!important;
+  }
+}
+
+.navbarCollapse {
+  justify-content: flex-end!important;
+
+  & .navbar-nav {
+    margin-right: 150px!important;
+    & li.nav-item {
+      padding: 15px 30px;
+
+      & a {
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+  }
+}

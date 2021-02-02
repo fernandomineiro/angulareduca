@@ -1,0 +1,81 @@
+<div class="courses-info">
+    <div class="courses-container">
+        <div class="title orange-font-color" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online">
+            <span class="fa fa-graduation-cap"></span>
+            <span style="margin-left: 10px;">Meus Cursos On-line</span>
+        </div>
+        <div class="horizontal-line3" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online"></div>
+        <div class="card-container" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online">
+            <p *ngIf="!cursos.length"><br/>Você não possui cursos on-line</p>
+            <app-mt-card [curso]="curso" [showProgressBar]="true" [percentageDone]="50" *ngFor="let curso of cursos"></app-mt-card>
+        </div>
+        <div class="title orange-font-color" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos">
+            <span class="fa fa-graduation-cap"></span>
+            <span style="margin-left: 10px;">Meus Cursos Remotos </span>
+        </div>
+        <div class="horizontal-line3" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos"></div>
+        <div class="card-container" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos">
+            <p *ngIf="!remotos.length"><br/>Você não possui cursos remotos</p>
+            <app-mt-card [curso]="curso" [showProgressBar]="true" *ngFor="let curso of remotos"></app-mt-card>
+        </div>
+        <div class="title orange-font-color" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais">
+            <span class="fa fa-graduation-cap"></span>
+            <span style="margin-left: 10px;">Meus Cursos Presenciais</span>
+        </div>
+        <div class="horizontal-line3" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais"></div>
+        <div class="card-container" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais">
+            <p *ngIf="!presenciais.length"><br/>Você não possui cursos presenciais</p>
+            <app-mt-card [curso]="curso" [showProgressBar]="true" *ngFor="let curso of presenciais"></app-mt-card>
+        </div>
+        <div class="title orange-font-color" *ngIf="configuracoes.tiposCursosAtivos.ativar_membership">
+            <span class="fa fa-graduation-cap"></span>
+            <span style="margin-left: 10px;">Minhas assinaturas</span>
+        </div>
+        <div class="horizontal-line3" *ngIf="configuracoes.tiposCursosAtivos.ativar_membership"></div>
+        <div class="card-container" *ngIf="configuracoes.tiposCursosAtivos.ativar_membership">
+            <p *ngIf="!assinaturas.length"><br/>Você não possui assinaturas</p>
+            <div *ngFor="let assinatura of assinaturas" style="width: 100%;margin-top: 30px;">
+                <span>Tipo da assinatura: {{ assinatura.tipo_assinatura }}</span><br>
+                <span>Status da assinatura: {{ assinatura.titulo }}</span><br>
+                <span>Nome do plano: {{ assinatura.assinatura_titulo }}</span><br>
+                <span>Valor da assinatura: {{ toNumber(assinatura.valor_bruto - assinatura.valor_desconto).toFixed(2) | currency: 'BRL': 'symbol' }}</span><br><br>
+            </div>
+        </div>
+        <div class="title orange-font-color" *ngIf="configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento">
+            <span class="fa fa-graduation-cap"></span>
+            <span style="margin-left: 10px;">Minhas trilhas de conhecimento</span>
+        </div>
+        <div class="horizontal-line3" *ngIf="configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento"></div>
+        <div class="card-container" *ngIf="configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento">
+            <p *ngIf="!trilhasRemotos.length && !trilhasOnline.length && !trilhasPresenciais.length">
+                <br/>Você não possui trilhas de conhecimento
+            </p>
+            <app-mt-card [curso]="curso" [showProgressBar]="true" *ngFor="let curso of trilhasOnline"></app-mt-card>
+            <app-mt-card [curso]="curso" [showProgressBar]="true" *ngFor="let curso of trilhasPresenciais"></app-mt-card>
+            <app-mt-card [curso]="curso" [showProgressBar]="true" *ngFor="let curso of trilhasRemotos"></app-mt-card>
+        </div>
+
+        <div class="title orange-font-color" *ngIf="configuracoes.tiposCursosAtivos.ativar_eventos">
+            <span class="fa fa-graduation-cap"></span>
+            <span style="margin-left: 10px;">Meus eventos</span>
+        </div>
+        <div class="horizontal-line3" *ngIf="configuracoes.tiposCursosAtivos.ativar_eventos"></div>
+        <div class="card-container" *ngIf="configuracoes.tiposCursosAtivos.ativar_eventos">
+            <p *ngIf="!eventos.length">
+                <br/>Você não possui eventos
+            </p>
+            <div class="course-outter" *ngFor="let evento of eventos">
+                <div class="padding-5">
+                    <div class="box-shadow">
+                        <div class="image">
+                            <img src="{{ evento.imagem }}" class="card-img" />
+                        </div>
+                        <div class="course-name" matTooltip="{{ evento.titulo }}">{{ evento.agenda_descricao }}</div>
+                        <div class="teacher-name"  matTooltip="{{ evento.professor_nome }}">{{ evento.professor_nome }}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

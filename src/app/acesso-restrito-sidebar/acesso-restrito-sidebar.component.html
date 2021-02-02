@@ -1,0 +1,170 @@
+<!-- 
+    1 - professor
+    2 - administrador
+    4 - curador
+    5- produtora
+    7 - gestor de conteudo ies
+    8 - gestor comercial ies
+    9 - coordenador acadêmico / gestor acadêmico
+    10 - financeiro ies
+    11 - marketing ies
+    12 - atendimento ies
+    13 - secretaria ies
+    14 - cliente - aluno
+    15 - projeto
+    16 - teste validação
+    17 - internauta
+    18 - operador ies
+    19 - parceiro
+    20 - desenvolvedor
+    22 - Gestor IES
+
+-->
+<div class="orange-background menu-container" [ngClass]="{'force-perennials': configuracoes.layoutHome == 4}">
+    <ul class="ul-container">
+        <li>
+            <a class="level1" [ngClass]="{'current':current1 == 'meu_perfil'}">Meu perfil</a>
+            <ul>
+                <li>
+                    <span *ngIf="perfilId == tiposPerfil.Professor">
+                        <a routerLink="/acesso-restrito/perfil" class="level2" [ngClass]="{'current':current2 == 'dados-basicos'}">
+                            Dados Pessoais
+                        </a>
+                    </span>
+                    <span *ngIf="perfilId != tiposPerfil.Professor">
+                        <a href="javascript:void(0)" class="level2 disabled" [ngClass]="{'current':current2 == 'dados-basicos'}">
+                            Dados Pessoais                            
+                        </a><small> EM BREVE</small>
+                    </span>
+                </li>              
+                <li *ngIf="perfilId != tiposPerfil.Administrador && perfilId != tiposPerfil.Curador && perfilId != tiposPerfil.SecretariaIes && perfilId != tiposPerfil.MarketingIes && perfilId != tiposPerfil.GestorIes && perfilId != tiposPerfil.FinanceiroIes">
+                    <a routerLink="/acesso-restrito/perfil/endereco" class="level2" [ngClass]="{'current':current2 == 'endereco'}">
+                        Endereço
+                    </a>
+                </li>
+                <li>
+                    <a *ngIf="perfilId == tiposPerfil.Professor" routerLink="/acesso-restrito/perfil/mini-curriculo" class="level2" [ngClass]="{'current':current2 == 'mini-curriculo'}">
+                        Mini-currículo
+                    </a>
+                </li>
+                <li *ngIf="perfilId != tiposPerfil.Administrador && perfilId != tiposPerfil.Curador && perfilId != tiposPerfil.SecretariaIes && perfilId != tiposPerfil.MarketingIes && perfilId != tiposPerfil.GestorIes && perfilId != tiposPerfil.FinanceiroIes">
+                    <a routerLink="/acesso-restrito/perfil/dados-bancarios" class="level2" [ngClass]="{'current':current2 == 'dados-bancarios'}">
+                        Dados bancários
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/acesso-restrito/perfil/credenciais" class="level2" [ngClass]="{'current':current2 == 'credenciais-professor'}">
+                        Credenciais
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li *ngIf="(perfilId == tiposPerfil.Professor || perfilId == tiposPerfil.Administrador || perfilId == tiposPerfil.Curador || perfilId == tiposPerfil.GestorIes) && configuracoes.layoutHome != 4">
+            <a class="level1" [ngClass]="{'current':current1 == 'criar_curso'}">Criar curso</a>
+            <ul>
+                <li>
+                    <a routerLink="/criar-curso-online" class="level2" [ngClass]="{'current':current2 == 'criar_online'}">On-line</a>
+                </li>
+                <li>
+                    <a routerLink="/criar-curso-presencial" href="" class="level2" [ngClass]="{'current':current2 == 'criar_presencial'}">Presencial</a>
+                </li>
+                <li>
+                    <a routerLink="/criar-curso-remoto" class="level2" [ngClass]="{'current':current2 == 'criar_remoto'}">Remoto</a>
+                </li>
+                <!--
+              <li>
+                  <a routerLink="/criar-evento" class="level2" [ngClass]="{'current':current2 == 'criar_evento'}">Evento</a>
+              </li>
+              -->
+            </ul>
+        </li>
+        <li *ngIf="configuracoes.layoutHome == 4">
+            <a class="level1" routerLink="/acesso-restrito/criar-conteudo" [ngClass]="{'current':current1 == 'criar_conteudoOnline'}">Criar conteúdo on-line</a>
+        </li>
+        <li *ngIf="configuracoes.layoutHome == 4 && perfilId == tiposPerfil.GestorIes">
+                <a class="level1" routerLink="/acesso-restrito/criar-categoria-mentoria" [ngClass]="{'current':current1 == 'criar_conteudoOnlineCategoria'}">Criar categorias</a>
+            </li>
+        <li *ngIf="configuracoes.layoutHome == 4">
+                <a class="level1" routerLink="/acesso-restrito/conteudo/meus-cursos" [ngClass]="{'current':current1 == 'mentoria_meusCursos'}">Meus cursos</a>
+            </li>
+
+        <li *ngIf="(perfilId == tiposPerfil.Professor || perfilId == tiposPerfil.Administrador || perfilId == tiposPerfil.Curador || perfilId == tiposPerfil.GestorIes) && configuracoes.layoutHome != 4">
+            <a class="level1" [ngClass]="{'current':current1 == 'agenda'}">Agenda</a>
+            <ul>
+                <li>
+                    <a href="" routerLink="/agenda-cursos" class="level2" [ngClass]="{'current':current2 == 'agenda_cursos'}">Agenda de cursos</a>
+                </li>
+
+                <!-- <li *ngIf="perfilId != tiposPerfil.Curador && perfilId != tiposPerfil.GestorIes">
+                  <a href="" routerLink="/meus-eventos" class="level2" [ngClass]="{'current':current2 == 'meus_eventos'}">Eventos</a> -->
+                <!--<a routerLink="/professores-meus-eventos" class="level2" [ngClass]="{'current':current2 == 'meus_eventos'}">Eventos</a>-->
+                <!-- </li> -->
+            </ul>
+        </li>
+        <li *ngIf="configuracoes.layoutHome != 4">
+            <!-- <a href="" routerLink="/acesso-restrito/relatorios" class="level1" [ngClass]="{'current':current1 == 'relatorios_graficos'}">Relatórios e gráficos</a> -->
+            <a href="javascript:void(0);" class="level1" [ngClass]="{'current':current1 == 'relatorios_graficos'}">Relatórios e gráficos</a>
+            <ul *ngIf="perfilId == tiposPerfil.SecretariaIes || perfilId == tiposPerfil.Administrador || perfilId == tiposPerfil.MarketingIes || perfilId == tiposPerfil.FinanceiroIes || perfilId == tiposPerfil.Curador || perfilId == tiposPerfil.GestorIes">
+                <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/relatorios/alunos')">
+                    <a routerLink="/acesso-restrito/relatorios/alunos" class="level2" [ngClass]="{'current':current2 == 'cadastros'}">Cadastros</a>
+                </li>
+                <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/relatorios/historico-escolar')">
+                    <a routerLink="/acesso-restrito/relatorios/historico-escolar" class="level2" [ngClass]="{'current':current2 == 'historico_escolar'}">Histórico escolar</a>
+                </li>
+                <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/graficos/faturamento-comparativo')">
+                    <a routerLink="/acesso-restrito/graficos/faturamento-comparativo" class="level2" [ngClass]="{'current':current2 == 'vendas'}">Vendas</a>
+                </li>
+                <!-- <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/graficos/faturamento-por-professor')">
+                    <a routerLink="/acesso-restrito/graficos/faturamento-por-professor" class="level2" [ngClass]="{'current':current2 == 'professor'}">Faturamento por professor</a>
+                </li> -->
+                <!-- <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/graficos/assinaturas')">
+                    <a routerLink="/acesso-restrito/graficos/assinaturas" class="level2" [ngClass]="{'current':current2 == 'assinaturas'}">Assinaturas</a>
+                </li> -->
+                <!-- <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/graficos/pedidos')">
+                    <a routerLink="/acesso-restrito/graficos/pedidos" class="level2" [ngClass]="{'current':current2 == 'pedidos'}">Pedidos</a>
+                </li> -->
+            </ul>
+        </li>
+        <li *ngIf="configuracoes.layoutHome == 4 && perfilId == tiposPerfil.GestorIes">
+            <!-- <a href="" routerLink="/acesso-restrito/relatorios" class="level1" [ngClass]="{'current':current1 == 'relatorios_graficos'}">Relatórios e gráficos</a> -->
+            <a href="javascript:void(0)" class="level1" [ngClass]="{'current':current1 == 'relatorios_graficos'}">Relatórios e gráficos</a>
+            <ul>
+                <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/relatorios/alunos')">
+                    <a routerLink="/acesso-restrito/relatorios/alunos" class="level2" [ngClass]="{'current':current2 == 'cadastros'}">Cadastros</a>
+                </li>
+                <!-- <li *ngIf="permissoesService.verificaSeUsuarioPodeAcessar('acesso-restrito/graficos/assinaturas')">
+                    <a routerLink="/acesso-restrito/graficos/assinaturas" class="level2" [ngClass]="{'current':current2 == 'assinaturas'}">Assinaturas</a>
+                </li> -->
+            </ul>
+        </li>
+        <li *ngIf="(perfilId == tiposPerfil.Professor || perfilId == tiposPerfil.Administrador || perfilId == tiposPerfil.MarketingIes || perfilId == tiposPerfil.Curador || perfilId == tiposPerfil.GestorIes) && configuracoes.layoutHome != 4">
+            <a href="" routerLink="/lista-presenca" class="level1" [ngClass]="{'current':current1 == 'lista_presenca'}">Lista de presença</a>
+        </li>
+        <li *ngIf="(perfilId == tiposPerfil.Administrador || perfilId == tiposPerfil.MarketingIes || perfilId == tiposPerfil.Curador || perfilId == tiposPerfil.GestorIes) && configuracoes.layoutHome != 4">
+            <a href="" routerLink="/lista-espera" class="level1" [ngClass]="{'current':current1 == 'lista_espera'}">Lista de espera</a>
+        </li>
+        <li *ngIf="(perfilId == tiposPerfil.Professor || perfilId == tiposPerfil.Administrador || perfilId == tiposPerfil.Curador || perfilId == tiposPerfil.GestorIes) && configuracoes.layoutHome != 4">
+            <a class="level1" [ngClass]="{'current':current1 == 'tutoria'}">Tutoria</a>
+            <ul>
+                <li>
+                    <a routerLink="/tutoria-mensagens" class="level2" [ngClass]="{'current':current2 == 'mensagens'}">Mensagens:
+                        <span id="messages">{{unreadMessages}}</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/tutoria-trabalhos" class="level2" [ngClass]="{'current':current2 == 'trabalhos'}">Trabalhos</a>
+                </li>
+
+            </ul>
+        </li>
+        <li style="display: none">
+            <a href="" routerLink="/acesso-restrito/pesquisa-opiniao" class="level1" [ngClass]="{'current':current1 == 'pesquisa_opiniao'}">Pesquisa de opinião</a>
+        </li>
+        <li *ngIf="(perfilId == tiposPerfil.MarketingIes || perfilId == tiposPerfil.GestorIes) && configuracoes.layoutHome != 4">
+            <a href="javascript:void(0)" class="level1 disabled" class="level1" [ngClass]="{'current':current1 == 'pesquisa_satisfacao'}">Pesquisa de satisfação</a>
+        </li>
+        <li style="margin-top:20px;">
+            <a (click)="logout()" class="level1">X &nbsp; Sair</a>
+        </li>
+    </ul>
+</div>

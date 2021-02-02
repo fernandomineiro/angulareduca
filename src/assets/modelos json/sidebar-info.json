@@ -1,0 +1,13 @@
+{
+    "nome_curso":"Técnicas de Apresentação",
+    "nome_faculdade":"Set Solutions",
+    "categoria":"Economia",
+    "idioma":"Português",
+    "modulos":18,
+    "duracao":20,
+    "certificado":"sim",
+    "percent":86,
+    "respostas_corretas":82,
+    "respostas_incorretas":18,
+    "tempo_finalizar": 7
+}

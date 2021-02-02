@@ -1,0 +1,221 @@
+
+<section *ngIf="!isAvailable">
+    <div class="container">
+            <h2 style="text-align:center;">Em breve acesse aqui nossa biblioteca virtual</h2>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+    </div>
+</section>
+
+<section id="page-cursos" class="cursos-remotos" *ngIf="isAvailable">
+
+    <!-- Page Content -->
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3" id="sidebar">
+                    <mt-sidebar></mt-sidebar>
+                </div>
+                <div class="col-lg-9">
+                    <div class="row sort-order">
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-12" id="sort">
+                            <div class="dropdown">
+                                <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" style="height:200px;">
+                                    <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                                        <div class="radio">
+                                            <input (change)="findCursos()" id="sort_az" name="sort" type="radio">
+                                            <label for="sort_az" class="radio-label">A-Z</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input (change)="findCursos()" id="sort_za" name="sort" type="radio">
+                                            <label for="sort_za" class="radio-label">Z-A</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input (change)="findCursos()" id="sort_mais_vendidos" name="sort" type="radio">
+                                            <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input (change)="findCursos()" id="sort_mais_recente" name="sort" type="radio">
+                                            <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input (change)="findCursos()" id="sort_promocoes" name="sort" type="radio">
+                                            <label for="sort_promocoes" class="radio-label">promoções</label>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-12">
+                            <div class="dropdown">
+                                <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">preço
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" style="height:70px">
+                                    <form id="form_curso_sort_price_dropdown" style="background-color:unset !important;">
+                                        <div class="range-slider">
+                                            <input (change)="findCursos()" id="rs-range-line" class="rs-range" type="range" value="0" min="0" max="1000">
+                                            <span id="rs-bullet" class="rs-label"></span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-6 col-sm-6 col-6 view-options hide-mobile">
+                            <button (click)="changeViewType('list1')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                <span class="icon-hamburger-menu-1" [ngClass]="{'active':currentViewType == 'list1' ? true : false}"></span>
+                            </button>
+                        </div>
+                        <div class="col-lg-1 col-md-6 col-sm-6 col-6 hide-mobile">
+                            <button (click)="changeViewType('grid')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                <span id="button_grid" class="icon-plus-filled" [ngClass]="{'active':currentViewType == 'grid' ? true : false}"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="book-container">
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="book-outter" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                            <a href="" style="display:flex;flex-wrap:wrap;">
+                                <div class="book-image">
+                                    <img src="../../assets/img/livro.PNG" />
+                                </div>
+                                <div class="book-name">
+                                    Concurso Público - Licitações e Contratos Administrativos
+                                </div>
+                                <div class="book-autor">
+                                    Sérgio Nogueira
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:50px;width:100%;">
+                        <a id="see_all_courses_remotos_link" [routerLink]="['/curso-remoto', 0, 'categoria']" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                            <span class="orange-font-color">
+                                <i class="icon-phone-computer"></i>
+                                <i class="icon-user-check"></i>
+                                <span class="text orange-font-color">Veja todos os cursos remotos</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

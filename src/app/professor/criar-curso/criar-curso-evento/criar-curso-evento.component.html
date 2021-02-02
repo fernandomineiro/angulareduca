@@ -1,0 +1,260 @@
+<div id="page-agenda" class="page-criar-curso page-perfil-acesso-restrito">
+
+ 
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current1='criar_curso' current2='criar_evento'></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:30px;padding:20px;" id="page-cadastro">
+                <div class="title orange-font-color">Criar
+                    <span>Evento</span>
+                </div>
+                <br/>
+                <div class="type" style="text-align:left !important;">
+
+                    <mat-accordion id="accordion">
+
+                        <mat-expansion-panel hideToggle class="accordion-item">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="mb-0">
+                                        <a class="orange-font-color">
+                                            <i class="icon icon-arquivo_preto"></i> Rascunhos</a>
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="card-body row messages">
+                                <div style="width:100%;cursor:pointer" *ngFor="let rascunho of rascunhos" (click)="getValues(enviado)">
+                                    <hr/>
+                                    <div class="course-name">{{rascunho.nome}}</div>
+                                    <div class="course-date">{{rascunho.data}}</div>
+
+                                </div>                                
+                            </div>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel hideToggle class="accordion-item">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5 class="mb-0">
+                                        <a class="orange-font-color">
+                                            <i class="icon icon-arquivo_preto"></i> Enviados</a>
+                                    </h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="card-body row messages">
+                                    <div style="width:100%;cursor:pointer" *ngFor="let enviado of enviados" (click)="getValues(enviado)">
+                                        <hr/>
+                                        <div class="course-name">{{enviado.nome}}</div>
+                                        <div class="course-date">{{enviado.data}}</div>
+    
+                                    </div>                                
+                                </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <br/>
+
+                    <br/>
+
+                </div>
+                <br/>
+                <hr/>
+                <br/>
+                <div class="title1 orange-font-color">Novo evento</div>
+                <form id="form_create_course_online" [formGroup]="newRecord" (ngSubmit)="onFormSubmit()">
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Projeto</div>
+                        <select formControlName="projeto" id="projeto" name="projeto" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                            <option selected disabled value="">Selecionar IES</option>
+                            <option *ngFor="let projeto of projetos" value="{{projeto.id}}">{{projeto.nome_faculdade}}</option>
+                        </select>
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Título</div>
+                        <input formControlName="titulo" class="col-lg-9 col-md-8 col-sm-6 col-6" id="titulo" name="titulo" type="text" maxlength="120"
+                            placeholder="Máximo 120 caracteres" />
+                    </div>
+
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Descrição</div>
+                        <textarea formControlName="descricao" class="col-lg-9 col-md-8 col-sm-6 col-6" id="descricao" name="descricao" maxlength="700" placeholder="Máximo 700 caracteres"></textarea>
+                    </div>
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Local</div>
+                        <input formControlName="local" class="col-lg-9 col-md-8 col-sm-6 col-6" id="local" name="local" type="text" />
+                    </div>
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Cidade</div>
+                        <input formControlName="cidade" class="col-lg-9 col-md-8 col-sm-6 col-6" id="cidade" name="cidade" type="text" />
+                    </div>
+                    <div class="item row">
+                        <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Estado</div>
+                        <input formControlName="estado" class="col-lg-9 col-md-8 col-sm-6 col-6" id="estado" name="estado" type="text" />
+                    </div>
+
+                    <div style="margin: 60px 0;" class="toAddDate">
+                        <div class="date" formArrayName="datas" *ngFor="let data of formDatas.controls; let i = index;">
+                          <div [formGroupName]="i">
+                              <div class="item row">
+                                  <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Data</div>
+                                  <input formControlName="data" class="col-lg-4 col-md-5 col-sm-6 col-6" id="data1" name="data1" type="date" />
+                                  <div class="col-lg-5 col-md-3 col-sm-12 col-12">
+                                      <select formControlName="diaSemana" id="dia_semana1" name="dia_semana1">
+                                          <option selected disabled value="">Selecionar dia da semana</option>
+                                          <option value="segunda">Segunda</option>
+                                          <option value="terça">Terça</option>
+                                          <option value="quarta">Quarta</option>
+                                          <option value="quinta">Quinta</option>
+                                          <option value="sexta">Sexta</option>
+                                          <option value="sabado">Sabado</option>
+                                          <option value="domingo">Domingo</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="item row">
+                                  <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Hora de início</div>
+                                  <input formControlName="horaInicio" class="col-lg-2 col-md-2 col-sm-6 col-6" id="hora_inicio1" name="hora_inicio1" type="time" />
+                                  <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Hora de término</div>
+                                  <input formControlName="horaTermino" class="col-lg-2 col-md-2 col-sm-6 col-6" id="hora_termino1" name="hora_termino1" type="time" />
+                              </div>
+                          </div>
+                            
+                        </div>
+
+                    </div>
+                    <p (click)="clickToAddData()" class="orange-font-color insert-more"> + inserir mais dia</p>
+                    <span style="margin-right:10px;font-family:encodeSansCondensed-Regular;">Curso gratuito</span>
+                    <input (checked)="criarCursoForm.gratuito == true" id="gratuito" name="gratuito" type="checkbox" class="cbx-id" formControlName="gratuito" />
+                    <label class="cbx" for="gratuito">
+                        <div class="flip not-border">
+                            <div class="front not-border"></div>
+                            <div class="back not-border">
+                                <svg width="10" height="10" viewBox="0 5 16 14">
+                                    <path d="M2 8.5L6 12.5L14 1.5"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </label>
+                    <br/>
+                    <br/>
+                    <div class="item row">
+                        <button style="margin-left:15px;background-color:#B2B1B1;color:white;max-width:485px;margin-top:20px;margin-bottom:20px;"
+                            class="col-lg-12 col-md-12 col-sm-12 col-12" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            Enviar imagem para banner (jpg ou png)
+                        </button>
+                        <div class="dropdown-menu" style="max-width:485px;background-color:#B2B1B1;color:white">
+                            <input class="col-lg-12 col-md-12 col-sm-12 col-12" type="file" id="upload_image_course" name="upload_image_course" placeholder="Enviar vídeo"
+                            />
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="title2">Conteúdo programático:</div>
+                    <hr style="border:1px solid #B2B1B1" />
+                    <div id="conteudos">
+                        <div class="conteudo" formArrayName="atividades" *ngFor="let atividade of formAtividade().controls; let i = index;">
+                          <div  [formGroupName]="i" >
+                              <div class="item row"> 
+                                  <div  style="width: 100%;display:flex;">
+                                      <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Atividade</div>
+                                      <select formControlName="tipo" id="atividade1" name="atividade1" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                                          <option selected disabled value="">Selecionar workshop/palestra</option>
+                                          <option value="workshop">Workshop</option>
+                                          <option value="palestra">Palestra</option>
+                                      </select>
+                                  </div>
+                                   
+                                </div>
+    
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Data</div>
+                                    <input formControlName="data" class="col-lg-9 col-md-8 col-sm-6 col-6" id="data1" name="data1" type="date" />
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Horário de início</div>
+                                    <input formControlName="horaInicio" class="col-lg-9 col-md-8 col-sm-6 col-6" id="horario_inicio1" name="horario_inicio1" type="time" />
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Horário de término</div>
+                                    <input formControlName="horaTermino" class="col-lg-9 col-md-8 col-sm-6 col-6" id="horario_termino1" name="horario_termino1" type="time" />
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Preço</div>
+                                    <input formControlName="preco" class="col-lg-9 col-md-8 col-sm-6 col-6" id="preco1" name="preco1" type="text" />
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Preço de venda</div>
+                                    <input formControlName="precoVenda" class="col-lg-9 col-md-8 col-sm-6 col-6" id="preco_venda1" name="preco_venda1" type="text" />
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Categoria</div>
+                                    <select formControlName="categoria" id="categoria" name="categoria" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                                        <option selected disabled value="">Selecionar categoria</option>
+                                        <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.titulo}}</option>
+                                    </select>
+            
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Certificado</div>
+                                    <select formControlName="certificado" id="certificado" name="certificado" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                                        <option selected disabled value="">Selecionar tipo de certificado</option>
+                                        <option *ngFor="let certificado of certificados" value="{{certificado.id}}">{{certificado.titulo}}</option>
+                                    </select>
+                                </div>
+                                <div class="item row">
+                                    <div  class="type col-lg-3 col-md-4 col-sm-6 col-6">Professor</div>
+                                    <div class="dropdown col-lg-9 col-md-8 col-sm-6 col-6">                                        
+                                        <select style="margin-bottom:20px;" formControlName="professor"  id="professores{{i}}" name="professores{{i}}" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                                            <option selected disabled value="">Selecionar professores</option>
+                                            <option  *ngFor="let professor of professores" value="{{professor.id}}">{{professor.nome_professor}} {{professor.sobrenome_professor}}</option>
+                                        </select>
+                                        <a style="cursor:pointer;margin-left:10px;" (click)="addProfessor(i)"><i class="fas fa-plus"></i></a>
+                                        <br/>
+                                        <div *ngIf="selectedProfessores[i] != undefined">
+                                            <span *ngFor="let selectProfessor of selectedProfessores[i].element; let j = index">
+                                                <span class="tagProfessor" *ngIf="selectProfessor.nome != ''">{{selectProfessor.nome_professor}} <i class="fas fa-ban" style="cursor:pointer" (click)="removeProfessor(selectedProfessores[i].element, j)"></i></span>
+                                                </span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Máximo de alunos</div>
+                                    <input formControlName="maxAlunos" class="col-lg-9 col-md-8 col-sm-6 col-6" id="alunos_max1" name="alunos_max1" type="text" />
+                                </div>
+                                <div class="item row">
+                                    <div class="type col-lg-3 col-md-4 col-sm-6 col-6">Mínimo de alunos</div>
+                                    <input formControlName="minAlunos" class="col-lg-9 col-md-8 col-sm-6 col-6" id="alunos_min1" name="alunos_min1" type="text" />
+                                </div>
+                                <hr style="border:1px solid #B2B1B1" />
+                          </div>
+                           
+
+                            
+                        </div>
+                    </div>
+                    <p (click)="clickToAddAtividade()" class="orange-font-color insert-more"> + inserir outra atividade</p>
+
+
+
+
+                    <br/>
+                    <br/>
+                    <div id="page-cadastro">
+                        <div class="main-row">
+                            <button type="" class="yellow-light-background">salvar rascunho</button>
+                            <button type="" class="yellow-dark-background">visualizar</button>
+                            <button type="" class="orange-background">eviar para workflow</button>
+                            <button type="submit" style="background-color:#FC0404;">publicar</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </section>
+  </div>

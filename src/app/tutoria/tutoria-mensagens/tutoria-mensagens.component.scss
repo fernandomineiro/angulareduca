@@ -1,0 +1,41 @@
+#page-cadastro .main-row button {
+  margin-top: 30px;
+  padding: 15px 100px;
+  font-family: encodeSansCondensed-Bold;
+  color:
+          white;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.page-tutoria button{
+  font-size:12px !important;
+  margin-top:0 !important;
+}
+
+.page-tutoria select, input{
+  margin-left:5px;
+}
+
+.page-tutoria .main-row{
+  font-family: encodeSansCondensed-Regular;
+}
+
+.page-tutoria .item{
+  margin-top:0 !important;
+}
+
+.page-tutoria hr{
+  border-width:2px;
+  margin-top:30px;
+}
+
+.page-tutoria .see-more {
+  text-align:right !important;
+  font-family: encodeSansCondensed-Regular;
+}
+
+.page-tutoria .fatura .row{
+  width:100%;
+}

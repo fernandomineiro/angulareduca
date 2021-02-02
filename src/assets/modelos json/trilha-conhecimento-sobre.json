@@ -1,0 +1,116 @@
+{
+    "trilhaName": "Direito",
+    "categoryName":"Direito Penal I",
+    "socialMediaLinks": 
+        {
+            "facebook": "www.facebook.com",
+            "twitter": "www.twitter.com",
+            "linkedin": "www.linkedin.com",
+            "pinterest": "www.pinterest.com",
+            "googlePlus": "www.googleplus.com"
+        },
+    
+    "starRate": 3,
+    "language": "Português",
+    "coursePresencialAmount": 4,
+    "courseOnlineAmount": 8,
+    "totalHours": 10,
+    "certification": "sim",
+    "valueTotal": 46.00,
+    "parcelaAmount": 2,
+    "parcelaValue": 23.00,
+    "economy": 38.00,
+    "about": "Indicado para estudantes de graduação em Direito, essa trilha foi preparada para complementar seus estudos em Direito Civil. São 8 cursos online para você fazer quando quiser. São 12 cursos, sendo 8 cursos online e 4 cursos presenciais, todos com certificado. Lembrando que o cada curso irá gerar um certificado único. ",
+    "coursesOnline":[
+        {
+            "id":0,
+            "imgSrc":"../assets/img/course_img_2.png",
+            "name":"Concurso Público - Licitações e Contratos Administrativos",
+            "teacher":"Sergio Nogueira"
+        },
+        {
+            "id":1,
+            "imgSrc":"../assets/img/course_img_2.png",
+            "name":"Concurso Público - Licitações e Contratos Administrativos",
+            "teacher":"Sergio Nogueira"
+        },
+        {
+            "id":2,
+            "imgSrc":"../assets/img/course_img_2.png",
+            "name":"Concurso Público - Licitações e Contratos Administrativos",
+            "teacher":"Sergio Nogueira"
+        },
+        {
+            "id":3,
+            "imgSrc":"../assets/img/course_img_2.png",
+            "name":"Concurso Público - Licitações e Contratos Administrativos",
+            "teacher":"Sergio Nogueira"
+        }
+    ],
+    "coursesPresencial":[
+        {
+            "id":0,
+            "imgSrc":"../assets/img/course-presencial-list.png",
+            "cityState":"São Paulo, SP",
+            "name":"Concurso Público - Licitações e Contratos Administrativos",
+            "teacher":"Sergio Nogueira",
+            "day":"15 de janeiro de 2019",
+            "price": 580.00
+        },
+        {
+            "id":1,
+            "imgSrc":"../assets/img/course-presencial-list.png",
+            "cityState":"São Paulo, SP",
+            "name":"Concurso Público - Licitações e Contratos Administrativos",
+            "teacher":"Sergio Nogueira",
+            "day":"15 de janeiro de 2019",
+            "price": 580.00
+        },
+        {
+            "id":2,
+            "imgSrc":"../assets/img/course-presencial-list.png",
+            "cityState":"São Paulo, SP",
+            "name":"Concurso Público - Licitações e Contratos Administrativos",
+            "teacher":"Sergio Nogueira",
+            "day":"15 de janeiro de 2019",
+            "price": 580.00
+        }
+    ],
+    "teachers":[
+        {
+            "id":0,
+            "imgSrc":"../assets/img/teacher_image.png",
+            "name":"Teo Medina"
+        },
+        {
+            "id":1,
+            "imgSrc":"../assets/img/teacher_image.png",
+            "name":"Teo Medina"
+        },
+        {
+            "id":2,
+            "imgSrc":"../assets/img/teacher_image.png",
+            "name":"Teo Medina"
+        },
+        {
+            "id":3,
+            "imgSrc":"../assets/img/teacher_image.png",
+            "name":"Teo Medina"
+        }
+    ],
+    "rulesInformation":"Texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação texto falso para marcação.",
+    "comments":[
+        {
+            "imgSrc":"../assets/img/teacher_image.png",
+            "starsRate":3,
+            "name":"Fernando Martins",
+            "comment":"Com o curso, consegui administrar melhor meus gastos e planejar investimentos! O curso é dinâmico e a equipe de instrutores é fantástica. Super recomendo para qualquer idade. "
+        },
+        {
+            "imgSrc":"../assets/img/teacher_image.png",
+            "starsRate":4,
+            "name":"Fernando Martins",
+            "comment":"Com o curso, consegui administrar melhor meus gastos e planejar investimentos! O curso é dinâmico e a equipe de instrutores é fantástica. Super recomendo para qualquer idade. "
+        }
+    ]
+}

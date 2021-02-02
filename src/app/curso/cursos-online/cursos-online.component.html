@@ -1,0 +1,320 @@
+<section id="page-cursos" (window:resize)="onResized($event)">
+    <section id="section_content" #section>
+        <div class="container" #sectionContainer>
+            <div class="row">
+                <div style="display:none;" class="col-lg-3" id="sidebar">
+                    <mt-sidebar [hasSearchBox]="false"></mt-sidebar>
+                </div>
+                <div class="col-lg-12">
+                    <div  class="sort-order row" style="justify-content:space-between;">
+                        <div id="sort" [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                            <div class="dropdown">
+                                <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" style="height:200px;">
+                                    <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                                        <div class="radio">
+                                            <input (change)="findCursos('sort','asc')" id="sort_az" name="sort" type="radio">
+                                            <label for="sort_az" class="radio-label">A-Z</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input (change)="findCursos('sort','desc')" id="sort_za" name="sort" type="radio">
+                                            <label for="sort_za" class="radio-label">Z-A</label>
+                                        </div>
+                                        <div *ngIf="!isMentoria" class="radio">
+                                            <input (change)="findCursos('sort','best-seller')" id="sort_mais_vendidos" name="sort" type="radio">
+                                            <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input (change)="findCursos('sort','latest')" id="sort_mais_recente" name="sort" type="radio">
+                                            <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                                        </div>
+                                        <div *ngIf="!isMentoria" class="radio">
+                                            <input (change)="findCursos('sort','promotions')" id="sort_promocoes" name="sort" type="radio">
+                                            <label for="sort_promocoes" class="radio-label">promoções</label>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="!isMentoria" [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                            <div class="dropdown">
+                                <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">preço
+                                    <span class="caret"></span>
+                                </button>
+                                <app-range-slider [tipoCurso]="1"></app-range-slider>
+                            </div>
+                        </div>
+                        <div *ngIf="!isMentoria" [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                            <div class="" id="category">
+                                <div class="dropdown">
+                                    <button href="#" class="nav-link dropdown-toggle" data-display="static" data-toggle="dropdown" style="padding:5px 10px;">categorias
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li *ngFor="let categoria of categorias">
+                                            <!-- <a href="javascript:void(0)" routerLink="/cursos-categoria/{{categoria.id}}">{{ categoria.titulo }}</a> -->
+                                            <a href="javascript:void(0)" routerLink="/cursos-categoria/{{categoria.slug_categoria}}">{{ categoria.titulo }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="!isMentoria" [ngClass]="{'col-sm-12 col-12' : isMobile}" [ngStyle]="{'width': isMobile ? '100%' : '450px'}">
+                            <app-caixa-de-pesquisa></app-caixa-de-pesquisa>
+                        </div>
+                        <div [hidden]="!isMentoria" [ngClass]="{'col-sm-12 col-12' : isMobile}" [ngStyle]="{'width': isMobile ? '100%' : '450px'}">
+                            <form id="form_sidebar_search"  (ngSubmit)="onSubmitSearch()">
+                                <div class="simulate-search-box" style="display:flex;width:100%;margin-bottom:0 !important;">
+                                    <input type="text" placeholder="Pesquisar" #searchBox  style="margin:auto 0;"/>
+                                     <a (click)="onSubmitSearch()" style="margin:auto 0;">
+                                        <span class="icon-search" style="font-size:25px;float:right;"></span>
+                                    </a>
+                                    <!-- <button type="submit" class="icon-search" style="font-size:25px;float:right;">Pesquisar</button> -->
+                            <!--        <button type="submit" class="orange-background">Pesquisar</button>-->
+                                </div>
+                            </form>
+                        </div>
+
+                        
+                        <div class="view-options hide-mobile">
+                            <button (click)="changeViewType('list')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                <span class="icon-hamburger-menu-1" [ngClass]="{'active':currentViewType == 'list' ? true : false}"></span>
+                            </button>
+                        </div>
+                        <div class="hide-mobile">
+                            <button (click)="changeViewType('grid')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                <span id="button_grid" class="icon-plus-filled" [ngClass]="{'active':currentViewType == 'grid' ? true : false}"></span>
+                            </button>
+                        </div>
+                    </div>
+
+
+
+                    <div class="banner" *ngIf="cursosAdicionadosRecentemente != undefined && cursosAdicionadosRecentemente.length && !isMentoria" style="padding: 0 15px;">
+                        <div id="adicionados_recentemente_mobile">
+                            <div>
+                                Adicionados recentemente
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cursos_adicionados_recentemente" class="slickear" style="display:flex;flex-wrap:wrap;" *ngIf="cursosAdicionadosRecentemente != undefined && cursosAdicionadosRecentemente.length && !isMobile"
+                        [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                        <div *ngIf="!isMentoria" href="" id="cursos_adicionados_recentemente_link" class="outter" style="height:340px;display:flex;">
+                            <div class="box-shadow cursos-first-square red-background item" style="margin:auto;height:100%;width:200px">
+                                <span style="font-size:30px;" class="title">Cursos adicionados recentemente</span>
+                            </div>
+                        </div>
+                        <div *ngFor="let curso of cursosAdicionadosRecentemente; let i = index" class="itemdiv" [ngStyle]="{'display':i < 17 ? 'block' : 'none'}"
+                            style="margin:0;">
+                            <app-card-cursos-online *ngIf="i < 17" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}"
+                                [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno">
+                            </app-card-cursos-online>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="cursosAdicionadosRecentemente != undefined && cursosAdicionadosRecentemente.length  && isMobile">
+                        <ngx-slick-carousel class="slickear1 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(section, isMobile ? 156 : 215)">
+                            <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" ngxSlickItem *ngFor="let curso of cursosAdicionadosRecentemente | slice:0:8"
+                                [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno">
+                            </app-card-cursos-online>
+                        </ngx-slick-carousel>
+                    </div>
+
+                    <div class="absolute" style="padding:15px;" *ngIf="cursosAdicionadosRecentemente != undefined && cursosAdicionadosRecentemente.length && !isMentoria">
+                        <a id="adicionados_recentemente_more_link" style="padding:0" routerLink="/todos-os-cursos/1/1" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                            <span style="padding:0">
+                                <i class="icon-next-filled"></i> Veja todos os cursos adicionados recentemente</span>
+                        </a>
+                    </div>
+
+
+                    <div class="banner" *ngIf="cursosEmPromocao != undefined && cursosEmPromocao.length && !isMentoria" style="padding: 0 15px;">
+                        <div id="promocoes_imperdiveis_mobile">
+                            <div>
+                                Promoções imperdíveis
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cursos_promocoes" *ngIf="cursosEmPromocao != undefined && cursosEmPromocao.length && !isMobile" class="slickear"  style="display:flex;flex-wrap:wrap;"
+                        [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+                        <div *ngIf="!isMentoria" href="" id="cursos_promocoes_link" class="outter" style="height:340px;display:flex;">
+                            <div class="box-shadow cursos-first-square orange-background item" style="margin:auto;height:100%;width:200px">
+                                <span style="font-size:30px;" class="title">Promoções por tempo limitado</span>
+                            </div>
+                        </div>
+                        <div *ngFor="let curso of cursosEmPromocao; let i = index" class="itemdiv" [ngStyle]="{'display':i < 17 ? 'block' : 'none'}"
+                            style="margin:0 !important">
+                            <app-card-cursos-online *ngIf="i < 17" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}"
+                                [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno">
+                            </app-card-cursos-online>
+                        </div>
+
+                    </div>
+                    <div *ngIf="cursosEmPromocao != undefined && cursosEmPromocao.length && isMobile">
+                        <ngx-slick-carousel class="slickear1 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(section, isMobile ? 156 : 215)">
+                            <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" ngxSlickItem *ngFor="let curso of cursosEmPromocao | slice:0:8"
+                                [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno">
+                            </app-card-cursos-online>
+                        </ngx-slick-carousel>
+                    </div>
+
+                    <div class="absolute" style="padding:15px;" *ngIf="cursosEmPromocao != undefined && cursosEmPromocao.length && !isMentoria">
+                        <a id="promocoes_more_link" style="padding:0" routerLink="/todos-os-cursos/1/2" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                            <span style="padding:0" >
+                                <i class="icon-next-filled"></i> Veja todos os cursos em promoção</span>
+                        </a>
+                    </div>
+
+                    <div class="banner" *ngIf="cursosEmPromocao != undefined && cursosEmPromocao.length && !isMentoria" style="padding: 0 15px;">
+                            <div id="mais_vendidos_mobile">
+                                <div>
+                                        Cursos mais vendidos
+                                </div>
+                            </div>
+                        </div>
+                    <div id="cursos_mais_vendidos" *ngIf="cursosMaisVendidos != undefined && cursosMaisVendidos.length  && !isMobile" class="slickear"  style="display:flex;flex-wrap:wrap;"
+                        [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}">
+
+                        <div *ngFor="let curso of cursosMaisVendidos; let i = index" class="itemdiv" [ngStyle]="{'display':i < 17 ? 'block' : 'none'}"
+                            style="margin:0 !important">
+                            <app-card-cursos-online *ngIf="i < 17" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}"
+                                [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno">
+                            </app-card-cursos-online>
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="cursosMaisVendidos != undefined && cursosMaisVendidos.length && isMobile">
+                        <div *ngIf="!isMentoria" href="" id="cursos_mais_vendidos_link" class="outter" style="height:340px;display:flex;">
+                            <div class="box-shadow cursos-first-square yellow-background item" style="margin:auto;height:100%;width:200px">
+                                <span style="font-size:30px;" class="title">Cursos mais vendidos</span>
+                            </div>
+                        </div>
+                        <ngx-slick-carousel class="slickear1 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(section, isMobile ? 156 : 215)">
+                            <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" ngxSlickItem *ngFor="let curso of cursosMaisVendidos | slice:0:8"
+                                [curso]="curso" [favorites]="favorites" [cursosAluno]="cursosAluno">
+                            </app-card-cursos-online>
+                        </ngx-slick-carousel>
+                    </div>
+
+                    <div class="absolute" style="padding:15px;" *ngIf="cursosMaisVendidos != undefined && cursosMaisVendidos.length && !isMentoria">
+                        <a id="mais_vendidos_link" style="padding:0"  routerLink="/todos-os-cursos/1/3" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                            <span style="padding:0" >
+                                <i class="icon-next-filled"></i> Veja todos os cursos mais vendidos</span>
+                        </a>
+                    </div>
+
+                    <div *ngIf="!isMentoria" class="row" style="margin-top:50px;width:100%;">
+                        <a id="see_all_courses_remotos_link" routerLink="/todos-os-cursos/1" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                            <span class="orange-font-color">
+                                <i class="icon-phone-computer"></i>
+                                <span class="text orange-font-color">Veja todos os cursos on-line</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div *ngIf="isMentoria && coursesMentoria" >
+                        <app-lista-card-cursos [cursos]="coursesMentoria" [favorites]="favorites" [isMobile]="isMobile" [config]="returnSlideConfig(sectionContainer, isMobile ? 156 : 215)"></app-lista-card-cursos>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.container -->
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+    var rangeSlider = document.getElementById("rs-range-line");
+    var rangeBullet = document.getElementById("rs-bullet");
+    rangeSlider.addEventListener("input", showSliderValue, false);
+
+    function showSliderValue() {
+        rangeBullet.innerHTML = rangeSlider.value;
+        var bulletPosition = (rangeSlider.value / rangeSlider.max);
+        rangeBullet.style.left = (bulletPosition * 80) + "px";
+    }
+
+    function activate(el) {
+        console.log(el);
+        if (el == 'grid') {
+            $(".list").addClass('grid');
+            $(".list").removeClass('list');
+            $("#button_grid").addClass('active');
+            $(".view-options .icon-hamburger-menu-1").removeClass('active');
+        } else {
+            $(".grid").addClass('list');
+            $(".grid").removeClass('grid');
+            $("#button_grid").removeClass('active');
+            $(".view-options .icon-hamburger-menu-1").addClass('active');
+        }
+    }
+
+    var interval = setInterval(function () {
+        if ($("#topnav_cursos").length) {
+            $("#topnav_cursos").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+    var slickeado = false;
+    var cursos1 = $("#cursos_adicionados_recentemente_link");
+    var cursos2 = $("#cursos_promocoes_link");
+    var cursos3 = $("#cursos_mais_vendidos_link");
+    function conditionalSlick() {
+        if ($(window).width() <= 991 && !slickeado) {
+            slickeado = true;
+            $("#cursos_adicionados_recentemente_link").remove();
+            $("#cursos_promocoes_link").remove();
+            $("#cursos_mais_vendidos_link").remove();
+            $(".slickear").slick(
+                {
+                    infinite: false,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    responsive: [
+                        {
+                            breakpoint: 485,
+                            settings: {
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                infinite: false,
+                                dots: false
+                            }
+                        }
+                    ]
+                }
+            );
+        } else {
+            if ($(window).width() > 991 && slickeado) {
+                $(".slickear").slick('unslick');
+                slickeado = false;
+                $("#cursos_adicionados_recentemente").prepend(cursos1);
+                $("#cursos_promocoes").prepend(cursos2);
+                $("#cursos_mais_vendidos").prepend(cursos3);
+            }
+        }
+    }
+
+    function resizeBanner() {
+        $(".banner").each(function () {
+            $(this).css('width',
+                $(window).width() -
+                parseInt($(".container").css('marginRight')) -
+                parseInt($(".container").css('paddingRight'))
+            );
+
+        });
+
+    }
+
+    resizeBanner();
+    conditionalSlick();
+    $(window).resize(function () {
+        conditionalSlick();
+        resizeBanner();
+    });
+</script>

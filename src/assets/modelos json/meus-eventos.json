@@ -1,0 +1,46 @@
+[
+    {
+        "id":0,
+        "name":"Contratos Públicos - Licitações e Contratos Administrativos",
+        "imgPath":"../assets/modelos json/img/course_img_2.jpg",
+        "publishDate":"25 de janeiro de 2019, 14:40",
+        "visitorsAmount":152,
+        "workshopBought":84,
+        "lectureBought": 5,
+        "valueOpened":34.99,
+        "valueLastMonth":69.87
+    },
+    {
+        "id":1,
+        "name":"Contratos Públicos - Licitações e Contratos Administrativos",
+        "imgPath":"../assets/modelos json/img/course_img_2.jpg",
+        "publishDate":"25 de janeiro de 2019, 14:40",
+        "visitorsAmount":258,
+        "workshopBought":200,
+        "lectureBought": 23,
+        "valueOpened":34.99,
+        "valueLastMonth":69.65
+    },
+    {
+        "id":2,
+        "name":"Contratos Públicos - Licitações e Contratos Administrativos",
+        "imgPath":"../assets/modelos json/img/course_img_2.jpg",
+        "publishDate":"25 de janeiro de 2019, 14:40",
+        "visitorsAmount":95,
+        "workshopBought":9,
+        "lectureBought": 18,
+        "valueOpened":34.31,
+        "valueLastMonth":69.58
+    },
+    {
+        "id":3,
+        "name":"Contratos Públicos - Licitações e Contratos Administrativos",
+        "imgPath":"../assets/modelos json/img/course_img_2.jpg",
+        "publishDate":"25 de janeiro de 2019, 14:40",
+        "visitorsAmount":741,
+        "workshopBought":61,
+        "lectureBought": 150,
+        "valueOpened":34.00,
+        "valueLastMonth":69.00
+    }
+]

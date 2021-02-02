@@ -1,0 +1,75 @@
+<section id="page-agenda" class="page-home-acesso-restrito">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current2="credenciais-professor" current1="meu-perfil"></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:30px;display:flex;">
+                <form id="editar-meus-dados" [formGroup]="formCredentials" (ngSubmit)="onSubmitCredentials()"  style="width: 100%;padding:15px;">
+                    <h2 class="title orange-font-color">Credenciais</h2>
+                    <hr>
+                    <div class="form-group">
+                        <div>
+                            <span class="orange-font-color">E-mail *</span>
+                            <input id="email" type="email"
+                                   class="form-control"
+                                   formControlName="email"
+                                   [ngClass]="[isFieldValid('email') ? 'is-invalid' : '', 'form-control']"
+                                   required placeholder="Email" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('email') && formCredentials.controls['email'].errors.required"
+                                errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                            <app-field-error-display
+                                [displayError]="isFieldValid('email') && formCredentials.controls['email'].errors.email"
+                                errorMsg="Este e-mail é inválido">
+                            </app-field-error-display>
+                        </div>
+                        <div style="position:relative">
+                            <span class="orange-font-color">Senha *</span>
+                            <input id="password"
+                                   [type]="visualizarSenha ? 'text' : 'password'"
+                                   minlength="8" required formControlName="senha" placeholder="Senha"
+                                   [ngClass]="[isFieldValid('senha') ? 'is-invalid' : '', 'form-control']" />
+                            <i class="fa fa-eye" title="Visualizar senha" (click)="visualizarSenha = !visualizarSenha" style="top:35px;margin:0;"></i>
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('senha') && formCredentials.controls['senha'].errors.required"
+                                    errorMsg="Campo senha é obrigatório">
+                            </app-field-error-display>
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('senha') && formCredentials.controls['senha'].errors.minlength"
+                                    errorMsg="Sua senha deve conter no mínimo 8 caracteres">
+                            </app-field-error-display>
+                        </div>
+                        <div style="position:relative">
+                            <span class="orange-font-color">Confirmar senha *</span>
+                            <input id="password-confirm"
+                                   [type]="visualizarSenha ? 'text' : 'password'"
+                                   minlength="8" formControlName="senha_confirmar" placeholder="Confirmar senha" required
+                                   [ngClass]="[isFieldValid('senha_confirmar') ? 'is-invalid' : '', 'form-control']" />
+                            <i class="fa fa-eye" title="Visualizar senha" (click)="visualizarSenha = !visualizarSenha"  style="top:35px;margin:0;"></i>
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('senha_confirmar') && formCredentials.controls['senha_confirmar'].errors.required"
+                                    errorMsg="Campo senha é obrigatório">
+                            </app-field-error-display>
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('senha_confirmar') && formCredentials.controls['senha_confirmar'].errors.minlength"
+                                    errorMsg="Sua senha deve conter no mínimo 8 caracteres">
+                            </app-field-error-display>
+                            <app-field-error-display
+                                    [displayError]="isFieldValid('senha_confirmar') && formCredentials.controls['senha_confirmar'].errors.NoPassswordMatch"
+                                    errorMsg="As senhas digitadas não conferem">
+                            </app-field-error-display>
+                        </div>
+                        <div class="not-border form-text text-muted">
+                            <small class="form-text text-muted">A sua senha deverá ter no mínimo 8</small>
+                        </div>
+                    </div>
+                    <button *ngIf="!loading" type="submit" class="orange-background">atualizar</button>
+                    <button *ngIf="loading" type="submit" class="orange-background">carregando...</button>
+                </form>
+            </div>
+        </div>
+        <div class="row"></div>
+    </section>
+</section>

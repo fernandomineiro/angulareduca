@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+<div *ngIf="!this.isLoggedIn()">
+  <section id="section1">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-5 col-sm-12 col-12 text"
+             [innerHTML]="configuracoes.tiposCursosAtivos.texto_banner_central | safe:'html'">
+        </div>
+        <div class="col-lg-8 col-md-7 col-sm-12 col-12">
+          <img src="{{ IMG_URL }}/files/banners/{{configuracoes.tiposCursosAtivos.banner_central }}" onError="this.onerror = null; this.src = '../assets/img/itv/section1.PNG'; return false;"  />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section2" [style.background-color]="configuracoes.tiposCursosAtivos.cor_banner_login">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-md-6 col-sm-12 col-12">
+          <div class="video-container">
+            <iframe width="560" height="315" [src]="src | safe:'resourceUrl'" frameborder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-6 col-sm-12 col-12">
+          <div class="text1-section2">
+            <div>
+              <div [innerHTML]="configuracoes.tiposCursosAtivos.primeiro_texto_login | safe:'html'">></div>
+              <a href="#" data-toggle="modal" data-target="#loginModal">
+                <div id="entrarButton">
+                  entrar
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12 text2-section2" [innerHTML]="configuracoes.tiposCursosAtivos.segundo_texto_login | safe:'html'">
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div *ngIf="this.isLoggedIn()" class="row">
+  <div class="col-lg-3"  style="text-align: justify">
+    <img *ngIf="configuracoes.tiposCursosAtivos.banner_lateral" src="{{ IMG_URL }}/files/banners/{{ configuracoes.tiposCursosAtivos.banner_lateral }}" width="98%" alt="">
+  </div>
+
+  <div class="col-lg-9 main-content" >
+
+    <div class="col-md-12" style="margin-bottom: 3%">
+      <h3>Olá, {{ loginService.user.nome }}!</h3>
+    </div>
+    <div class="col-md-12" *ngIf="configuracoes.tiposCursosAtivos.banner_secundario"
+         [innerHTML]="configuracoes.tiposCursosAtivos.banner_secundario" style="text-align: justify; margin-bottom: 3%;">
+    </div>
+
+    <app-menu-itv></app-menu-itv>
+
+    <div class="col-lg-12" *ngFor="let estrutura of estruturas$ | async" style="top: 30px;">
+      <h2 class="orange-font-color">Minhas disciplinas em {{ estrutura.titulo }}</h2>
+      <div class="horizontal-line3"></div>
+
+      <section #section *ngFor="let categoria of estrutura.categorias" style="margin-top: 30px;">
+        <h3 class="orange-font-color" style="font-size: 1.6rem; font-weight: bold;">{{ categoria.titulo }}</h3>
+
+        <ngx-slick-carousel
+                            class="slickear1 carousel type1" #slickModal="slick-carousel"
+                            [config]="returnSlideConfig(section, isMobile ? 146 : 200)">
+            <app-card-cursos-online
+                    class="grid"
+                    [ngStyle]="{'width': isMobile ? '166px' : '220px'}"
+                    ngxSlickItem *ngFor="let curso of categoria.cursos"
+                    [curso]="curso"
+                    [cursosAluno]="categoria.cursos"
+                    [tipoLiberacao]="estrutura.tipo_liberacao">
+            </app-card-cursos-online>
+        </ngx-slick-carousel>
+      </section>
+    </div>
+  </div>
+</div>

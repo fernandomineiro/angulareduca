@@ -1,0 +1,22 @@
+#navbar_Responsive {
+  & .nav-link {
+    font-family: encodeSansCondensed-SemiBold;
+    color: $navbar_Responsive-color;
+    font-size: $navbar_Responsive-font-size;
+  }
+
+  & .dropdown-menu {
+    border-radius: 0;
+    border-width: 0;
+
+    & a {
+      color: $navbar_Responsive-dropdown-menu-color;
+      font-family: encodeSansCondensed-Bold;
+      font-size: $navbar_Responsive-dropdown-menu-font-size;
+    }
+
+    & li{
+      padding: 10px;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+<!-- Início do Sidebar -->
+
+<h1 class="my-4 orange-font-color" >Pesquise pela área de seu interesse</h1>
+<div class="list-group" id="sidebar_links">
+    <div id="page-cursos-categoria">
+        <div>
+            <ngx-simplebar  style="max-height:280px;overflow-y:auto" [options]="options" >
+                <div *ngFor="let categoria of categorias" style="text-align:left;padding:5px 0;">
+                    <a routerLink="/cursos-categoria/{{categoria.slug_categoria}}"><i class="far fa-circle" style="color:#acacac"></i>&nbsp;{{ categoria.titulo }}</a>
+                </div>
+            </ngx-simplebar>
+
+        </div>
+    </div>
+</div>
+<app-caixa-de-pesquisa *ngIf="hasSearchBox"></app-caixa-de-pesquisa>
+
+<a [routerLink]="['/assinaturas']" id="sidebar_conheca_vantagens" *ngIf="configuracoes.tiposCursosAtivos.ativar_vantagens_assinantes == 1">
+    <div class="yellow-light-background sidebar_colored_links">
+        <div class="icon icon-user-card"></div>
+        <p>
+            Conheça as vantagens de ser um assinante EducAZ
+        </p>
+    </div>
+</a>
+
+<a [routerLink]="['/trilhas-conhecimento']" *ngIf="configuracoes.tiposCursosAtivos.ativar_descubra_trilhas == 1" id="sidebar_visite_trilhas">
+    <div class="yellow-dark-background sidebar_colored_links">
+        <div class="icon icon-share"></div>
+        <p>
+            Descubra as trilhas de conhecimento em diversas áreas
+        </p>
+    </div>
+</a>
+
+<a [routerLink]="['/seja-um-professor']" id="sidebar_compartilhe_conhecimentos" *ngIf="configuracoes.tiposCursosAtivos.ativar_seja_professor == 1">
+    <div class="orange-light-background sidebar_colored_links">
+        <div class="icon icon-graduation-hat"></div>
+        <p>
+            Compartilhe seu conhecimento como um professor EducAZ
+        </p>
+    </div>
+</a>
+
+<a href="" id="sidebar_baixe_aplicativo" routerLink="/autenticar-certificado" *ngIf="configuracoes.tiposCursosAtivos.ativar_autenticidade_certificado == 1">
+    <div class="orange-background sidebar_colored_links">
+        <div class="icon fas fa-qrcode" style="width:100%;"></div>
+        <p>Confira o código de autenticidade do seu certificado aqui</p>
+    </div>
+</a>
+
+<!-- Fim do Sidebar -->

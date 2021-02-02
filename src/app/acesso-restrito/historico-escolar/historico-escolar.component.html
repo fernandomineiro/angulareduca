@@ -1,0 +1,108 @@
+<div id="page-agenda">
+
+
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='relatorios_graficos' current2='historico_escolar'></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:1050px;margin-top:30px;padding:20px;" id="page-cadastro">
+        <div class="title orange-font-color" style="margin-bottom:20px;">Histórico Escolar
+        </div>
+        <label id="example-radio-group-label" style="margin-right:10px;">Buscar por</label>
+        <mat-radio-group (change)="search.value = ''" aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="typeSearch">
+          <mat-radio-button style="margin-right:10px;" class="example-radio-button" [selected]="true" value="cpf">CPF</mat-radio-button>
+          <mat-radio-button class="example-radio-button" value="nome">Nome</mat-radio-button>
+        </mat-radio-group>
+        <div id="search" class="sort-order">          
+          <form id="form_sidebar_search" (ngSubmit)="sendSeach(search.value)">
+            <div class="simulate-search-box" style="display:flex;width:100% !important;margin-bottom:0 !important;">
+              <input (keypress)="cpfMask($event);" (change)="cpfMask($event);" #search placeholder="Digite o {{typeSearch}}" style="margin:auto 0;width:100%"
+                type="text">
+              <a style="margin:auto 0;">
+                <span class="icon-search" style="font-size:25px;float:right;"></span>
+              </a>
+            </div>
+          </form>
+        </div>
+        <div id="student_info" *ngIf="historico && found">
+          <div>
+            <b>Nome: </b>{{historico.aluno.nome}} {{historico.aluno.sobre_nome}}
+          </div>
+          <div>
+            <b>Data de nascimento: </b>{{historico.aluno.data_nascimento}}
+          </div>
+          <div>
+            <b>CPF: </b>{{historico.aluno.cpf}}
+          </div>
+          <div>
+            <b>RG: </b>{{historico.aluno.identidade}}
+          </div>
+          <div>
+            <b>Cidade: </b>{{historico.aluno.descricao_cidade}}
+          </div>
+          <div>
+            <b>Telefone fixo: </b>{{historico.aluno.telefone_1}}
+          </div>
+          <div>
+            <b>Celular: </b>{{historico.aluno.telefone_2}}
+          </div>
+        </div>
+
+        <div id="historico" *ngIf="!empty">
+          <div *ngFor="let info of tableInfo; let i = index;">
+            <div class="semestre_title">
+              <b>SEMESTRE </b>{{info.semestre}}</div>
+            <div *ngIf="info.online" class="table_material">
+              <div>
+                <b>ONLINE</b>
+                <div>
+                  <small>
+                    <b>Carga horária total: </b>
+                  </small>{{online[i]}}h
+                </div>
+              </div>
+              <app-historico-table [data]="info.online" [displayedColumns]="displayedColumnsOnline"></app-historico-table>
+            </div>
+
+            <div *ngIf="info.presencial" class="table_material">
+              <div>
+                <b>PRESENCIAL</b>
+                <div>
+                  <small>
+                    <b>Carga horária total: </b>
+                  </small>{{presencial[i]}}h
+                </div>
+              </div>
+              <app-historico-table [data]="info.presencial" [displayedColumns]="displayedColumnsPresencialRemoto"></app-historico-table>
+            </div>
+
+            <div *ngIf="info.remoto" class="table_material">
+              <div>
+                <b>HÍBRIDO</b>
+                <div>
+                  <small>
+                    <b>Carga horária total: </b>
+                  </small>{{remoto[i]}}h
+                </div>
+              </div>
+              <app-historico-table [data]="info.remoto" [displayedColumns]="displayedColumnsPresencialRemoto"></app-historico-table>
+
+            </div>
+
+            <hr>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <a *ngIf="historico && historico.link_pdf" href="{{historico.link_pdf}}" target="_blank" class="button-send-div2" style="margin-right:50px">
+              <span class="send-search">imprimir</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+  </section>
+</div>

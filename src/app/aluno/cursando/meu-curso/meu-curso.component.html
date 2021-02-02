@@ -1,0 +1,112 @@
+<section id="page-conta" class="meu-curso">
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-12 user-info">
+                    <app-sidebar-info></app-sidebar-info>
+                </div>
+
+                <div class="col-lg-9 col-md-9 col-sm-12 col-12 right" style="width:100%;" *ngIf="tempo_finalizar > 0 ">
+                    <router-outlet></router-outlet>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12 col-12 right" style="width:100%;" *ngIf="tempo_finalizar != undefined && tempo_finalizar <= 0">
+                    <h2 style="text-align:center;">O prazo para concluir este curso terminou. Se você ainda não finalizou este curso, entre em contato com <a href="mailto:sac@educaz.com.br">sac@educaz.com.br</a>.</h2>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+    </section>
+</section>
+
+<div class="modal fade" id="tccModalSuccess" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="close_modal" class="close" data-dismiss="modal">X</button>
+            </div>
+            <div class="modal-body" style="max-width:400px;">
+                <div class="inner">
+                    <div class="logo">
+                        <app-mt-logotipo [style]="{'width': 'auto', 'height': '50px'}"></app-mt-logotipo>
+                    </div>
+                </div>
+                <h4 class="orange-font-color" style="font-family:encodeSansCondensed-Bold;margin-top:50px;margin-bottom:40px;">Trabalho enviado com sucesso.</h4>
+                <p style="color:black;">Aguarde correção e nota do professor.</p>
+                <p *ngIf="exibir_pendencias" style="color:black;">Porém ainda restam as seguintes etapas:</p>
+                <!-- <p *ngIf="!exibir_pendencias">Parabéns, seu trabalho foi enviado com sucesso!</p> -->
+                <p *ngIf="situacao_questionario" style="color:black;">Aprovação Questionário</p>
+                <p *ngIf="situacao_presencial" style="color:black;">Assistir Aulas Presenciais</p>
+                <p *ngIf="situacao_online" style="color:black;">Assistir Aulas Online</p>
+                <p style="color:black;">Após isso, o certificado será enviado por e-mail. O certificado também poderá ser acessado no perfil do aluno.</p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="openTccSuccess" type="button" style="display:none;" class="btn btn-primary" data-toggle="modal" data-target="#tccModalSuccess">
+    Open modal
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+
+
+    var interval = setInterval(function () {
+        if ($("#topnav_users").length) {
+            $("#topnav_users").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+    var progressValue = Number($("#progress_chart").attr("progress"));
+    $('#progress_chart').circleProgress({
+        value: progressValue,
+        size: 130,
+        fill: {
+            gradient: ["#D35B30", "#FFF22D"]
+        },
+        reverse: true,
+        thickness: 20,
+        emptyFill: "transparent"
+    });
+
+    $("#modules_list .item").each(function () {
+        var item;
+        item = $(this).find(".icon");
+        if ($(this).find(".minutes").text().includes('conclu')) {
+            item.addClass('icon-check-filled');
+            item.css("color", "#F1CE23");
+            $(this).find('.minutes').css("font-weight", "bold");
+        }
+        if ($(this).find(".minutes").text().includes('%')) {
+            item.addClass('icon-play-filled');
+            item.css("color", "#F2A628");
+            $(this).find('.minutes').css("font-weight", "bold");
+        }
+        if ($(this).find(".minutes").text().includes('minu')) {
+            item.addClass('icon-play-filled');
+            item.css("color", "#F2652A");
+
+        }
+    });
+
+</script>
+<style>
+    #page-conta .navbar {
+        background-color: #DBDADA !important;
+    }
+
+    #mobile_navbar {
+        background-color: #DBDADA !important;
+
+    }
+
+    .slick-slide {
+        display: flex !important;
+        justify-content: center;
+    }
+</style>

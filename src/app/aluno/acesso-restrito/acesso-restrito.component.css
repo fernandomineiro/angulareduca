@@ -1,0 +1,54 @@
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    margin-top: 50px;
+    margin-left: 30px;
+}
+.buttons a {
+    padding: 15px;
+    color: white;
+    font-family: encodeSansCondensed-Medium;
+    max-width: 140px;
+    width: 100%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+span.hide-sm {
+    margin-left: 10px;
+}
+
+#page-agenda .navbar { background-color: #DBDADA !important; }
+#mobile_navbar { background-color: #DBDADA !important; }
+.sent{
+    background-color: #e4ffd1;
+    padding:10px;
+    font-family: encodeSansCondensed-regular;
+}
+
+.amount * {
+    font-size: 12px;
+}
+
+.amount *,
+.amount-goal *{    
+    font-family: encodeSansCondensed-bold;
+}
+
+@media (max-width:992px){
+    #page-conta .user-info{
+      border:none;
+    }
+  }
+
+  @media (max-width:767px){
+    .buttons a{
+      width:54px !important;
+      text-align: center;
+    }
+  }
+
+  .buttons{
+      height: unset !important
+  }
+  

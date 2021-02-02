@@ -1,0 +1,105 @@
+
+<div *ngIf="sidebarInfo != undefined">
+
+
+    <h3 id="course_name">{{sidebarInfo.nome_curso}}</h3>
+    <!--<span id="company_name">{{sidebarInfo.nome_faculdade}}</span>-->
+    <br/>
+    <br/>
+    <div class="category"> Categoria:
+        <span id="category_name" *ngFor="let category of sidebarInfo.categorias">{{category.titulo}} </span>
+    </div>
+    <br/>
+    <br/>
+    <div class="course-info">
+        <div>
+            <span class="icon icon-comments"></span>
+            Idioma:
+            <span id="language">{{sidebarInfo.idioma}}</span>
+        </div>
+        <div *ngIf="curso != undefined && sidebarInfo.modulos_info != undefined && curso.tipo != 2">
+            <span class="icon icon-hamburger-menu-1"></span>
+            Aulas:
+            <span id="modules_amount">{{sidebarInfo.modulos_info[0].total_modulos}}</span>
+        </div>
+        <div *ngIf="curso != undefined && sidebarInfo.modulos_info != undefined && curso.tipo != 2" >
+            <span class="icon icon-clock"></span>
+            Carga Horária:
+            <span id="duration">{{sidebarInfo.modulos_info[0].total_minutos}}</span>hrs
+        </div>
+        <div>
+            <span class="icon icon-medal"></span>
+            Certificado:
+            <span id="certification" *ngIf="sidebarInfo.criterios != undefined">{{ (sidebarInfo.criterios.emite_certificado != null && sidebarInfo.criterios.emite_certificado != 0) ? ' Sim' : ' Não' }}</span>
+        </div>
+        <div *ngIf="sidebarInfo.criterios != undefined && sidebarInfo.criterios.nota_corte_trabalho != null">
+            <span class="icon icon-papers"></span>
+            Nota mínima no TCC:
+            <span id="certification" *ngIf="sidebarInfo.criterios != undefined">{{ (sidebarInfo.criterios.nota_corte_trabalho/10).toFixed(1).toString().replace('.',',')}}</span>
+        </div>
+        <div *ngIf="sidebarInfo.tipo != 1">
+            <span class="icon icon-user-check"></span>
+            Frequência mínima:
+            <span id="certification" *ngIf="sidebarInfo.criterios != undefined">{{ sidebarInfo.criterios.frequencia_minima}}%</span>
+        </div>
+        <div *ngIf="sidebarInfo.possui_quiz != 0">
+            <span class="icon icon-pencil"></span>
+            Acerto mínimo no questionário:
+            <span id="certification" *ngIf="sidebarInfo.criterios != undefined">{{ sidebarInfo.criterios.nota_corte_quiz}}%</span>
+        </div>
+    </div>
+
+    <div class="" id="chart">
+        <div style="max-width: 200px;">
+            <circle-progress
+            [percent]="sidebarInfo.percent"
+            [showUnits]="true"
+            [radius]="30"
+            [outerStrokeColor]="'#FFF22D'"
+            [outerStrokeGradient] = "true"
+            [outerStrokeWidth]="10"
+            [outerStrokeGradientStopColor]="'#D35B30'"
+            [innerStrokeColor]="'#e7e8ea'"
+            [innerStrokeWidth]="10"
+            [space]="-10"
+            [animation]="false"
+            [clockwise] = "false"
+            [responsive] = "true"
+            [showSubtitle] = "false"
+            [lazy] = "false"
+            [titleColor]="'#D35B30'"
+            [titleFontWeight]="'500'"
+            [unitsFontSize]="15"
+            [unitsColor]="'#D35B30'"
+            [unitsFontWeight]="'500'"
+            [outerStrokeLinecap]="'square'"
+            [toFixed]="2"
+            [titleFontSize]="14"
+        ></circle-progress>
+
+        </div>
+
+        <br/>
+        <div *ngIf="curso != undefined && sidebarInfo.criterios != undefined && sidebarInfo.criterios.emite_certificado != null">
+            <div class="certificado-info">
+                    O certificado estará disponível após conclusão de:{{ conclusaoInfo(curso.tipo)}}
+            </div>
+        </div>
+
+        <div class="time-finish" *ngIf="sidebarInfo.tempo_finalizar != undefined && sidebarInfo.tempo_finalizar > 0">
+            <span class="orange-font-color">Tempo para finalizar o curso: </span>
+            <div class="days orange-font-color">
+                <span id="days_amount">{{sidebarInfo.tempo_finalizar}} </span> dias
+            </div>
+        </div>
+
+        <div class="time-finish" *ngIf="sidebarInfo.tempo_finalizar != undefined && sidebarInfo.tempo_finalizar <= 0">
+            <span class="orange-font-color">Tempo para finalizar o curso: </span>
+            <div class="days orange-font-color">
+                <span id="days_amount">esgotado</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,420 @@
+<md-progress-spinner *ngIf="loading"></md-progress-spinner>
+
+<!-- <p>{{info| json}}</p> -->
+
+<section id="page-cadastro" class="editar-perfil">
+    
+    <section>
+            <div class="row main-row">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-12 avatar-info">
+
+                    <div class="picture-container" (click)="triggerInputFile()">
+                        <img id="user_avatar" src="{{IMG_URL_MAIN}}" width="130px" height="130px" />
+                        <div class="edit-profile-picture">Editar foto</div>
+                    </div>
+
+                    <div id="editar_foto" class="text-center" style="margin-top: 0">
+                        <input name="file" type="file" id="profilePicture" (change)="onFileSelected($event)" style="display: none;" >
+                        <button type="button" class="orange-font-color"
+                        (click)="onUpload()"
+                        style="background: none; margin-top:10px;margin-top: 0; padding-top:0">Editar Foto</button>
+                    </div>
+                    <div class="list-group" id="sidebar_links">
+                        <button class="list-group-item perfil orange-font-color" (click)="activeMenu = 'meus-dados'">Meus dados</button>
+                        <button class="list-group-item perfil orange-font-color" (click)="activeMenu = 'meu-endereco'">Endereço</button>
+                        <button class="list-group-item perfil orange-font-color" (click)="activeMenu = 'trocar-senha'">Alterar senha</button>                      
+                        <button *ngIf="configuracoes.layoutHome == 4" class="list-group-item perfil orange-font-color" (click)="activeMenu = 'pedidos'">Meus pedidos</button>
+                       
+                    </div>
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12 main-form">
+                    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+                    <div *ngIf="successStr" class="alert alert-success">{{ successStr }}</div>
+
+                    <div data-toggle="meus-dados" id="meus-dados" *ngIf="activeMenu == 'pedidos'">
+                        <app-mt-pedidos></app-mt-pedidos>
+                    </div>
+
+                    <div data-toggle="meus-dados" id="meus-dados" *ngIf="activeMenu == 'meus-dados'">
+                        <form id="editar-meus-dados" [formGroup]="formMeusDados" (ngSubmit)="onSubmit()">
+                            <h2 class="title orange-font-color">Meus dados</h2>
+                            <hr>
+                            <div class="form-group">
+                                <div >
+                                    <div [ngStyle]='{"border-color" :   formMeusDados.controls.nome.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                        <span class="orange-font-color">Nome * <small  style="color:#FC0404">(É necessário preencher seu nome completo para fins de certificação)</small> </span>
+                                        <input id="name" maxlength="30" type="text" formControlName="nome" [ngClass]="[formMeusDados.controls['nome'].invalid ? 'is-invalid' : '', 'form-control']" value="test" required  placeholder="Nome"/>
+                                    </div>
+                                    <div class="not-border" *ngIf="  formMeusDados.controls.nome.status == 'INVALID' &&   submitted">
+                                        <p style="color:#FC0404">Este campo é obrigatório</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div [ngStyle]='{"border-color" :   formMeusDados.controls.sobre_nome.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                        <span class="orange-font-color">Sobrenome * <small  style="color:#FC0404">(É necessário preencher seu nome completo para fins de certificação)</small> </span>
+                                        <input id="last_name" maxlength="30" type="text" formControlName="sobre_nome" [ngClass]="[formMeusDados.controls['sobre_nome'].invalid ? 'is-invalid' : '', 'form-control']" required placeholder="Sobrenome" />
+                                    </div>
+                                    <div class="not-border" *ngIf="  formMeusDados.controls.sobre_nome.status == 'INVALID' &&   submitted">
+                                        <p style="color:#FC0404">Este campo é obrigatório</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div [ngStyle]='{"border-color" :   formMeusDados.controls.cpf.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                        <span class="orange-font-color">CPF *</span>
+                                        <input id="cpf" maxlength="14" (keypress)="cpfMask($event);" (change)="cpfMask($event);" type="text" [ngClass]="[formMeusDados.controls['cpf'].invalid ? 'is-invalid' : '', 'form-control']" formControlName="cpf" required placeholder="CPF" />
+                                    </div>
+                                    <div class="not-border" *ngIf="  formMeusDados.controls.cpf.status == 'INVALID' &&   submitted">
+                                        <p style="color:#FC0404">Este campo é obrigatório</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div [ngStyle]='{"border-color" :   formMeusDados.controls.identidade.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                        <span class="orange-font-color">RG *</span>
+                                        <input id="identidade" maxlength="14"  type="text" [ngClass]="[formMeusDados.controls['identidade'].invalid ? 'is-invalid' : '', 'form-control']" formControlName="identidade" required placeholder="RG" />
+                                    </div>
+                                    <div class="not-border" *ngIf="  formMeusDados.controls.identidade.status == 'INVALID' &&   submitted">
+                                        <p style="color:#FC0404">Este campo é obrigatório</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div [ngStyle]='{"border-color" :   formMeusDados.controls.telefone_2.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                        <span class="orange-font-color">Celular *</span>
+                                        <input id="telefone_2" maxlength="16" formControlName="telefone_2" (keyup)="celularMask($event);" (change)="celularMask($event);"  type="text" [ngClass]="[formMeusDados.controls['telefone_2'].invalid ? 'is-invalid' : '', 'form-control']" required placeholder="Celular" />
+                                    </div>
+                                    <div class="not-border" *ngIf="  formMeusDados.controls.telefone_2.status == 'INVALID' &&   submitted">
+                                        <p style="color:#FC0404">Este campo é obrigatório</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div [ngStyle]='{"border-color" :   formMeusDados.controls.data_nascimento.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                        <span class="orange-font-color">Data de nascimento*</span>
+                                        <input id="birthday" data-inputmask="'alias': 'date'" type="text" formControlName="data_nascimento" [ngClass]="[formMeusDados.controls['data_nascimento'].invalid ? 'is-invalid' : '', 'form-control', 'datetime']" required placeholder="Data de nascimento" />
+                                    </div>
+                                    <div class="not-border" *ngIf="  formMeusDados.controls.data_nascimento.status == 'INVALID' &&   submitted">
+                                        <p style="color:#FC0404">Este campo é obrigatório</p>
+                                    </div>
+                                </div>
+
+                                <div class="not-border">
+                                    <small>* preenchimento obrigatório</small>
+                                </div>
+
+                                <div id="aditional_info" class="not-border">
+                                    <div *ngIf="this.configuracoes.tiposCursosAtivos.ativar_faz_curso_superior">
+                                        <span style="opacity:.6">Faz curso superior? </span>
+                                        <select class="form-control" formControlName="curso_superior" requiredIf (change)="cursoSuperior = formMeusDados.value.curso_superior === 'sim';">
+                                            <option value="sim">Sim</option>
+                                            <option value="não">Não</option>
+                                        </select>
+                                    </div>
+                                    <div id="superior" *ngIf="cursoSuperior && this.configuracoes.tiposCursosAtivos.ativar_faz_curso_superior">
+                                        <div >
+                                            <div [ngStyle]='{"border-color" : formMeusDados.controls.universidade.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                                <span class="orange-font-color">Universidade *</span>
+                                                <!--placeholder: "Select a state",
+                                                allowClear: true-->
+                                                <select formControlName="universidade" (ngModelChange)="changeUniversidade($event)" [ngClass]="[formMeusDados.controls['universidade'].invalid ? 'is-invalid'  : '', 'form-control']">
+                                                    <option [value]="ie.id" *ngFor="let ie of faculdades">
+                                                        {{ ie.text | titlecase }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="not-border" *ngIf="  formMeusDados.controls.universidade.status == 'INVALID' &&   submitted">
+                                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="faculdadeOutros">
+                                            <div [ngStyle]='{"border-color" :   formMeusDados.controls.universidade_outro.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                                <span class="orange-font-color">(Outros) Universidade *</span>
+                                                <input id="university" type="text" requiredIf formControlName="universidade_outro" [ngClass]="[formMeusDados.controls['universidade_outro'].invalid ? 'is-invalid' : '']" placeholder="Universidade" />
+                                            </div>
+                                            <div class="not-border" *ngIf="  formMeusDados.controls.universidade_outro.status == 'INVALID' &&   submitted">
+                                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="faculdadeOutros">
+                                            <div [ngStyle]='{"border-color" :   formMeusDados.controls.curso_outro.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                                <span class="orange-font-color">(Outros) Curso *</span>
+                                                <input id="course" type="text" requiredIf formControlName="curso_outro" placeholder="Curso" />
+                                            </div>
+
+                                            <div class="not-border" *ngIf="  formMeusDados.controls.curso_outro.status == 'INVALID' &&   submitted">
+                                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="!faculdadeOutros">
+                                            <span class="orange-font-color">Curso *</span>
+                                            <select formControlName="curso" [ngClass]="[formMeusDados.controls['curso'].invalid ? 'is-invalid'  : '', 'form-control']">
+                                                <option [value]="curso.id" *ngFor="let curso of cursoList">
+                                                    {{ curso.text | titlecase }}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div >
+                                            <span class="orange-font-color">Semestre *</span>
+                                            <div [ngStyle]='{"border-color" :   formMeusDados.controls.semestre.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                                <select requiredIf formControlName="semestre" [ngClass]="[formMeusDados.controls['semestre'].invalid ? 'is-invalid' : '', 'form-control']">
+                                                    <option [ngValue]="null">Semestre</option>
+                                                    <option [value]="s" *ngFor="let s of semestre">
+                                                        {{s}}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="not-border" *ngIf="  formMeusDados.controls.semestre.status == 'INVALID' &&   submitted">
+                                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                                            </div>
+                                        </div>
+
+                                        <div >
+                                            <div [ngStyle]='{"border-color" :   formMeusDados.controls.ra.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                                <span class="orange-font-color">Matrícula *</span>
+                                                <input id="ra" requiredIf  type="text" formControlName="ra" placeholder="RA" [ngClass]="[formMeusDados.controls['ra'].invalid ? 'is-invalid' : '']" />
+                                            </div>
+                                            <div class="not-border" *ngIf="  formMeusDados.controls.ra.status == 'INVALID' &&   submitted">
+                                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="this.configuracoes.tiposCursosAtivos.ativar_faz_especializacao">
+                                        <span style="opacity:.6">Faz Pós-graduação?</span>
+                                        <select
+                                                class="form-control"
+                                                formControlName="curso_especializacao"
+                                                (change)="especializacao = formMeusDados.value.curso_especializacao === 'sim';">
+                                            <option value="não">Não</option>
+                                            <option value="sim">Sim</option>
+                                        </select>
+                                    </div>
+                                    <div id="cursoEspecializacao" *ngIf="especializacao && this.configuracoes.tiposCursosAtivos.ativar_faz_especializacao">
+                                        <div>
+                                            <span class="orange-font-color">Qual modalidade?</span>
+                                            <select formControlName="tipo_curso_especializacao" [ngClass]="[formMeusDados.controls['tipo_curso_especializacao'].invalid ? 'is-invalid'  : '', 'form-control']">
+                                                <optgroup [label]="especializacao.text" *ngFor="let especializacao of tipoEspecializacao">
+                                                    <option [value]="child.id" *ngFor="let child of especializacao.children">
+                                                        {{ child.text | titlecase }}
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <div [ngStyle]='{"border-color" :   formMeusDados.controls.especializacao_universidade.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                                <span class="orange-font-color">Qual Instituição?</span>
+                                                <select formControlName="especializacao_universidade" (ngModelChange)="changeUniversidadeEspecializacao($event)" [ngClass]="[formMeusDados.controls['especializacao_universidade'].invalid ? 'is-invalid'  : '', 'form-control']">
+                                                    <option [value]="ie.id" *ngFor="let ie of faculdades">
+                                                        {{ ie.text | titlecase }}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="not-border" *ngIf="  formMeusDados.controls.especializacao_universidade.status == 'INVALID' &&   submitted">
+                                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="faculdadeEspecializacaoOutros">
+                                            <div [ngStyle]='{"border-color" :   formMeusDados.controls.especializacao_universidade_outro.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                                <span class="orange-font-color">(Outros) Instituição *</span>
+                                                <input id="university_other"
+                                                       [ngClass]="[formMeusDados.controls['especializacao_universidade_outro'].invalid ? 'is-invalid' : '', 'form-control']"
+                                                       type="text"
+                                                       formControlName="especializacao_universidade_outro" placeholder="Instituição" />
+                                            </div>
+                                            <div class="not-border" *ngIf="  formMeusDados.controls.especializacao_universidade_outro.status == 'INVALID' &&   submitted">
+                                                <p style="color:#FC0404">Este campo é obrigatório</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button *ngIf="!loading" type="submit" class="orange-background" style="padding: 15px 100px !important;">atualizar</button>
+                            <button *ngIf="loading" type="submit" class="orange-background" style="padding: 15px 100px !important;">carregando...</button>
+                        </form>
+                    </div>
+                    <div data-toggle="meu-endereco" id="meu-endereco" *ngIf="activeMenu == 'meu-endereco'">
+                        <form id="editar-meu-endereco" [formGroup]="formMeuEndereco" (ngSubmit)="onSubmitEndereco()">
+                            <h2 class="title orange-font-color">Endereço</h2>
+                            <hr>
+                            <div >
+                                <div [ngStyle]='{"border-color" :   formMeuEndereco.controls.cep.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                    <span class="orange-font-color">CEP *</span>
+                                    <input id="cep" type="text" formControlName="cep" required placeholder="CEP" (blur)="buscarEnderecoCEP($event)" [ngClass]="[formMeuEndereco.controls['cep'].invalid ? 'is-invalid'  : '', 'form-control']"/>
+                                </div>
+                                <div class="not-border" *ngIf="  formMeuEndereco.controls.cep.status == 'INVALID' &&   submitted">
+                                    <p style="color:#FC0404">Este campo é obrigatório</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div [ngStyle]='{"border-color" :   formMeuEndereco.controls.logradouro.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                    <span class="orange-font-color">Logradouro *</span>
+                                    <input id="address_street" type="text" formControlName="logradouro" required placeholder="Rua" [ngClass]="[formMeuEndereco.controls['logradouro'].invalid ? 'is-invalid'  : '', 'form-control']"/>
+                                </div>
+                                <div class="not-border" *ngIf="  formMeuEndereco.controls.logradouro.status == 'INVALID' &&   submitted">
+                                    <p style="color:#FC0404">Este campo é obrigatório</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div [ngStyle]='{"border-color" :   formMeuEndereco.controls.numero.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                    <span class="orange-font-color">Número *</span>
+                                    <input id="address_number" type="text" formControlName="numero" required placeholder="Número" [ngClass]="[formMeuEndereco.controls['numero'].invalid ? 'is-invalid'  : '', 'form-control']"/>
+                                </div>
+                                <div class="not-border" *ngIf="  formMeuEndereco.controls.numero.status == 'INVALID' &&   submitted">
+                                    <p style="color:#FC0404">Este campo é obrigatório</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div [ngStyle]='{"border-color" :   formMeuEndereco.controls.complemento.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                    <span class="orange-font-color">Complemento</span>
+                                    <input id="address_complemento" class="form-control" type="text" formControlName="complemento" placeholder="Complemento" />
+                                </div>
+                                <div class="not-border" *ngIf="  formMeuEndereco.controls.complemento.status == 'INVALID' &&   submitted">
+                                    <p style="color:#FC0404">Este campo é obrigatório</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <span class="orange-font-color">Bairro</span>
+                                <input id="address_bairro" class="form-control" type="text" formControlName="bairro" placeholder="Bairro" />
+                            </div>
+                            <div >
+                                <div [ngStyle]='{"border-color" :   formMeuEndereco.controls.fk_estado_id.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                    <span class="orange-font-color">Estado *</span>
+                                    <select formControlName="fk_estado_id" required (change)="buscarCidades()" [ngClass]="[formMeuEndereco.controls['fk_estado_id'].invalid ? 'is-invalid'  : '', 'form-control']">
+                                        <option [ngValue]="null">Selecione</option>
+                                        <option [value]="estado.id" *ngFor="let estado of estados">
+                                            {{ estado.descricao_estado | titlecase }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="not-border" *ngIf="  formMeuEndereco.controls.fk_estado_id.status == 'INVALID' &&   submitted">
+                                    <p style="color:#FC0404">Este campo é obrigatório</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div [ngStyle]='{"border-color" :   formMeuEndereco.controls.fk_cidade_id.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                                    <span class="orange-font-color">Cidade *</span>
+                                    <select formControlName="fk_cidade_id" required [ngClass]="[formMeuEndereco.controls['fk_cidade_id'].invalid ? 'is-invalid'  : '', 'form-control']">
+                                        <option [ngValue]="null">Selecione </option>
+                                        <option [value]="cidade.id" *ngFor="let cidade of cidades">
+                                            {{ cidade.descricao_cidade | titlecase }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="not-border" *ngIf="  formMeuEndereco.controls.fk_cidade_id.status == 'INVALID' &&   submitted">
+                                    <p style="color:#FC0404">Este campo é obrigatório</p>
+                                </div>
+                            </div>
+
+                            <button *ngIf="!loading" type="submit" class="orange-background" style="padding: 15px 100px !important;">atualizar</button>
+                            <a style="margin-left:20px;" routerLink="/"><button *ngIf="backHomeButton" type="button" class="orange-background" style="padding: 15px 100px !important;">ir para a home</button></a> 
+                            <button *ngIf="loading" type="submit" class="orange-background" style="padding: 15px 100px !important;">carregando...</button>
+                        </form>
+                    </div>
+                    <div data-toggle="trocar-senha" id="trocar-senha" *ngIf="activeMenu == 'trocar-senha'">
+                        <form id="editar-trocar-senha" [formGroup]="formTrocarSenha" (ngSubmit)="onSubmitTrocarSenha()">
+                            <h2 class="title orange-font-color">Trocar senha</h2>
+                            <hr>
+                            <div id="contact_info" class="not-border">
+                                <div class="row">
+                                    <span class="orange-font-color">E-mail *</span>
+                                    <input id="email" [ngClass]="[formTrocarSenha.controls['email'].invalid ? 'is-invalid' : '', 'form-control']" type="email" formControlName="email" required placeholder="Email" />
+                                    <div style="width: 100%; margin-top: 5px;"
+                                         *ngIf="formTrocarSenha.controls['email'].invalid &&
+                                                (formTrocarSenha.controls['email'].dirty || formTrocarSenha.controls['email'].touched)"
+                                         class="not-border"
+                                    >
+                                        <p style="color:#FC0404" *ngIf="formTrocarSenha.controls['email'].errors.required">
+                                            Campo e-mail é obrigatório
+                                        </p>
+                                        <p style="color:#FC0404" *ngIf="formTrocarSenha.controls['email'].errors.email">
+                                            Este e-mail é inválido.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="orange-font-color">Senha</span>
+                                    <input id="password" minlength="8"
+                                           [ngClass]="[formTrocarSenha.controls['senha'].invalid &&
+                                                (formTrocarSenha.controls['senha'].dirty || formTrocarSenha.controls['senha'].touched) ? 'is-invalid' : '', 'form-control']"
+                                           [type]="visualizarSenha ? 'text' : 'password'" formControlName="senha" placeholder="Senha" />
+                                    <i class="fa fa-eye" title="Visualizar senha" (click)="visualizarSenha = !visualizarSenha"></i>
+
+                                    <div style="width: 100%; margin-top: 5px;"
+                                         *ngIf="formTrocarSenha.controls['senha'].invalid &&
+                                                (formTrocarSenha.controls['senha'].dirty || formTrocarSenha.controls['senha'].touched)"
+                                         class="not-border"
+                                    >
+                                        <p style="color:#FC0404" *ngIf="formTrocarSenha.controls['senha'].errors.required">
+                                            Campo senha é obrigatório
+                                        </p>
+                                        <p style="color:#FC0404" *ngIf="formTrocarSenha.controls['senha'].errors.minlength">
+                                            Sua senha deve conter no mínimo 8 caracteres
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span class="orange-font-color">Confirmar senha</span>
+                                    <input id="password_confirm"
+                                           [ngClass]="[formTrocarSenha.controls['senha_confirmar'].invalid ? 'is-invalid' : '', 'form-control']"
+                                           [type]="visualizarSenha ? 'text' : 'password'" formControlName="senha_confirmar"
+                                           minlength="8"
+                                           placeholder="Confirme sua senha" />
+                                    <i class="fa fa-eye" title="Visualizar senha" (click)="visualizarSenha = !visualizarSenha"></i>
+
+                                    <div style="width: 100%; margin-top: 5px;"
+                                         *ngIf="formTrocarSenha.controls['senha_confirmar'].invalid &&
+                                                (formTrocarSenha.controls['senha_confirmar'].dirty || formTrocarSenha.controls['senha'].touched)"
+                                         class="not-border"
+                                    >
+                                        <p style="color:#FC0404" *ngIf="formTrocarSenha.controls['senha_confirmar'].errors.required">
+                                            Campo senha é obrigatório
+                                        </p>
+                                        <p style="color:#FC0404" *ngIf="formTrocarSenha.controls['senha_confirmar'].errors.NoPassswordMatch">
+                                            As senhas digitadas não conferem
+                                        </p>
+                                        <p style="color:#FC0404" *ngIf="formTrocarSenha.controls['senha_confirmar'].errors.minlength">
+                                            As senhas precisar ter no mínimo 8 caracteres
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="not-border form-text text-muted">
+                                    <small>A sua senha deverá ter no mínimo 8</small>
+                                </div>
+                            </div>
+                            <button *ngIf="!loading" type="submit" class="orange-background" style="padding: 15px 100px !important;">atualizar</button>
+                            <button *ngIf="loading" type="submit" class="orange-background" style="padding: 15px 100px !important;">carregando...</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- Page Content -->
+
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12"></div>
+            </div>
+        </div>
+    </section>
+    <!-- /.container -->
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+    var interval = setInterval(function () {
+        if ($("#topnav_users").length) {
+            $("#topnav_users").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+</script>
+
+<style>
+    #page-cadastro .navbar { background-color: #DBDADA !important; }
+    #mobile_navbar { background-color: #DBDADA !important; }
+</style>

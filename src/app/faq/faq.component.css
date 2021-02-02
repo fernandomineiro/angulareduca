@@ -1,0 +1,26 @@
+.super1:hover{
+    color: white !important;
+    text-decoration: none !important;
+    background-color: #f2652a !important;
+}
+.super1:focus{
+    color: white !important;
+    text-decoration: none !important;
+    background-color: #f2652a !important;
+}
+.super1 .mat-expansion-panel-header-title{
+    color:white;
+}
+.faq{
+    margin-top: 30px;
+}
+
+
+
+  .super2{
+      cursor:pointer;
+  }
+
+ 
+
+

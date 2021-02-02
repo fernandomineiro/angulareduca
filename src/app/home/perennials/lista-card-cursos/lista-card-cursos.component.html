@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="sort-order row" style="justify-content:space-between;">
+        <div id="sort" [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+            <div class="dropdown">
+                <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                    <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu" style="height:200px;">
+                    <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                        <div class="radio">
+                            <input (change)="findCursos('asc')" id="sort_az" name="sort" type="radio">
+                            <label for="sort_az" class="radio-label">A-Z</label>
+                        </div>
+                        <div class="radio">
+                            <input (change)="findCursos('desc')" id="sort_za" name="sort" type="radio">
+                            <label for="sort_za" class="radio-label">Z-A</label>
+                        </div>
+                        <div class="radio">
+                            <input (change)="findCursos('latest')" id="sort_mais_recente" name="sort" type="radio">
+                            <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div [ngClass]="{'col-sm-12 col-12' : isMobile}" [ngStyle]="{'width': isMobile ? '100%' : '450px'}">
+            <form (ngSubmit)="onSubmit()">
+                <div class="simulate-search-box" style="display:flex;width:100%;margin-bottom:0 !important;">
+                    <input type="text" placeholder="Pesquisar" #searchWord style="margin:auto 0;" />
+                    <a (click)="onSubmit()" style="margin:auto 0;">
+                        <span class="icon-search" style="font-size:25px;float:right;"></span>
+                    </a>
+                    <!-- <button type="submit" class="icon-search" style="font-size:25px;float:right;">Pesquisar</button> -->
+                    <!--        <button type="submit" class="orange-background">Pesquisar</button>-->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="cursos" class="container" #sectionContainer (window:resize)="onResized($event)">
+    <div *ngFor="let categoria of cursos">
+        <div *ngIf="categoria.mentorias && categoria.mentorias.length && categoriaHasPublicados(categoria)">
+            <h4 class="orange-font-color" style="margin-top:40px;">{{categoria.nome}}</h4>
+            <div class="course-container">
+                <ngx-slick-carousel class="slickear1 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(sectionContainer, isMobile ? 156 : 215)">
+                    <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" ngxSlickItem *ngFor="let mentoria of categoria.mentorias | filterObj:filterStatus"
+                        [curso]="mentoria" [favorites]="favorites">
+                    </app-card-cursos-online>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div *ngIf="cursos" class="container" #sectionContainer (window:resize)="onResized($event)">
+    <div class="course-container">
+        <ngx-slick-carousel class="slickear1 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(sectionContainer, isMobile ? 156 : 215)">
+            <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" ngxSlickItem *ngFor="let mentoria of cursos | filterObj:filterStatus"
+                [curso]="mentoria" [favorites]="favorites">
+            </app-card-cursos-online>
+        </ngx-slick-carousel>
+    </div>
+</div>
+
+<div *ngIf="cursos && !cursos.length">
+    <p>Nenhum curso publicado foi encontrado</p>
+</div>

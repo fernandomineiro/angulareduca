@@ -1,0 +1,48 @@
+<form (ngSubmit)="submitSearch()" style="margin:50px 0;">
+    <div class="row">  
+        <div class="col-lg-3 col-md-3 col-sm-6 col-6" style="display:flex;flex-direction:column;justify-content:center;">
+          <div style="display:flex;">
+              <label style="margin-right:15px;">Mês </label>
+              <select #mes style="background-color:#e1e1e1;width: 100%;border: none;height:25px;">
+                <option value="01">janeiro</option>
+                <option value="02">fevereiro</option>
+                <option value="03">março</option>
+                <option value="04">abril</option>
+                <option value="05">maio</option>
+                <option value="06">junho</option>
+                <option value="07">julho</option>
+                <option value="08">agosto</option>
+                <option value="09">setembro</option>
+                <option value="10">outubro</option>
+                <option value="11">novembro</option>
+                <option value="12">dezembro</option>
+              </select>
+          </div>
+            
+          </div>     
+      <div class="col-lg-3 col-md-3 col-sm-6 col-6" style="display:flex;flex-direction:column;justify-content:center;">
+        <div>
+            <label style="margin-right:15px;">Ano </label>
+            <input type="number" #ano />
+        </div>
+       
+      </div>    
+      <div class="col-lg-3 col-md-3 col-sm-6 col-6" style="display: flex;flex-direction: column;justify-content: flex-end;">
+        <button type="submit" class="orange-background" style="color:white;border:none;padding:10px;width:100%">
+          <b>buscar</b>
+        </button>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="wrapper" [hidden]="viewAsList">
+      <div class="element">
+        <div id="vendas1" class="mini-chart">
+
+        </div>
+      </div>
+
+    </div>
+
+  

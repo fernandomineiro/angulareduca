@@ -1,0 +1,428 @@
+<section id="page-cursos-sobre" *ngIf="curso != undefined" style="margin-top: 40px;">
+    <h2 class="container">Cursos Remotos</h2>
+    <section id="short_description">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+                    <h3 id="course_title">{{ curso.nome_curso }}</h3>
+                    <span id="course_company">{{ curso.nome_professor }} {{ curso.sobrenome_professor }}</span>
+                    <div class="card-image">
+                        <img style="width:100% !important;max-width:100% !important;height:auto !important; object-fit: cover" src="{{ IMG_URL }}/files/curso/imagem/{{ curso.imagem }}"
+                            onError="this.onerror = null; this.src = '/assets/img/az.png'; return false;" />
+
+                    </div>
+                    <div class="row">
+                        <div id="social_media" class="col-lg-6 col-md-6 col-sm-12 col-12">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ URL }}" target="_blank" id="facebook_link">
+                                <span class="icon-facebook"></span>
+                            </a>
+                            <a href="https://twitter.com/home?status={{ URL }}" target="_blank" id="twitter_link">
+                                <span class="icon-twitter"></span>
+                            </a>
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ URL }}&title={{ curso.nome_curso }}&summary=&source=" target="_blank"
+                                id="linkedin_link">
+                                <span class="icon-linkedin"></span>
+                            </a>
+                            <a href="" target="_blank" id="instagram_link">
+                                <span class="icon-instagram"></span>
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                            <a *ngIf="curso.isFavorite != undefined" (click)="favoritar(curso)" style="cursor:pointer;color:#F2652A !important;bottom:0;right:0;"
+                                class="card-favorite">
+                                <i *ngIf="!curso.isFavorite.value" class="far fa-heart" style="font-size: 40px; margin-right: 20px;margin-bottom: 10px;"></i>
+                                <i *ngIf="curso.isFavorite.value" class="fas fa-heart" style="font-size: 40px; margin-right: 20px;margin-bottom: 10px;"></i>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+
+                    <div class="box-shadow" *ngIf="!hasAccess" style="max-height:100%;">
+                        <div class="yellow-square">&nbsp;</div>
+                        <span class="title">{{ curso.nome_curso }} </span>
+                        <br/>
+                        <span class="company">{{ curso.nome_professor }} {{ curso.sobrenome_professor }}</span>
+                        <br/>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12 category">
+                                <span>Categoria:&nbsp;
+                                    <span *ngFor="let cat of curso.categorias; let i = index">
+                                        <span *ngIf="i < curso.categorias.length-1">{{cat.titulo}}, </span>
+                                        <span *ngIf="i == curso.categorias.length-1">{{cat.titulo}}</span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" id="infos">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <span class="icon-comments icon"></span>
+                                <br>
+                                <span>&nbsp; Idioma: &nbsp;</span>
+                                <span id="language">{{ curso.idioma }}</span>
+                                <br>
+                            </div>
+                            <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <span class="icon-user-check icon"></span>
+                                <br>
+                                <span>&nbsp;Dias de aula presencial: &nbsp;</span>
+                                <span id="module_presencial_amount" *ngIf="modulosPresencias"> {{ modulosPresencias.length }}</span>
+                                <span id="module_presencial_amount" *ngIf="!modulosPresencias"> 0 </span>
+                                <br>
+                            </div> -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <span class="icon-phone-computer icon"></span>
+                                <br>
+                                <span>&nbsp;Aulas on-line: &nbsp;</span>
+                                <span id="module_online_amount">{{ curso.total_modulos }}</span>
+                                <br>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="moduloInicialFinal.length > 0">
+                                <span class="icon-notes icon"></span>
+                                <br>
+                                <div style="display: block;margin: 0;">
+                                    <div class="date" *ngFor="let modulo of moduloInicialFinal" style="margin: 0;">
+                                        <span class="date1">
+                                            &nbsp;{{ modulo.data_inicio | date }}, das {{ modulo.hora_inicio.slice(0, -3) }} às {{ modulo.hora_final.slice(0, -3) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <span class="icon-clock icon"></span>
+                                <span>&nbsp;Total de horas: </span>
+                                <span id="amount_hours">&nbsp; {{ cargaHorariaTotal }} hora(s)</span>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="!visualizar">
+                                <span class="icon-medal icon"></span>
+                                <br>
+                                <span>&nbsp;Certificado: </span>
+                                <span id="certification">&nbsp;{{ curso.emite_certificado != 0 ? 'Sim' : 'Não' }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="!curso.indisponivel_venda">
+                                <button id="buy" (click)="inserirNoCarrinho(curso)" *ngIf="!visualizar && !curso.gratis">
+                                    <div><b style="color:white;">COMPRE AQUI</b></div>
+                                    <div id="total_price">
+                                        <div *ngIf="curso.valor_de != null && curso.valor != null">
+                                            <small>
+                                                <strike>{{curso.valor_de | currency: 'BRL' : 'symbol'}}</strike>
+                                            </small>
+                                            <br/>
+                                        </div>
+                                        <span *ngIf="curso.valor_de != null && curso.valor != null" id="price">{{ curso.valor | currency: 'BRL': 'symbol' }}</span>
+                                        <span *ngIf="curso.valor_de != null && curso.valor == null" id="price">Por: {{ curso.valor_de | currency: 'BRL': 'symbol' }}</span>
+                                        <br/>
+                                    </div>
+                                    <div id="installment">
+                                        ou
+                                        <span id="parcel_amount">6</span> x
+                                        <span *ngIf="curso.valor_de != null && curso.valor != null" id="parcel_value">{{ curso.valor/6 | currency: 'BRL': 'symbol' }}</span>
+                                        <span *ngIf="curso.valor_de != null && curso.valor == null" id="parcel_value">Por: {{ curso.valor_de/6 | currency: 'BRL': 'symbol' }}</span>
+                                    </div>
+                                </button>
+                                <button (click)="inserirNoCarrinho(curso)" id="buy" *ngIf="!visualizar && curso.gratis">
+                                    <div id="total_price">
+                                        <span id="price">GRÁTIS</span>
+                                        <br />
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-12" *ngIf="curso.indisponivel_venda">
+                                <a matTooltip="Avise-me sobre novas turmas." data-toggle="modal" data-target="#meavise" style="cursor:pointer;" (click)="openWarnMeModal(curso.id)">
+                                    <span class="course-call orange-font-color">Avise-me sobre novas turmas.</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-shadow" id="bought" *ngIf="hasAccess" style="max-height:100%;">
+                        <div class="yellow-square">&nbsp;</div>
+                        <span class="title">Técnicas de Apresentação</span>
+                        <br/>
+                        <span class="company">Set Solutions</span>
+                        <br/>
+                        <span class="filled fas fa-star"></span>
+                        <span class="filled fas fa-star"></span>
+                        <span class="filled fas fa-star"></span>
+                        <span class="filled fas fa-star"></span>
+                        <span class="filled fas fa-star"></span>
+                        <br/>
+                        <br/>
+                        <div class="row" id="chart">
+                            <div style="max-width: 200px;margin:auto;">
+                                <circle-progress [percent]="sidebarInfo.percent" [radius]="30" [outerStrokeColor]="'#FFF22D'" [outerStrokeGradient]="true" [outerStrokeWidth]="10"
+                                    [outerStrokeGradientStopColor]="'#D35B30'" [innerStrokeColor]="'#d9dadd'" [innerStrokeWidth]="10"
+                                    [space]="-10" [animation]="false" [clockwise]="false" [responsive]="true" [showUnits]="true"
+                                    [showSubtitle]="true" subtitle="curso feito" [titleColor]="'black'" [unitsColor]="'black'"
+                                    [subtitleColor]="'black'" [titleFontWeight]="'500'" [unitsFontWeight]="'500'" [outerStrokeLinecap]="'square'"></circle-progress>
+
+                            </div>
+                        </div>
+                        <div class="row" id="time_to_finish">
+                            <span class="text">Tempo para finalizar o curso: &nbsp; </span>
+                            <span id="time_value"> {{sidebarInfo.tempo_finalizar || "0"}}
+                                <span>dias</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="long_description">
+        <div class="container">
+            <div class="row" id="about">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+                    <span class="icon-phone-computer"></span>
+                </div>
+                <div class="col-lg-7 col-md-6 col-sm-9 col-9">
+                    <div class="title orange-font-color">
+                        Sobre o curso
+                    </div>
+                </div>
+                <div class="col-lg-4 hide-mobile"></div>
+                <div class="col-lg-1 hide-mobile"></div>
+                <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+                    <div id="text_description" [innerHtml]="curso.sobre_curso | safe: 'html'">
+                    </div>
+                    <div id="video" style="width:100%;" *ngIf="curso.teaser != null">
+                            <div>
+                                <iframe id="vimeoIframe" title="vimeo-player" [src]="curso.teaser" width="640" height="360" frameborder="0" autoplay="false"
+                                    allowfullscreen>
+    
+                                </iframe>
+                            </div>
+                        </div>
+
+                    <div id="video" *ngIf="curso.teaser != null">
+                        <div *ngIf="curso.teaser != null && curso.teaser != undefined && curso.teaser != ''">
+                            <iframe id="vimeoIframe" title="vimeo-player" [src]="src" width="640" height="360"
+                                    frameborder="0" autoplay="false" allowfullscreen>
+                            </iframe>
+                        </div>
+
+                    </div>
+
+                    <div id="tags" *ngIf="tags" style="margin-top: 30px; display:flex; flex-wrap: wrap;">
+                        <div *ngFor="let tag of tags; let i = index" style="color: white; font-weight: bold; padding: 0 5px; margin: 5px 5px 0; font-size: 13px;">#{{ tag.tag }}</div>
+                    </div>
+
+                    <hr style="margin-top: 1px;" />
+                </div>
+            </div>
+
+            <div class="row" id="goals">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+                </div>
+                <div class="col-lg-7 col-md-6 col-sm-9 col-9">
+                    <div class="title orange-font-color">
+                        Objetivo do curso
+                    </div>
+                </div>
+                <div class="col-lg-4 hide-mobile"></div>
+                <div class="col-lg-1 hide-mobile"></div>
+                <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+                    <div id="text_description" [innerHtml]="curso.objetivo_descricao | safe: 'html'">
+                    </div>
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row" id="publico">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+                </div>
+                <div class="col-lg-7 col-md-6 col-sm-9 col-9">
+                    <div class="title orange-font-color">
+                        Público-alvo
+                    </div>
+                </div>
+                <div class="col-lg-4 hide-mobile"></div>
+                <div class="col-lg-1 hide-mobile"></div>
+                <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+                    <div id="text_description" [innerHtml]="curso.publico_alvo | safe: 'html'">
+
+                    </div>
+                    <hr />
+                </div>
+            </div>
+
+
+            <div class="row" id="structure">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+                    <span class="icon-papers"></span>
+                </div>
+                <div class="col-lg-7 col-md-6 col-sm-9 col-9">
+                    <div class="title orange-font-color">
+                        Estrutura do curso
+                    </div>
+
+                </div>
+                <div class="col-lg-4 hide-mobile"></div>
+                <div class="col-lg-1 hide-mobile"></div>
+                <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+                    <div *ngIf="!visualizar">
+                        <span class="type-module">Aulas on-line</span>
+                        <app-modulos-list *ngIf="modulos != undefined && assistidos != undefined && curso != undefined" [modulos]="modulos" [assistidos]="assistidos"
+                            [curso]="curso" [openWhere]="'all'" [hasAccess]="hasAccess">
+                        </app-modulos-list>
+                    </div>
+                    <!-- <div id="modules_presencial" class="presencial_modules">
+                        <span class="type-module">Aulas presenciais ({{ curso.percentual_presencial }})</span>
+                        <div *ngFor="let modulo of modulosPresencias">
+                            <i class="icon-check orange-font-color"></i>
+                            <span style="font-family: encodeSansCondensed-Bold;">&nbsp;{{ modulo.nome }}: &nbsp;</span>
+                            <span class="type-module" *ngIf="modulo.data_inicio">{{modulo.data_inicio | date}}, das {{modulo.hora_inicio.slice(0, -3)}} às {{modulo.hora_final.slice(0,
+                                -3)}}
+                            </span>
+                        </div>
+                    </div> -->
+                    <hr />
+                </div>
+            </div>
+
+            <div class="row" id="about_teacher">
+                <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+                    <span class="icon-graduation-hat"></span>
+                </div>
+                <div class="col-lg-7 col-md-6 col-sm-9 col-9">
+                    <div class="title orange-font-color">
+                        Sobre o instrutor
+                    </div>
+                </div>
+
+                <div class="col-lg-4 hide-mobile"></div>
+                <div class="col-lg-1 hide-mobile"></div>
+
+                <div class="col-lg-7 col-md-12 col-sm-11 col-11">
+                    <div id="teacher_info" class="row">
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-12">
+                            <img onError="this.onerror = null; this.src = './assets/img/default-avatar.png';" src="{{s3_url}}/files/usuario/{{curso.foto_professor}}" width="100%" height="auto" />
+                        </div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-12">
+                            <div id="teacher_name">
+                                {{ curso.nome_professor }} {{ curso.sobrenome_professor }}
+                            </div>
+                            <div id="teacher_description">
+                                {{ curso.sobre_professor }}
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+
+            <!--            <div class="row" id="course-info-date">-->
+            <!--                <div class="col-lg-1 col-md-1 col-sm-1 col-1" style="text-align:center;">-->
+            <!--                    <span class="icon-notes" style="font-size:50px;"></span>-->
+            <!--                </div>-->
+            <!--                <div class="col-lg-7 col-md-7 col-sm-11 col-11">-->
+            <!--                    <div class="title orange-font-color">15 de janeiro de 2019</div>-->
+            <!--                    <div class="title orange-font-color">15 de fevereiro de 2019</div>-->
+            <!--                    <div class="title orange-font-color">15 de março de 2019</div>-->
+            <!--                    <div class="title orange-font-color">25 de março de 2019</div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+            <!-- <div class="row" id="course-info-location">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-1" style="text-align:center;">
+                    <span class="icon-localization orange-font-color" style="font-size:50px;"></span>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-11 col-11">
+                    <div class="title orange-font-color">{{ curso.endereco_presencial }}</div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 hide-mobile"> </div>
+            <div class="col-lg-1 hide-mobile"> </div>
+
+            <div class="col-lg-10 col-md-12 col-sm-12 col-12">
+                <div id="googleMap" class="wrapper" style="margin-bottom: 50px;width: 100%; height: 400px;" *ngIf="curso.endereco_presencial">
+                    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                    </agm-map>
+                </div>
+            </div> -->
+
+            <div class="horizontal-line1" *ngIf="!visualizar"></div>
+
+            <div class="row" id="see-more-courses" *ngIf="!visualizar">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12 title orange-font-color" *ngIf="curso != undefined">
+                    <br/> Veja mais cursos remotos como: {{ curso.nome_curso }}
+                </div>
+
+                <ngx-slick-carousel class="col-lg-12 col-md-12 col-sm-12 col-12 slickear" #slickModal="slick-carousel" [config]="slide1Config">
+                    <app-card-cursos-remotos class="grid" ngxSlickItem [favorites]="favorites" [curso]="curso" [cursosAluno]="cursosAluno" *ngFor="let curso of cursos"></app-card-cursos-remotos>
+
+
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    </section>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+<script>
+
+    $(".slickear").each(function () {
+        $(this).slick(
+            {
+
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                centerMode: true,
+                responsive: [
+                    {
+                        breakpoint: 1200,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: false
+                        }
+                    },
+                    {
+                        breakpoint: 990,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            infinite: true,
+                            dots: false
+                        }
+                    }
+                ]
+            }
+        );
+
+    });
+
+    var interval = setInterval(function () {
+        if ($("#topnav_cursos").length) {
+            $("#topnav_cursos").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+
+</script>
+
+<style>
+    #mobile_navbar {
+        background-color: #DBDADA !important;
+    }
+
+    span.date {
+        font-size: 12px!important;
+    }
+
+    agm-map {
+        height: 400px;
+    }
+</style>

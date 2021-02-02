@@ -1,0 +1,90 @@
+<div id="page-agenda" class="page-criar-curso page-perfil-acesso-restrito" style="margin:40px 0;">
+    <section id="main_content">
+      <div class="row" style="width:100%;">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+          <app-acesso-restrito-sidebar current1='criar_conteudoOnlineCategoria'></app-acesso-restrito-sidebar>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:1090px;width:100%;" id="page-cadastro">
+          <div class="title orange-font-color">Criar categortia          
+          </div>
+          <br/>
+          <div class="type" style="text-align:left !important;">
+  
+            <mat-accordion id="accordion">
+  
+              <mat-expansion-panel hideToggle class="accordion-item" *ngFor="let categoria of categorias">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h5 class="mb-0">
+                      <a class="orange-font-color">
+                        <img style="padding:0 5px 6px" src="../assets/img/perennials/Grupo 2621.png" />
+                        <span>{{categoria.nome}}</span>                        
+                      </a>
+                    </h5>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="card-body messages">
+                  <p style="color:black !important">{{categoria.descricao}}</p>
+                  <div>
+                    <span style="padding: 10px"><a style="text-decoration:underline !important;cursor:pointer" (click)="editar(categoria)" class="orange-font-color">editar</a></span>
+                    <span style="padding: 10px"><a style="text-decoration:underline !important;cursor:pointer" (click)="excluir(categoria)" class="orange-font-color">excluir</a></span>
+                  </div>
+                </div>
+              </mat-expansion-panel>             
+            </mat-accordion>
+  
+            <br/>
+  
+            <br/>
+  
+          </div>
+          <br/>
+          <hr/>
+          <br/>
+          <div *ngIf="!isEdit" class="title1 orange-font-color">Adicionar categoria</div>
+          <div *ngIf="isEdit" class="title1 orange-font-color">Editar categoria</div>
+          <div id="novo_conteudo">
+            <form  (ngSubmit)="salvar()" [formGroup]="newRecord">
+              <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right">
+                  Nome*
+                </div>
+                <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                  <input [ngStyle]='{"border-color" :   newRecord.controls.nome.status == "INVALID" &&   submited ? "#FC0404" : "#ddd" }'
+                    formControlName="nome" style="width:100% !important" required placeholder="Máximo 60 caracteres" maxlength="60"
+                    type="text" />
+                  <div style="color:#FC0404" *ngIf="submited && newRecord.controls.nome.status == 'INVALID'">
+                    Este campo é obrigatório
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right">
+                  Descrição*
+                </div>
+                <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                    <textarea [ngStyle]='{"border-color" :   newRecord.controls.descricao.status == "INVALID" &&   submited ? "#FC0404" : "#ddd" }'
+                      formControlName="descricao" placeholder="Escreva sobre o conteúdo em até 500 caracteres" maxlength="800"></textarea>
+                    <div style="color:#FC0404" *ngIf="submited && newRecord.controls.descricao.status == 'INVALID'">
+                      Este campo é obrigatório
+                    </div>
+                  </div>
+              </div>
+              <div class="main-row">
+                <button type="button" style="background-color:#dbdada;" (click)="limparForm()">cancelar</button>
+                <button *ngIf="newRecord.status == 'VALID'" type="submit" style="background-color:#EE5666;">salvar</button>
+              </div>
+            </form>
+          </div>
+  
+        </div>
+      </div>
+      <div class="row">
+  
+      </div>
+  
+  
+    </section>
+  
+  
+  
+  
+  </div>

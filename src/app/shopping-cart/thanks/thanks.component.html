@@ -1,0 +1,161 @@
+<section id="page-compra-finalizada">
+    <section>
+        <div class="row main-row">
+            <div class="col-lg-3 col-md-3 col-sm-0 col-0">
+
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-12">
+                <h2 class="orange-font-color">Confirmação do pedido</h2>
+                <h3>Número da compra
+                    <span id="compra_num">{{numeroPedido}}</span>
+                </h3>
+                <br />
+
+                <div class="regular-text">
+                    <p>Olá, {{nomeAluno}},</p>
+                    <p>Agradecemos a compra realizada. Para pagamentos em cartão de crédito, os cursos on-line já estão disponíveis
+                        na página Meu Perfil. Para pagamentos em boleto, os cursos on-line estarão disponíveis em até 48h
+                        após a confirmação do pagamento. Os vouchers dos cursos presenciais e eventos estarão disponíveis
+                        na seção
+                        <a class="orange-font-color" href="javascript:void(0)" routerLink="/perfil">Meu perfil</a> e poderão ser acessados pelo celular, tablete ou computador.
+                    </p>
+                    <p id="warning">É obrigatória a apresentação do voucher na entrada de eventos e de cursos presenciais</p>
+                </div>
+                <br />
+                <div id="pedido_details">
+                    <div class="border-payment">Detalhes do pedido</div>
+                    <p>Número {{numeroPedido}}</p>
+                    <p>Data da compra: {{dataPedido | date:'dd/MM/yyyy'}}</p>
+                    <p>Pagamento feito com {{tipoPagamento}}</p>
+                    <p>Total: {{valorTotal }}</p>
+                </div>
+                <br />
+                <br />
+
+                <div *ngIf="tipoPagamento == 'Boleto'">
+                    <p>O BOLETO SERÁ ENVIADO PARA O E-MAIL CADASTRADO NO SISTEMA.</p>
+                    <p>QUANDO VOCÊ CONCLUIR O PEDIDO, O BOLETO APARECERÁ EM UMA NOVA JANELA, PORTANTO,
+                        CERTIFIQUE-SE QUE O BLOQUEADOR DE POP-UP DO SEU NAVEGADOR ESTEJA DESATIVADO.</p>
+                    <p *ngIf="linkBoleto" ><a href="{{ linkBoleto }}" target="_blank">CLIQUE AQUI  PARA IMPRIMIR SEU BOLETO</a></p>
+                </div>
+
+                <div id="page-carrinho">
+                    <div *ngFor="let curso of cursosCarrinho">
+                        <a routerLink="{{pedidoPago ? '/meu-curso/'+curso.item_id+'/faca-aulas' : null}}" class="outter row" *ngIf="curso.item_categoria == 'Curso Online' || curso.item_categoria == 'Curso Remoto'">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-12" *ngIf="curso && curso.item_imagem">
+                                <img *ngIf="!curso.item_imagem.includes('/assets/img/')" src="{{ curso.item_imagem }}" width="100%" height="auto" />
+                                <img *ngIf="curso.item_imagem.includes('/assets/img/')" src="../{{curso.item_imagem}}" width="100%" height="auto" />
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-12 col-12 pedido-course-name">
+                                <div class="course-type">{{curso.item_categoria}}</div>
+                                <div class="course-title">{{curso.item_nome}}</div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 col-12 pedido-course-price">
+
+                            </div>
+                        </a>
+                        <div class="outter row" *ngIf="curso.item_categoria == 'Assinatura'">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+                                    <img src="../assets/img/az.png" width="100%" height="auto" />
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-12 col-12 pedido-course-name">
+                                    <div class="course-type">{{curso.item_categoria}}</div>
+                                    <div class="course-title">{{curso.item_nome}}</div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-12 pedido-course-price">
+    
+                                </div>
+                            </div>
+                        <a class="outter row" routerLink="{{pedidoPago ? '/meu-curso/'+curso.idem_id+'/voucher' : null}}" *ngIf="curso.item_categoria == 'Curso Presencial'">
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-12">
+                                    <img *ngIf="!curso.item_imagem.includes('/assets/img/')" src="{{ curso.item_imagem }}" width="100%" height="auto" />
+                                    <img *ngIf="curso.item_imagem.includes('/assets/img/')" src="'../{{curso.item_imagem}}" width="100%" height="auto" />
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-12 col-12 pedido-course-name">
+                                    <div class="course-type">{{curso.item_categoria}}</div>
+                                    <div class="course-title">{{curso.item_nome}}</div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-12 col-12 pedido-course-price">
+    
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="display:none;">
+                                    <div style="height:40px;margin-top:20px;"><span style="cursor:pointer; background-color:#F2652A;padding:10px;color:white;margin-top:10px;"><span class="icon-download icon"></span> salvar voucher</span></div>
+                                    <div style="height:40px;margin-top:20px;"><span style="cursor:pointer; background-color:#F2652A;padding:10px;color:white;margin-top:10px;"><span class="icon-printer icon"></span> imprimir voucher</span></div>
+
+                                </div>
+                                
+                            </a>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-0 col-0">
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+
+    </section>
+
+
+    <!-- Page Content -->
+
+
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+</section>
+
+<script type="text/javascript">
+    window._st_account = 5825;
+    window._cv_data = {
+        'order_id': 0,      // Número do pedido
+        'valor': 0          // Valor do pedido
+    };
+    (function () {
+        var ss = document.createElement('script');
+        ss.type = 'text/javascript';
+        ss.async = true;
+        ss.src = '//app.shoptarget.com.br/js/tracking.js';
+        var sc = document.getElementsByTagName('script')[0];
+        sc.parentNode.insertBefore(ss, sc);
+    })();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+    var interval = setInterval(function () {
+        if ($("#topnav_shop").length) {
+            $("#topnav_shop").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+</script>
+
+<style>
+    #page-compra-finalizada .navbar {
+        background-color: #DBDADA !important;
+    }
+
+    #mobile_navbar {
+        background-color: #DBDADA !important;
+
+    }
+</style>

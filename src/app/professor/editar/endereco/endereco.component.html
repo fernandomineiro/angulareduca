@@ -1,0 +1,91 @@
+<section id="page-agenda" class="page-home-acesso-restrito">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current2="endereco" current1="meu-perfil"></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:30px;display:flex;">
+                <form id="editar-meus-dados" [formGroup]="formEndereco" (ngSubmit)="onSubmitMiniCurriculo()"   style="width: 100%;padding:15px;">
+                    <h2 class="title orange-font-color">Endereço</h2>
+                    <hr>
+                    <div class="form-group">
+                        <div>
+                            <span class="orange-font-color">CEP *</span>
+                            <input id="cep"
+                                   [ngClass]="[isFieldValid('cep') ? 'is-invalid' : '', 'form-control']"
+                                   type="text" formControlName="cep" required placeholder="CEP" (blur)="buscarEnderecoCEP($event)" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('cep')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div >
+                            <span class="orange-font-color">Logradouro *</span>
+                            <input id="address_street"
+                                   [ngClass]="[isFieldValid('logradouro') ? 'is-invalid' : '', 'form-control']"
+                                   type="text" formControlName="logradouro" required placeholder="Rua" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('logradouro')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div>
+                            <span class="orange-font-color">Número *</span>
+                            <input id="address_number"
+                                   [ngClass]="[isFieldValid('numero') ? 'is-invalid' : '', 'form-control']"
+                                   type="text" formControlName="numero" required placeholder="Número" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('numero')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div >
+                            <span class="orange-font-color">Complemento</span>
+                            <input id="address_complemento"
+                                   [ngClass]="[isFieldValid('complemento') ? 'is-invalid' : '', 'form-control']"
+                                   type="text" formControlName="complemento" placeholder="Complemento" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('complemento')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div >
+                            <span class="orange-font-color">Bairro</span>
+                            <input id="address_bairro"
+                                   [ngClass]="[isFieldValid('bairro') ? 'is-invalid' : '', 'form-control']"
+                                   type="text" formControlName="bairro" placeholder="Bairro" />
+                            <app-field-error-display
+                                [displayError]="isFieldValid('bairro')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div>
+                            <span class="orange-font-color">Estado *</span>
+                            <select [ngClass]="[isFieldValid('fk_estado_id') ? 'is-invalid' : '', 'form-control']"
+                                    formControlName="fk_estado_id" required (change)="buscarCidades()">
+                                <option [ngValue]="null">Selecione</option>
+                                <option [value]="estado.id" *ngFor="let estado of estados">
+                                    {{ estado.descricao_estado }}
+                                </option>
+                            </select>
+                            <app-field-error-display
+                                [displayError]="isFieldValid('fk_estado_id')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                        <div >
+                            <span class="orange-font-color">Cidade *</span>
+                            <select [ngClass]="[isFieldValid('fk_cidade_id') ? 'is-invalid' : '', 'form-control']"
+                                    formControlName="fk_cidade_id" required>
+                                <option [ngValue]="null">Selecione </option>
+                                <option [value]="cidade.id" *ngFor="let cidade of cidades">
+                                    {{ cidade.descricao_cidade }}
+                                </option>
+                            </select>
+                            <app-field-error-display
+                                [displayError]="isFieldValid('fk_cidade_id')" errorMsg="Campo é obrigatório">
+                            </app-field-error-display>
+                        </div>
+                    </div>
+                    <button *ngIf="!loading" type="submit" class="orange-background">atualizar</button>
+                    <button *ngIf="loading" type="submit" class="orange-background">carregando...</button>
+                </form>
+            </div>
+        </div>
+        <div class="row"></div>
+    </section>
+</section>

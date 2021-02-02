@@ -1,0 +1,52 @@
+<section  id="page-cursos">
+    <br/>
+    <br/>
+    <div class="container">
+      <h2 class="title">Cursos on-line</h2>
+    </div>
+    <div id="main-info" *ngIf="obj && profInfo">
+      <div class="container">
+        <h3 class="title">{{obj.titulo}}</h3>
+        <h4 class="teacher-name">{{profInfo.nome}} {{profInfo.sobrenome}}
+          <div class="dropdown">
+            <span style="color:#EE5666" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropup-auto="false">
+              + </span>
+            <div class="dropdown-menu box-shadow" aria-labelledby="dropdownMenuButton">
+              <div class="inner-dropdown">
+                <div>
+                    <img #image onError="this.src = '/assets/img/default-avatar.png';"  src="{{ IMG_URL }}/files/usuario/{{ profInfo.usuario.foto }}"
+                    />                  
+                </div>
+                <div>
+                  <h6>{{profInfo.nome}} {{profInfo.sobrenome}}</h6>
+                  <p>{{profInfo.mini_curriculum}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </h4>
+  
+        <div class="row">
+          <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+            <div id="video">
+              <div class="wrapper">
+                  <iframe id="vimeoIframe" title="vimeo-player" [src]="src" width="640" height="360"
+                  frameborder="0" autoplay="false" allowfullscreen>
+              </iframe>              
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="display:flex;">
+            <p style="margin:auto;max-width:300px;">{{obj.descricao}}</p>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+ 
+ 
+  
+  
+  </section>
+  
+  

@@ -1,0 +1,42 @@
+<div class="courses-info">
+    <div class="want-to-info" style="width:100%;" >
+        <div class="title orange-font-color">
+            <span class="fa fa-bookmark"></span>
+            <span style="margin-left: 10px;">Meus Cursos Favoritos</span>
+        </div>
+        <div class="horizontal-line1" style="max-width:825px !important;"></div>
+        <p *ngIf="favorites != undefined && !favorites.length"><br/>Você ainda não favoritou nenhum curso</p>
+        <ngx-slick-carousel
+                class="slickear1 carousel" #slickModal="slick-carousel"
+                [config]="slide1Config">
+           
+                    <app-card-cursos-online class="grid"
+                    ngxSlickItem 
+                    *ngFor="let favorite of favorites"
+                    [curso]="favorite"
+                    [favorites]="favorites2"
+                    [cursosAluno]="cursosAluno">
+                  </app-card-cursos-online>
+           
+                </ngx-slick-carousel>
+    </div>
+</div>
+
+<div class="courses-info">
+    <div class="want-to-info" style="width:100%;">
+        <div class="title orange-font-color">
+            <span class="fa fa-bookmark"></span>
+            <span style="margin-left: 10px;">Minhas Trilhas Favoritas</span>
+        </div>
+        <div class="horizontal-line1" style="max-width:825px !important;"></div>
+        <p *ngIf="trilhaFavorites != undefined && !trilhaFavorites.items.length"><br/>Você ainda não favoritou nenhuma trilha de conhecimento</p>
+
+        <ngx-slick-carousel id="trilhaConhecimento" class="slickear2 carousel" #slickModal="slick-carousel"
+        [config]="slide2Config">             
+      <app-card-trilha-conhecimento  *ngFor="let trilha of trilhaFavorites.items" ngxSlickItem [categoria]="trilha" [favorites]="trilhaFavorites" ></app-card-trilha-conhecimento>
+
+      </ngx-slick-carousel>  
+    </div>
+</div>
+
+

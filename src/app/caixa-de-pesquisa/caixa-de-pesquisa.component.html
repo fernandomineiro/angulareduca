@@ -1,0 +1,10 @@
+<form id="form_sidebar_search" [formGroup]="formBuscar" (ngSubmit)="onSubmit()">
+    <div class="simulate-search-box" style="display:flex;width:100%;margin-bottom:0 !important;">
+        <input type="text" placeholder="Pesquisar" formControlName="search" (keypress)="pesquisar($event)"  style="margin:auto 0;"/>
+         <a (click)="onSubmit()" style="margin:auto 0;">
+            <span class="icon-search" style="font-size:25px;float:right;"></span>
+        </a>
+        <!-- <button type="submit" class="icon-search" style="font-size:25px;float:right;">Pesquisar</button> -->
+<!--        <button type="submit" class="orange-background">Pesquisar</button>-->
+    </div>
+</form>

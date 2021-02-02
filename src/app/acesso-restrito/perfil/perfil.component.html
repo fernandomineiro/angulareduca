@@ -1,0 +1,13 @@
+<section id="page-agenda" class="page-home-acesso-restrito">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current2="dados-basicos" current1="meu-perfil"></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px; margin-top:80px; display:flex;">
+                <app-editar-professor *ngIf="perfil == 1" style="width: 100%"></app-editar-professor>
+                <app-curador *ngIf="perfil == 5" style="width: 100%"></app-curador>
+            </div>
+        </div>
+    </section>
+</section>

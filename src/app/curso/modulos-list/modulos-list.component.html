@@ -1,0 +1,57 @@
+<div id="page-cursos-sobre">
+    <div id="modules_list" style="max-width:100% !important;">
+        <mat-accordion id="accordion" *ngIf="modulos != undefined" [multi]="true">
+
+            <mat-expansion-panel [expanded]='panelOpenState[i_secao]' *ngFor="let secao of modulos; let i_secao = index;" class="accordion-item">
+
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+
+                        <h5 class="mb-0 course row">
+                            <a href="#" style="text-transform:unset;" data-toggle="collapse" data-target="#collapse{{i_secao}}" aria-expanded="true" aria-controls="collapse1">
+                                <span style="padding-left: 30px" class="module-name" style="background-color:transparent !important;margin-bottom:0 !important;margin-left:30px;text-transform:unset;">
+                                    {{ secao.nome_secao }} </span>
+                                <span style="position:absolute;right:45px" class="amount orange-font-color" *ngIf="hasAccess">{{secao.amountWatched > 0 ? secao.amountWatched : 0}}/{{secao.modulos.length}}</span>
+                                <span style="position:absolute;right:45px" class="amount orange-font-color" *ngIf="!hasAccess">{{secao.modulos.length}}</span>
+                            </a>
+                        </h5>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="card-body row" >
+                    <span [matTooltipDisabled]="modulo.liberado && hasAccess" matTooltip="Acesso negado" *ngFor="let modulo of secao.modulos; let i_modulo = index;" style="width:100%" [ngStyle]="{'cursor': modulo.liberado  && hasAccess ? 'pointer' : 'not-allowed', 'opacity': modulo.liberado  && hasAccess ? 1 : .5}">
+                        <br>
+                        <a routerLink="/video/{{curso.id}}/{{modulo.modulo_id}}" [ngStyle]="{'cursor': modulo.liberado && hasAccess ? 'pointer' : 'not-allowed', 'pointer-events': !modulo.liberado  || !hasAccess ? 'none' : null}"
+                            class="line">
+                            <span>
+                                <i *ngIf="modulo.url_video != null || modulo.aula_ao_vivo" [ngClass]="{'icon-check-filled': modulo.assistido,'icon-play-filled': modulo.assistido != true }"
+                                    [ngStyle]="{'color': modulo.assistido ? '#03a84e' : '#FB0616'}" class="icon"></i>
+                                <i *ngIf="modulo.url_video == null && !modulo.aula_ao_vivo && modulo.url_arquivo != null && !modulo.url_arquivo.toLowerCase().includes('mp3')" [ngClass]="{'icon-check-filled': modulo.assistido,'icon-paper': modulo.assistido != true }"
+                                    class="icon" [ngStyle]="{'color': modulo.assistido ? '#03a84e' : '#FB0616'}"></i>
+                                    <i *ngIf="modulo.url_video == null && !modulo.aula_ao_vivo && modulo.url_arquivo != null && modulo.url_arquivo.toLowerCase().includes('mp3')" [ngClass]="{'icon-check-filled': modulo.assistido,'fas fa-podcast': modulo.assistido != true }"
+                                    class="icon" [ngStyle]="{'color': modulo.assistido ? '#03a84e' : '#FB0616'}"></i>                               
+                                <span class="module">Aula {{ i_secao+1 }}.{{ i_modulo+1 }} </span>
+                                <span class="text">{{ modulo.titulo }}</span>
+                                <span *ngIf="modulo.aula_ao_vivo">
+                                    <i class="icon icon-clock" style="color: #ff0000; margin-left: 10px;"></i><!-- 2020-03-20  20200320 -->
+                                    <span>Data: {{ modulo.data_aula_ao_vivo | date:'dd/MM/yyyy'  }} as {{ modulo.hora_aula_ao_vivo.substring(0,5)+' hs' }}</span>
+                                </span>
+                            </span>
+                            <span class="label label-danger" style="background: red; color: #ffffff; padding: 2px 5px; font-weight: bold; border: solid 1px #333;" *ngIf="modulo.aula_ao_vivo == 1">aula ao vivo</span>
+                            <span class="duration" *ngIf="modulo.assistido != true && modulo.url_video != null">
+                                <b> {{ modulo.carga_horaria }} minuto(s)</b>
+                            </span>
+                            <span class="duration" *ngIf="modulo.assistido">
+                                <b>concluído</b>
+                            </span>
+                        </a>
+                    </span>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+    </div>
+
+</div>
+
+<a href="javascript:void(0);" data-target="#modalAulaLive" data-toggle="modal" style="margin-left: -999999px;" id="disparaOpenModal">trigger para o modal</a>
+<app-modal-aula-live></app-modal-aula-live>

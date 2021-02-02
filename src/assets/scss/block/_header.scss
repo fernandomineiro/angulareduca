@@ -1,0 +1,36 @@
+#form_header_search {
+  max-width: 430px;
+
+  & input {
+    width: 100%;
+    font-family: $encode-Sans-Condesed-Regular;
+    color: #707070;
+    font-size: 13px;
+    border: none;
+    height: 30px;
+  }
+}
+
+#header_characteristics{
+  margin-top: 25px;
+  margin-bottom: 50px;
+
+  & p {
+    padding-top: 10px;
+    font-family: $encode-Sans-Condesed-Medium;
+    font-size: 14px;
+    color:black;
+  }
+}
+
+#index_call_search_div {
+  padding: 200px 0;
+  margin-top: -70px;
+
+  & h3 {
+    color: $gray;
+    font-family: $encode-Sans-Condesed-Regular;
+    font-size: 25px;
+    max-width: 430px;
+  }
+}

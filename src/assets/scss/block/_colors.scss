@@ -1,0 +1,23 @@
+.orange {
+  &-font-color{
+    color: $default-color-theme !important;
+  }
+  &-background {
+    background-color: $default-color-theme !important;
+  }
+  &-light-background {
+    background-color: $orange-light-background;
+  }
+  &-medium-background {
+    background-color: $orange-dark-background;
+  }
+}
+
+.yellow {
+  &-light-background {
+    background-color: $yellow-light-background;
+  }
+  &-dark-background {
+    background-color: $yellow-dark-background;
+  }
+}

@@ -1,0 +1,33 @@
+
+<div *ngIf="this.isLoggedIn()" class="row">
+    <div class="col-lg-3"  style="text-align: justify">
+        <img *ngIf="configuracoes.tiposCursosAtivos.banner_lateral" src="{{ IMG_URL }}/files/banners/{{ configuracoes.tiposCursosAtivos.banner_lateral }}" width="98%" alt="">
+    </div>
+
+    <div class="col-lg-9 main-content" >
+
+        <div class="col-md-12" style="margin-bottom: 3%">
+            <h3>Olá, {{ loginService.user.nome }}!</h3>
+        </div>
+        <div class="col-md-12" *ngIf="configuracoes.tiposCursosAtivos.banner_secundario"
+             [innerHTML]="configuracoes.tiposCursosAtivos.banner_secundario" style="text-align: justify; margin-bottom: 3%;">
+        </div>
+
+        <app-menu-itv></app-menu-itv>
+
+        <div class="col-lg-12 my-5">
+            <h2 class="orange-font-color">Agenda de liberação de cursos</h2>
+            <div class="horizontal-line3"></div>
+        </div>
+
+        <div class="col-lg-12">
+            <ejs-schedule cssClass='schedule-event-template' [currentView]="setView" locale="pt" [readonly]="true"
+                          [eventSettings]='eventSetting'>
+                <e-views>
+                    <e-view option="Month"></e-view>
+                    <e-view option="Day"></e-view>
+                </e-views>
+            </ejs-schedule>
+        </div>
+    </div>
+</div>

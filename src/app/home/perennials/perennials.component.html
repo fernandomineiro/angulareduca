@@ -1,0 +1,94 @@
+<div *ngIf="!isLoggedIn() || !loginService.hasMembershipMentoria()">
+<section id="banner">
+  <a routerLink="/assinaturas">
+    <div>
+        <img src="../assets/img/perennials/banner-pere-botao.png" />
+      </div>
+  </a>
+</section>
+
+<section class="sections">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+        <div id="video">
+          <div class="wrapper">
+            <iframe class="elementor-video-iframe" allowfullscreen="" title="Player de Vídeo vimeo" src="https://player.vimeo.com/video/326911075?color&amp;autopause=0&amp;loop=0&amp;muted=0&amp;title=1&amp;portrait=1&amp;byline=1&amp;autoplay=1#t="></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-6 col-sm-12 col-12 flex">
+        <div class="margin-auto">
+          <h2>Plataforma de Mentoring em tempo real</h2>
+          <p>Serviços de mentoring em tempo real e de forma permanente para empresários, profissionais e estudantes empreendedores,
+            garantindo toda a orientação necessária para que se preservem rigorosamente atualizados, e maximizem suas possibilidades
+            e perspectivas de sucesso em seus negócios.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sections">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+        <div class="icon flex">
+          <img class="margin-auto" src="../assets/img/perennials/icon-3-150x150.png" />
+        </div>
+        <div class="title">
+          <h3>Inovação, tendências, cases</h3>
+        </div>
+        <div class="text">
+          <p>Um olhar criterioso para o passado, sempre vislumbrando as maiores novidades do futuro.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+        <div class="icon flex">
+          <img class="margin-auto" src="../assets/img/perennials/icon-2-150x150.png" />
+        </div>
+        <div class="title">
+          <h3>Conteúdo exclusivo</h3>
+        </div>
+        <div class="text">
+          <p>Produzido pela primeira consultoria empresarial do Brasil especializada em planejamento estratégico sob a ótica
+            do mercado.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+        <div class="icon flex">
+          <img class="margin-auto" src="../assets/img/perennials/icon-1-150x150.png" />
+        </div>
+        <div class="title">
+          <h3>Novos vídeos todos dias</h3>
+        </div>
+        <div class="text">
+          <p>Com análises, criticas. comentários e muitos insights.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+        <h2 style="margin-top:50px;text-align:center;">Você permanentemente conectado ao mundo dos negócios de uma maneira prática, simples e em tempo real</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sections flex" id="color">
+  <div class="margin-auto">
+    <h2>CADASTRE-SE E GANHE 30 DIAS GRÁTIS</h2>
+    <div class="flex">
+      <a routerLink="/assinaturas" class="margin-auto">
+        <div id="assine" >
+            ASSINE AGORA
+          </div>
+      </a>      
+    </div>
+  </div>
+</section>
+
+
+</div>
+<div *ngIf="isLoggedIn() && loginService.hasMembershipMentoria()">
+  <app-lista-card-cursos></app-lista-card-cursos>
+</div>

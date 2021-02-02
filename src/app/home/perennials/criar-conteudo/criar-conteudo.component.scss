@@ -1,0 +1,27 @@
+.orange-font-color{
+    color: #EE5666 !important;
+}
+
+#novo_conteudo div{
+    padding-top: 10px;
+}
+select::-ms-expand {
+    display: none;
+}
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+select{
+    background-color: #DBDADA;
+    border: none;
+    padding: 5px 10px;
+
+}
+
+button{
+    width: 168px;
+}

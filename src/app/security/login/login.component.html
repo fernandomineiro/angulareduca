@@ -1,0 +1,138 @@
+<div class="modal fade" id="loginModal" *ngIf="current != undefined" role="dialog" style="overflow: auto">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" (click)='current.value = "login"' id="close_modal" class="close" data-dismiss="modal">X</button>
+      </div>
+      <div *ngIf="current.value == 'login'" class="modal-body">
+        <div class="inner">
+          <div class="logo">
+            <app-mt-logotipo [style]="{'width': 'auto', 'height': '50px'}"></app-mt-logotipo>
+          </div>
+          <div id="login_screen">
+            <div class="not-border" >
+              <a (click)="current.value = 'cadastro'" class="orange-font-color" style="cursor:pointer;font-family: encodeSansCondensed-SemiBold;text-decoration:underline !important">Clique aqui e crie seu cadastro</a>
+              <br/>
+              <br/>
+              ou
+              <br/>
+              <br/>         
+            </div>
+            <span class="login-title">{{ current.title }}</span>
+
+            <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+            <form id="login_form" [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+              <div [ngStyle]='{"border-color" :   formLogin.controls["email"].status == "INVALID" && submitted ? "#FC0404" : "#ddd" }'>
+                <input type="email" formControlName="email" id="login_email" placeholder="Seu email" required />
+              </div>
+              <div class="not-border" *ngIf="formLogin.controls.email.status == 'INVALID' && submitted">
+                <p *ngIf="formLogin.controls.email.errors.required" style="color:#FC0404">Este campo é obrigatório</p>
+                <p *ngIf="formLogin.controls.email.errors.email" style="color:#FC0404">Informe um e-mail válido.</p>
+              </div>
+              <div class="form-group">
+                <div [ngStyle]='{"border-color" :   formLogin.controls.password.status == "INVALID" &&   submitted ? "#FC0404" : "#ddd" }'>
+                  <input [type]="monstrarESenha ? 'text' : 'password'" autocomplete="off" formControlName="password" id="login_password" placeholder="Sua senha"
+                    required />
+                </div>
+                <div class="not-border">
+                  <input style="width:20px;" type="checkbox" name="show_passwordr" id="show_passwordr" (click)="triggerPassword()" />
+                  <label for="show_passwordr">Mostrar a senha</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (success)="handleSuccess($event)" hl="pt-br" [useGlobalDomain]="false" formControlName="recaptcha">
+                </ngx-recaptcha2>
+              </div>
+              <div class="not-border" *ngIf="formLogin.controls.password.status == 'INVALID' && submitted">
+                <p style="color:#FC0404">Este campo é obrigatório</p>
+              </div>
+              <div class="not-border">
+                <input style="width:20px;" type="checkbox" name="login_remember" id="login_remember" (click)="rememberMe()" checked="true"
+                />
+                <label for="login_remember">Lembrar minha senha</label>
+              </div>
+              <div class="not-border">
+                <button *ngIf="!loading" class="orange-background" type="submit" value="entrar">entrar agora</button>
+                <button *ngIf="loading" class="orange-background">verificando...</button>
+              </div>
+            </form>
+
+            <!--
+            <div id="login_social_media">
+              <span class="entrar">Entrar com: </span>
+              <a href="">
+                <span class="icon-facebook icon"></span>
+              </a>
+              <a href="">
+                <span class="icon-google-plus icon"></span>
+              </a>
+            </div>
+            -->
+
+            <div id="bottom_linksEsqueciSenha">
+              <a style="cursor:pointer;" onclick="displayRecover()">Esqueci minha senha</a>
+              <br />
+              <br />
+              <!-- <a style="cursor:pointer;" *ngIf="current.hasCadastro && configuracoes.layoutHome != 1" (click)="current.value = 'cadastro'" >Ainda não tenho cadastro</a> -->
+            </div>
+          </div>
+          <div id="recover_screen" style="display:none">
+            <span class="login-title">Recuperação de senha</span>
+            <div *ngIf="mensagemErro" class="alert alert-danger">{{mensagem}}</div>
+            <div *ngIf="mensagemSucesso" class="alert alert-success">
+              {{mensagem}}
+            </div>
+            <form id="recover_form" [formGroup]="formRecover" (ngSubmit)="onSubmitRecover()">
+              <div [ngStyle]='{"border-color" :   formRecover.controls.email.status == "INVALID" && enviado ? "#FC0404" : "#ddd" }'>
+                <input name="email" formControlName="email" (change)="submittedChangeRecover()" type="email" id="recover_email" name="login_email"
+                  placeholder="Seu email" required />
+              </div>
+              <div class="not-border" *ngIf="formRecover.controls.email.status == 'INVALID' && enviado">
+                <p *ngIf="formRecover.controls.email.errors.required" style="color:#FC0404">Este campo é obrigatório</p>
+                <p *ngIf="formRecover.controls.email.errors.email" style="color:#FC0404">Informe um e-mail válido.</p>
+              </div>
+              <!-- <div class="form-group">
+                <input name="cpf" (change)="submittedChangeRecover()" type="text" id="recover_cpf"
+                  name="recover_cpf" placeholder="Seu CPF" required />
+              </div> -->
+              <div class="not-border">
+                <span>
+                  <small>Você receberá um email com a senha provisória para realizar o acesso ao seu perfil. Essa senha deverá ser
+                    alterada na opção "editar perfil" desse app.</small>
+                </span>
+              </div>
+              <div class="not-border">
+                <button class="orange-background" type="submit" id="recover_button">enviar</button>
+              </div>
+              <div id="bottom_links" style="border: none;">
+                <a href="#" onclick="displayLogin()">Voltar para o login</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="current.value == 'cadastro'" class="modal-body">
+        <app-cadastro></app-cadastro>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="modal fade" id="cadastroModal" role="dialog">
+    <div class="modal-dialog">
+        Modal content
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" id="close_modal" class="close" data-dismiss="modal">X</button>
+          </div>
+          <div class="modal-body">
+           
+            <app-cadastro></app-cadastro>
+
+          </div>
+        </div>
+      </div>
+</div>-->

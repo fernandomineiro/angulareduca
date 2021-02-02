@@ -1,0 +1,87 @@
+#page-cadastro .main-row button {
+    margin-top: 30px;
+    padding: 15px 100px;
+    font-family: encodeSansCondensed-Bold;
+    color: 
+    white;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.page-relatorios button{
+    font-size:12px !important;
+    margin-top:0 !important;
+  }
+  
+  .page-relatorios select{
+    margin-left:5px;
+  }
+  
+  .page-relatorios .main-row{
+    font-family: encodeSansCondensed-Regular; 
+  }
+  
+  .page-relatorios .item{
+    margin-top:0 !important;
+  }
+  
+  .page-relatorios .charts{
+    font-family: encodeSansCondensed-Regular; 
+  }
+  
+  .page-relatorios .chart-type{
+    font-family: encodeSansCondensed-SemiBold; 
+    font-size:25px;
+  }
+  
+  .page-relatorios .chart-description{
+    font-size:12px;
+  }
+  .page-relatorios hr{
+    border-width:2px;
+    margin-top:30px;
+  }
+  
+  .page-relatorios .see-more {
+    text-align:right !important;
+    font-family: encodeSansCondensed-Regular; 
+  }
+  
+  .page-relatorios .fatura hr{
+     border-color:#B2B1B1;
+  }
+  
+  .page-relatorios .fatura{
+    font-family: encodeSansCondensed-Regular; 
+  }
+  
+  .page-relatorios .fatura .row{
+    width:100%;
+  }
+  
+  .page-relatorios .fatura .left,
+  .page-relatorios .fatura .right{
+    width:50%;
+    padding:5px;
+  }
+  
+  .page-relatorios .fatura .line{
+   display:flex;
+  }
+  
+  .page-relatorios .fatura .left{
+   text-align:right;
+  }
+  
+  .page-relatorios .fatura .course-name{
+    font-size:20px;
+   }
+  
+   .page-relatorios .fatura .amount{
+    margin-top:20px;
+   }
+  
+   .page-relatorios .fatura .value{
+    text-align:right;
+   }

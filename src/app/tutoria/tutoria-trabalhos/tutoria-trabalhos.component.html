@@ -1,0 +1,100 @@
+<section id="page-agenda" class="page-meus-cursos page-criar-curso page-status-aprovacao page-tutoria page-trabalhos">
+
+
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current2="trabalhos" current1="tutoria"></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:80px;">
+        <div class="title orange-font-color">Tutoria
+          <b>Trabalhos</b>
+        </div>
+
+        <form [formGroup]="form" id="form_info" (ngSubmit)="filtrar()">
+          <div class="row main-row">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 item">
+              <span>Cursos </span>
+              <select name="curso" matTooltip="Curso ao qual a mensagem pertence" formControlName="curso_id">
+                <option selected value="">Todos</option>
+                <option *ngFor="let curso of cursos" [value]="curso.curso_id">{{ curso.curso_titulo }}</option>
+              </select>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 item">
+              <span>Data Envio </span>
+              <input name="data_envio" id="birthday" matTooltip="Data de envio do trabalho" type="date"
+                placeholder="*Data de envio" formControlName="data_envio" />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6 item">
+              <span>Status do trabalho</span>
+              <select name="status" matTooltip="Verifica se o trabalho foi corrigido" formControlName="status">
+                <option value="">Ambos</option>
+                <option [value]="false">Corrigir</option>
+                <option [value]="true">Corrigido</option>
+              </select>
+            </div>
+          </div>
+          <div class="row main-row justify-content-end mt-4 mb-4">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-6">
+              <button type="submit" class="orange-background" style="width:100%;">pesquisar</button>
+            </div>
+          </div>
+        </form>
+
+        <mat-accordion id="accordion" *ngIf="tutoriasTrabalhos != undefined">
+          
+          <mat-expansion-panel (opened)="panelOpenState[i] = true" (closed)="panelOpenState[i] = false" hideToggle *ngFor="let trabalho of tutoriasTrabalhos; let i = index" class="accordion-item">
+           
+            <mat-expansion-panel-header>               
+              <mat-panel-title>                
+                <h5 class="mb-0 course row" style="width:100%">
+                  <div class="course-info col-lg-8 col-md-8 col-sm-6 col-6">
+                    <div class="course-name">{{ trabalho.trabalho_titulo }} ({{ trabalho.tipo_titulo }}) - {{ trabalho.curso_data_criacao | date:'shortDate' }}</div>
+                  </div>
+                  <a class="col-lg-4 col-md-4 col-sm-6 col-6 orange-font-color">
+                    <span class="text-button">{{panelOpenState[i] ? 'fechar' : 'mostrar'}} lista</span>
+                  </a>
+                </h5>
+              </mat-panel-title>             
+            </mat-expansion-panel-header>           
+              <div class="card-body row messages">
+                <div *ngFor="let envio of trabalho.envios" href="" class="row">
+                  <div class="col-lg-7 col-md-7 col-sm-12 col-12">
+                    <div class="student-name read">{{ envio.student }} - {{ envio.data_envio | date:'shortDate' }} - {{ envio.nome_arquivo }}</div>
+                  </div>
+                  <div class="col-lg-5 col-md-5 col-sm-12 col-12">
+                    <div class="row">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                        <a [href]="envio.downloadPath" target="_blank" download>
+                          <span class="icon icon-download orange-font-color"></span>
+                        </a>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                        <input step="0.5" type="number" min="0" max="10" maxlength="2" placeholder="inserir nota" 
+                          (change)="checkIfValid(envio)" onkeydown="return false" [(ngModel)]="envio.grade" />
+                      </div>
+                    </div>
+                  </div>
+                  <hr style="margin-left:10px;" />
+                </div>
+              </div>
+              <div class="button-send-div">
+                <span class="send-grades" (click)=sendGrades(trabalho)>enviar</span>
+              </div>           
+          </mat-expansion-panel>
+        </mat-accordion>        
+        <div class="messages">
+          <hr/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+    </div>
+
+
+  </section>
+
+
+
+</section>

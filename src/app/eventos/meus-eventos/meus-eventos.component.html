@@ -1,0 +1,131 @@
+<div id="page-agenda" class="page-meus-cursos page-criar-curso page-meus-eventos">
+
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='meus_cursos' current2="meus_eventos"></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:810px;margin-top:80px;">
+        <div class="title orange-font-color">Meus
+          <b>Eventos</b>
+        </div>
+        <mat-accordion id="accordion" *ngIf="meusEventos != undefined">
+
+            <mat-expansion-panel (opened)="panelOpenState[i] = true" (closed)="panelOpenState[i] = false" hideToggle
+              *ngFor="let evento of meusEventos; let i = index" class="accordion-item">
+  
+              <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'" >
+                <mat-panel-title style="display: block !important;" class="accordion-item">
+                  <hr />
+                  <h5 class="mb-0 course row">
+                    <div class="image-container col-lg-3 col-md-3 col-sm-6 col-6" *ngIf="evento.imagem">
+                      <img src="{{IMG_URL}}/files/eventos/{{evento.imagem}}" width="auto" height="90px" />
+                    </div>
+                    <div class="course-info col-lg-7 col-md-7 col-sm-6 col-6">
+                      <div class="course-name">{{evento.titulo}}</div>
+  
+                      <div class="publish-info">
+                        <small> Publicado em
+                          <span id="date">{{evento.criacao | date:'medium'}}</span>
+                        </small>
+                        <br />
+                      </div>
+                    </div>                  
+  
+                    <!--<a class="col-lg-2 col-md-2 col-sm-6 col-6 orange-font-color"
+                      class="orange-font-color">
+                      <span class="text-button">{{panelOpenState[i] ? 'fechar' : 'ver'}} detalhes</span>
+                    </a>-->
+  
+                  </h5>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+  
+  
+              <!--<div class="card-body row">
+                  <div class="col-lg-8 col-md-8 col-sm-12 col-12  number-info">
+                    <div class="row">
+                      <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="number orange-font-color">
+                          {{evento.visitorsAmount}}
+                        </div>
+                        <div style="margin-top: 10px;" class="description orange-font-color">pessoas visitaram o curso</div>
+                      </div>
+  
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-12 chart">
+                          <circle-progress
+                          [percent]="percentWorkshop[i]"
+                          [radius]="30"
+                          [outerStrokeColor]="'#FFF22D'"
+                          [outerStrokeGradient] = "true"
+                          [outerStrokeWidth]="10"
+                          [outerStrokeGradientStopColor]="'#D35B30'"
+                          [innerStrokeColor]="'transparent'"
+                          [animation]="false"
+                          [title]="evento.workshopBought"
+                          [clockwise] = "false"
+                          [responsive] = "true"
+                          [showUnits] = "false"
+                          [showSubtitle] = "false"
+                          [titleColor]="'#D35B30'"
+                          [titleFontWeight]="'500'"
+                          [outerStrokeLinecap]="'square'"
+                        ></circle-progress>                          
+                       
+                        <div class="orange-font-color">pessoas comprar o
+                          <br />módulo workshop</div>
+  
+  
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-12 col-12 chart">
+                          <circle-progress
+                          [percent]="percentLecture[i]"
+                          [radius]="30"
+                          [outerStrokeColor]="'#FFF22D'"
+                          [outerStrokeGradient] = "true"
+                          [outerStrokeWidth]="10"
+                          [outerStrokeGradientStopColor]="'#D35B30'"
+                          [innerStrokeColor]="'transparent'"
+                          [animation]="false"
+                          [title]="evento.lectureBought"
+                          [clockwise] = "false"
+                          [responsive] = "true"
+                          [showUnits] = "false"
+                          [showSubtitle] = "false"
+                          [titleColor]="'#D35B30'"
+                          [titleFontWeight]="'500'"
+                          [outerStrokeLinecap]="'square'"
+                        ></circle-progress>             
+                        
+                        <div class="orange-font-color">pessoas comprar o
+                          <br />módulo palestra</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-12 right">
+                    <div class="inner">
+                      <div class="aberto">
+                        <div class="n1">R$ {{evento.valueOpened | number:'1.2-2':'pt'}}</div>
+                        <div>em aberto</div>
+                        <hr />
+                      </div>
+                      <div class="ultimo">
+                        <div class="n1">R$ {{evento.valueLastMonth | number:'1.2-2':'pt'}}</div>
+                        <div>último mês</div>
+                        <hr />
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>-->
+  
+            </mat-expansion-panel>
+          </mat-accordion>
+     
+
+
+      </div>
+    </div>
+</section>
+
+</div>

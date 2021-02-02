@@ -1,0 +1,48 @@
+#sidebar {
+  & h1 {
+    font-family: $encode-Sans-Condesed-Bold;
+    font-size: 22px;
+    margin-top: 3rem !important;
+  }
+
+  & .list-group-item{
+    font-family: $encode-Sans-Condesed-Regular;
+    border: none;
+    padding: 4px 0;
+  }
+
+  & #form_sidebar_search .simulate-search-box {
+    padding: 5px;
+    background-color: $footer-background-color;
+    margin-top: 50px;
+
+    & input {
+      background-color: transparent;
+      border: none;
+      font-family: $encode-Sans-Condesed-Regular;
+      width: 80%;
+    }
+  }
+
+  & .sidebar_colored_links{
+    padding: 20px;
+    margin-top: 10px;
+    min-height: 140px;
+
+    & p {
+      font-family: $encode-Sans-Condesed-Medium;
+      font-size: 16px;
+      color:black;
+      margin-bottom: 0 !important;
+    }
+
+    & .icon {
+      font-size: 35px;
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    &.yellow-light-background {
+      margin-top: 50px;
+    }
+  }
+}

@@ -1,0 +1,193 @@
+<!-- Início do Footer -->
+
+<footer style="margin-top:30px;" *ngIf="!isQuemSomos && !krotonAccess" class="hide-mobile">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" id="footer_column1_links">
+                <a href="" *ngIf="configuracoes.layoutHome != 4">
+                    <app-mt-logotipo [style]="{'width': '220px', 'height': '60px'}"></app-mt-logotipo>
+                </a>
+                <a href="" *ngIf="configuracoes.layoutHome == 4">
+                    <img src="../assets/img/perennials/logo-perennials.png" />
+                </a>
+                <p style="font-size: 12px;margin-top: 20px;color:black;">CNPJ: 28.287.766/0001-18</p>
+                <div id="footer_social_media">
+                    <a *ngFor="let rede of configuracoes.redesSociais" target="_blank" href="{{rede.rede_url.includes('http') ? rede.rede_url : 'http://'+rede.rede_url}}">
+                        <span style="margin: 0 5px;" [ngClass]="{'icon-facebook': rede.titulo.includes('acebook'),'icon-linkedin':rede.titulo.toLowerCase().includes('inkedin') ,'icon-instagram':rede.titulo.includes('nstagram')}"
+                            class="icon-facebook"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" id="footer_column2_links">
+                <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online == 1 && configuracoes.layoutHome != 1">
+                    <a [routerLink]="['/cursos-online']">Cursos on-line</a>
+                </div>
+                <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/cursos-presenciais']">Cursos presenciais</a>
+                </div>
+                <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/cursos-remotos']">Cursos Remotos</a>
+                </div>
+                <div *ngIf="configuracoes.tiposCursosAtivos.ativar_eventos == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/eventos']">Eventos</a>
+                </div>
+                <!--
+            <div><a [routerLink]="['/eventos']">Eventos</a></div>
+            -->
+                <div *ngIf="configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/trilhas-conhecimento']">Trilha de conhecimento</a>
+                </div>
+                <div *ngIf="configuracoes.tiposCursosAtivos.ativar_membership == 1  && configuracoes.layoutHome != 1">
+                    <a [routerLink]="['/assinaturas']">Assinaturas</a>
+                </div>
+                <div *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/biblioteca']">Biblioteca</a>
+                </div>
+                <div *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/professores']">Nossos Professores</a>
+                </div>
+                <div *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/seja-um-professor']">Seja um professor</a>
+                </div>
+                <div *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a href="">Já sou professor</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" id="footer_column3_links">
+                <div>
+                    <a *ngIf="configuracoes.layoutHome != 1" [routerLink]="['/carrinho']">Meu carrinho</a>
+                </div>
+                <div *ngIf="isLoggedIn() && getPerfil() !== 14 && configuracoes.layoutHome == 4">
+                    <a [routerLink]="['/acesso-restrito']">Meu perfil</a>
+                </div>
+                <div *ngIf="isLoggedIn() && getPerfil() !== 1 && configuracoes.layoutHome == 4">
+                    <a [routerLink]="['/perfil']">Meu perfil</a>
+                </div>
+                <div *ngIf="!isLoggedIn()">
+                    <a href="#" data-toggle="modal" data-target="#loginModal">Meu perfil</a>
+                </div>
+                <div style="padding: 20px 0" *ngIf="this.configuracoes.sac && this.configuracoes.sac.email && configuracoes.layoutHome != 1">
+                    <span *ngIf="configuracoes.layoutHome != 1" class="bold">Tem dúvidas sobre o site ou
+                        <br/>sobre a sua compra?
+                        <br/>Mande um e-mail para
+                        <a *ngIf="configuracoes.layoutHome != 4" href="mailto:{{ this.configuracoes.sac.email }}" id="footer_column3_duvida_link"
+                            class="orange-font-color">
+                            {{ this.configuracoes.sac.email }}
+                        </a>
+                        <a *ngIf="configuracoes.layoutHome == 4" href="mailto:sac@perennials.com.br" id="footer_column3_duvida_link" style="color:#EE5666 !important">
+                            sac@perennials.com.br
+                        </a>
+                    </span>
+                </div>
+                <div style="padding: 20px 0" *ngIf="!this.configuracoes.sac && configuracoes.layoutHome != 1">
+                    <span class="bold">Tem dúvidas sobre o site ou
+                        <br/>sobre a sua compra?
+                        <br/>Mande um e-mail para
+                        <a href="mailto:sac@educaz.com.br" id="footer_column3_duvida_link" class="orange-font-color">
+                            sac@educaz.com.br test
+                        </a>
+                    </span>
+                </div>
+                <div style="padding: 20px 0" *ngIf="configuracoes.layoutHome == 1">
+                    <span *ngIf="configuracoes.layoutHome == 1" class="bold">Tem dúvidas sobre o acesso?
+                        <br/>
+                        
+                        Mande um e-mail para
+                        <a  href="mailto:{{configuracoes.sac.email}}" id="footer_column3_duvida_link" class="orange-font-color">
+                            {{configuracoes.sac.email}}
+                        </a>
+                    </span>
+                </div>
+                <div>
+                    <a [routerLink]="['/politica-privacidade']">Política de Privacidade</a>
+                </div>
+                <div>
+                    <a [routerLink]="['/termos-condicoes']">Termos e condições de uso</a>
+                </div>
+                <div *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+                    <a [routerLink]="['/quem-somos']">Quem somos nós</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 bold" id="footer_column4_links">
+
+                <div *ngIf="isLoggedIn() && getPerfil() !== 14 && configuracoes.layoutHome != 1">
+                    <div>
+                        <a class="orange-font-color" [routerLink]="['/acesso-restrito']">Acesso restrito</a>
+                    </div>
+                </div>
+
+                <div *ngIf="!isLoggedIn()">
+                    <div>
+                        <a class="orange-font-color" href="#" data-toggle="modal" data-target="#loginModal" (click)="setLoginAcessoRestrito()">
+                            Acesso restrito
+                        </a>
+                    </div>
+                </div>
+
+                <div id="burnit_logo" style="position:unset !important">
+                    <br/>
+                    <br/>
+                    <span style="font-family:encodeSansCondensed-Regular;">powered by</span>
+                    <br>
+                    <a href="" *ngIf="environmentTemplate.faculdade_id != 7">
+                        <img src="../assets/img/Educaz_preto.png" style="width: 80px" />
+                    </a>
+                    <a href="" *ngIf="environmentTemplate.faculdade_id == 7">
+                        <img src="../assets/img/burnit-logo.png" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<footer class="hide-web">
+    <div class="container">
+        <div class="row">
+            <div class="col-6" id="footer_column1_links">
+                <a href="" *ngIf="configuracoes.layoutHome != 4">
+                    <app-mt-logotipo [style]="{'width': '100%', 'height': 'auto','max-width':'200px'}"></app-mt-logotipo>
+                </a>
+                <a href="" *ngIf="configuracoes.layoutHome == 4">
+                    <img src="../assets/img/perennials/logo-perennials.png" />
+                </a>
+                <p style="font-size: 12px;margin-top: 20px;color:black">CNPJ: 28.287.766/0001-18</p>
+                <div>
+                    Em caso de dúvidas:
+                    <a href="mailto:{{ configuracoes.sac.email }}" id="footer_column3_duvida_link" class="orange-font-color">
+                        {{ this.configuracoes.sac.email }}
+                    </a>
+                </div>
+                <div id="footer_social_media">
+                    <a *ngFor="let rede of configuracoes.redesSociais" target="_blank" href="{{rede.rede_url.includes('http') ? rede.rede_url : 'http://'+rede.rede_url}}">
+                        <span style="margin: 0 5px;" [ngClass]="{'icon-facebook': rede.titulo.includes('acebook'),'icon-linkedin':rede.titulo.toLowerCase().includes('inkedin') ,'icon-instagram':rede.titulo.includes('nstagram')}"
+                            class="icon-facebook"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6" id="burnit_logo" style="display:flex;justify-content:center;flex-direction:column;position:unset !important;">
+
+                <div *ngIf="!isLoggedIn()">
+                    <a class="orange-font-color" href="#" data-toggle="modal" data-target="#loginModal" (click)="setLoginAcessoRestrito()">
+                        Acesso restrito
+                    </a>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+                <span style="font-family:encodeSansCondensed-Regular;">powered by</span>
+                <br>
+                <a href="" *ngIf="environmentTemplate.faculdade_id != 7">
+                    <img src="../assets/img/Educaz_preto.png" style="width: 80px" />
+                </a>
+                <a href="" *ngIf="environmentTemplate.faculdade_id == 7">
+                    <img src="../assets/img/burnit-logo.png" style="max-width:100px;" />
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Fim do Footer -->

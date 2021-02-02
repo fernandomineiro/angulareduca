@@ -1,0 +1,38 @@
+{
+    "totalPagesNumber":5,
+    "categorias":
+    [
+        {
+            "categoryId": "0",
+            "categoryName": "Direito Penal I",
+            "coursesPresencial": 4,
+            "coursesOnline": 8,
+            "cityId": "0",
+            "price": 20
+        },
+        {
+            "categoryId": "1",
+            "categoryName": "Introdução ao Direito Civil",
+            "coursesPresencial": null,
+            "coursesOnline": 8,
+            "cityId": null,
+            "price": 20
+        },
+        {
+            "categoryId": "2",
+            "categoryName": "Direito Penal II",
+            "coursesPresencial": 4,
+            "coursesOnline": null,
+            "cityId": "0",
+            "price": 20
+        },
+        {
+            "categoryId": "3",
+            "categoryName": "Introdução ao Código de Defesa do Consumidor",
+            "coursesPresencial": 20,
+            "coursesOnline": 9,
+            "cityId": "0",
+            "price": 20
+        }
+    ]
+}

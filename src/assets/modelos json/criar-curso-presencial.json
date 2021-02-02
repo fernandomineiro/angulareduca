@@ -1,0 +1,58 @@
+{
+    "projetoId":0,
+    "titulo":"Blá Blá",
+    "descricao":"teste teste teste",
+    "local":"Centro de Convivência de São Paulo",
+    "cidade":"São Paulo",
+    "estado":"SP",   
+    "datas":[
+        {
+            "data":"2019-06-07",
+            "diaSemana":"sexta",
+            "horaInicio":"00:00",
+            "horaTermino":"01:00"
+        },
+        {
+            "data":"2019-06-08",
+            "diaSemana":"sabado",
+            "horaInicio":"00:00",
+            "horaTermino":"01:00"
+        }
+    ],
+    "duracao":"20h",
+    "preco":"R$ 150,00",
+    "precoVenda":"R$ 160,00",
+    "categoriaId":1,
+    "certificadoId":0,
+    "professoresId":[0,2,5],
+    "maxAlunos":100,
+    "minAlunos":80,
+    "imagemPath":"url endereço",
+    "modulos":[
+        {
+            "nome": "Modulo 1",
+            "subModulos": [
+                {
+                    "nome":"blpá blá",
+                    "codigoVimeo": "xxxxx",
+                    "duracao": "20h",
+                    "arquivoPath": "url endereço"
+                }
+            ]
+           
+        },
+        {
+            "nome": "Modulo 2",
+            "subModulos": [
+                {
+                    "nome":"blpá blá",
+                    "codigoVimeo": "xxxxx",
+                    "duracao": "20h",
+                    "arquivoPath": "url endereço"
+                }
+            ]
+           
+        }
+    ]
+   
+}

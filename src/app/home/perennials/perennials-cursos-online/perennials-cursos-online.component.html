@@ -1,0 +1,151 @@
+<section *ngIf="curso && curso.permission" id="page-cursos" (window:resize)="onResized($event)" style="margin-bottom:100px;">
+  <br/>
+  <br/>
+  <div class="container">
+    <h2 class="title">Cursos on-line</h2>
+  </div>
+  <div id="main-info" *ngIf="curso">
+    <div class="container">
+      <h3 class="title">{{curso.titulo}}</h3>
+      <h4 class="teacher-name">{{curso.nome_professor}} {{curso.sobrenome_professor}}
+        <div class="dropdown">
+          <span style="color:#EE5666" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-dropup-auto="false">
+            + </span>
+          <div class="dropdown-menu box-shadow" aria-labelledby="dropdownMenuButton">
+            <div class="inner-dropdown">
+              <div>
+                <img #image onError="this.src = 'src/assets/img/default-avatar.png';" src="{{ IMG_URL }}/files/usuario/{{ curso.foto_usuario_professor }}"
+                />
+              </div>
+              <div>
+                <h6>{{curso.nome_professor}} {{curso.sobrenome_professor}}</h6>
+                <p>{{curso.mini_curriculum_professor}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h4>
+
+      <div class="row">
+        <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+          <div id="video">
+            <div class="wrapper">
+              <iframe id="vimeoIframe" title="vimeo-player" [src]="src" width="640" height="360" frameborder="0" autoplay="false" allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-12" style="display:flex;">
+          <p style="margin:auto;max-width:300px;">{{curso.descricao}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="container" id="comments">
+    <div class="row">
+      <div class="col-lg-1 col-md-2 col-sm-3 col-3" style="text-align:center;">
+        <span class="icon-comments"></span>
+      </div>
+      <div class="col-lg-7 col-md-6 col-sm-9 col-9">
+        <div class="title orange-font-color">
+          O que dizem sobre o curso
+        </div>
+
+      </div>
+      <div class="col-lg-4  hide-mobile">
+
+      </div>
+      <div class="col-lg-1 col-md-2 col-sm-3 col-3 hide-mobile">
+
+      </div>
+      <div class="col-lg-7 col-md-12 col-sm-12 col-12" >
+        <div class="comment" *ngFor="let comentario of comentarios">
+          <div class="user-info">
+            <div class="user-photo">
+              <img  onError="this.onerror = null; this.src = '../assets/img/default-avatar.png';" src="{{ IMG_URL }}/files/usuario/{{ comentario.foto_usuario }}" width="100%" height="auto" />
+            </div>
+            <span class="user-evaluation">
+              <div class="group">
+                <div>
+                  <i [ngClass]="comentario.avaliacao >= 1 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+                  <i [ngClass]="comentario.avaliacao >= 2 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+                  <i [ngClass]="comentario.avaliacao >= 3 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+                  <i [ngClass]="comentario.avaliacao >= 4 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+                  <i [ngClass]="comentario.avaliacao >= 5 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+                </div>
+                <div class="user-name">{{comentario.nome_usuario}}</div>
+              </div>
+            </span>
+          </div>
+          <div class="user-comment">
+            {{comentario.comentario}}
+
+          </div>
+          <hr/>
+        </div>
+
+        <div class="comment" *ngIf="comentarios && !comentarios.length">
+          <p>Ainda não há avaliações</p>
+        </div>
+        <div id="commentsNew" class="comment user-info" style="display:block !important">
+          <label><b>Novo comentário</b></label>
+          <div>
+            <i (click)="evaluation = 1" [ngClass]="evaluation >= 1 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+            <i (click)="evaluation = 2" [ngClass]="evaluation >= 2 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+            <i (click)="evaluation = 3" [ngClass]="evaluation >= 3 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+            <i (click)="evaluation = 4" [ngClass]="evaluation >= 4 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+            <i (click)="evaluation = 5" [ngClass]="evaluation >= 5 ? 'filled fas' : 'empty far'" class="fa-star"></i>
+          </div>
+          <div *ngIf="submitted && !evaluation">
+            <p style="color:#FC0404">clique em uma estrela para inserir a avaliação</p>
+          </div>
+          <div>
+            <textarea style="width:100%" #novoComentario></textarea>
+          </div>
+          <div *ngIf="submitted && !novoComentario && !novoComentario.value && novoComentario.value != ''">
+            <p style="color:#FC0404">insira um comentário</p>
+          </div>
+          <div style="display:flex;justify-content:flex-end">
+            <button (click)="sendComment()" style="background-color:#EE5666;border:none;padding:10px 15px;color:white">enviar</button>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="horizontal-line2" [ngStyle]="{'left':offsetLeftContainer+'px','width': (widthContainer + offsetLeftContainer) + 'px'}"></div>
+  </div>
+
+  <div *ngIf="cursos">
+    <div class="container" style="margin-top:70px;" *ngFor="let categoria of cursos">
+      <div class="title orange-font-color">
+        Veja mais conteúdo de {{categoria.nome}}
+      </div>
+      <div #section2>
+        <ngx-slick-carousel class="slickear1 carousel type1" #slickModal="slick-carousel" [config]="returnSlideConfig(section2, isMobile ? 146 : 200)">
+          <app-card-cursos-online class="grid" [ngStyle]="{'width': isMobile ? '166px' : '220px'}" ngxSlickItem [curso]="curso" [favorites]="favorites"
+            [cursosAluno]="cursosAluno" *ngFor="let curso of categoria.mentorias">
+          </app-card-cursos-online>
+        </ngx-slick-carousel>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+
+<section *ngIf="curso && !curso.permission">
+  <div class="container" >
+    <div *ngIf="isAluno" style="margin:200px 0;">
+        <h3 class="text-center">Você não possui assinatura ativa. Clique <a class="orange-font-color" routerLink="/assinaturas">aqui</a> e conheça nossos planos</h3>
+    </div>
+    <div  *ngIf="!isAluno" style="margin:200px 0;">
+        <h3 class="text-center">Você não possui permissão para ver esse curso.</h3>
+    </div>
+
+  </div>
+</section>

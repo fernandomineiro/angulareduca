@@ -1,0 +1,26 @@
+@mixin line-clamp($numLines : 2, $lineHeight: 1.5) {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  max-height: $numLines * $lineHeight + unquote('em');
+}
+
+:host.list a{
+    display: flex;
+}
+
+:host.list .card-favorite{
+    justify-content: unset !important;
+    width: 100%;
+}
+
+
+  :host.grid #nomeTrilha{
+    height: 44px !important;
+    @include line-clamp;
+  }

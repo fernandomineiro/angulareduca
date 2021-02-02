@@ -1,0 +1,197 @@
+<section id="page-cursos" class="cursos-remotos" (window:resize)="onResized($event)">
+
+        <!-- Page Content -->
+        <section id="section_content">
+            <div class="container">
+                <div class="row">
+                    <div style="display:none;" class="col-lg-3" id="sidebar">
+                        <mt-sidebar></mt-sidebar>
+                    </div>
+                    <div class="col-lg-12">
+                        <div  class="sort-order row" style="justify-content:space-between;">
+                            <div id="sort"  [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                                <div class="dropdown">
+                                    <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                                        <span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu" style="height:200px;">
+                                        <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                                            <div class="radio">
+                                                <input (change)="findCursos('sort','asc')" id="sort_az" name="sort" type="radio">
+                                                <label for="sort_az" class="radio-label">A-Z</label>
+                                            </div>
+                                            <div class="radio">
+                                                <input (change)="findCursos('sort','desc')" id="sort_za" name="sort" type="radio">
+                                                <label for="sort_za" class="radio-label">Z-A</label>
+                                            </div>
+                                            <div class="radio">
+                                                <input (change)="findCursos('sort','best-seller')" id="sort_mais_vendidos" name="sort" type="radio">
+                                                <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                                            </div>
+                                            <div class="radio">
+                                                <input (change)="findCursos('sort','latest')" id="sort_mais_recente" name="sort" type="radio">
+                                                <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                                            </div>
+                                            <div class="radio">
+                                                <input (change)="findCursos('sort','promotions')" id="sort_promocoes" name="sort" type="radio">
+                                                <label for="sort_promocoes" class="radio-label">promoções</label>
+                                            </div>
+                                        </form>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            <div  [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                                <div class="dropdown">
+                                    <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">preço
+                                        <span class="caret"></span>
+                                    </button>
+                                    <app-range-slider [tipoCurso]="4"></app-range-slider>
+                                </div>
+                            </div>
+                            <div  [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                                <div class="" id="category">
+                                    <div class="dropdown">
+                                        <button href="#" class="nav-link dropdown-toggle" data-display="static" data-toggle="dropdown" style="padding:5px 10px;">categorias
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li *ngFor="let categoria of categorias">
+                                               <!-- <a href="javascript:void(0)" routerLink="/cursos-categoria/{{categoria.id}}">{{ categoria.titulo }}</a>-->
+                                               <a href="javascript:void(0)" routerLink="/cursos-categoria/{{categoria.slug_categoria}}">{{ categoria.titulo }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [ngClass]="{'col-sm-12 col-12' : isMobile}" [ngStyle]="{'width': isMobile ? '100%' : '450px'}">
+                                <app-caixa-de-pesquisa></app-caixa-de-pesquisa>
+                            </div>
+                            <div class="view-options hide-mobile">
+                                <button (click)="changeViewType('list')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                    <span class="icon-hamburger-menu-1" [ngClass]="{'active':currentViewType == 'list' ? true : false}"></span>
+                                </button>
+                            </div>
+                            <div class="hide-mobile">
+                                <button (click)="changeViewType('grid')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                    <span id="button_grid" class="icon-plus-filled" [ngClass]="{'active':currentViewType == 'grid' ? true : false}"></span>
+                                </button>
+                            </div>
+    
+                        </div>
+    
+                        <div id="cursos_adicionados_recentemente" style="display:flex;flex-wrap:wrap;" *ngIf="cursosAdicionadosRecentemente != undefined && cursosAdicionadosRecentemente.length"
+                            [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list1': currentViewType=='list' ? true : false}">
+                            <div style="margin:5px !important; " href="" id="cursos_adicionados_recentemente_link" class="outter">
+                                <div class="box-shadow cursos-first-square red-background item">
+                                    <span class="title">Cursos adicionados recentemente</span>
+                                </div>
+                            </div>
+                            <app-card-cursos-remotos style="margin:5px;margin-bottom:0 !important;" class="card-remoto" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}"
+                                [favorites]="favorites" [curso]="curso" [cursosAluno]="cursosAluno" *ngFor="let curso of cursosAdicionadosRecentemente"></app-card-cursos-remotos>
+                        </div>
+                        <div class="absolute" *ngIf="cursosAdicionadosRecentemente != undefined && cursosAdicionadosRecentemente.length">
+                            <a id="adicionados_recentemente_more_link" routerLink="/todos-os-cursos/4/1" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                                <span>
+                                    <i class="icon-next-filled"></i> Veja todos os cursos adicionados recentemente</span>
+                            </a>
+                        </div>
+    
+                        <div id="cursos_promocoes" style="display:flex;flex-wrap:wrap;" *ngIf="cursosEmPromocao != undefined && cursosEmPromocao.length"
+                            [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list1': currentViewType=='list' ? true : false}">
+                            <div style="margin:5px  !important;" href="" id="cursos_promocoes_link" class="outter">
+                                <div class="box-shadow cursos-first-square orange-background item">
+                                    <span class="title">Promoções por tempo limitado</span>
+                                </div>
+                            </div>
+                            <app-card-cursos-remotos style="margin-bottom:10px;" class="card-remoto" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list1': currentViewType=='list' ? true : false}"
+                                [favorites]="favorites" [curso]="curso" [cursosAluno]="cursosAluno" *ngFor="let curso of cursosEmPromocao"></app-card-cursos-remotos>
+                        </div>
+                        <div class="absolute" *ngIf="cursosEmPromocao != undefined && cursosEmPromocao.length">
+                            <a id="promocoes_more_link" routerLink="/todos-os-cursos/4/2" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                                <span>
+                                    <i class="icon-next-filled"></i> Veja todos os cursos em promoção</span>
+                            </a>
+                        </div>
+                        <div id="cursos_mais_vendidos" style="display:flex;flex-wrap:wrap;" *ngIf="cursosMaisVendidos != undefined && cursosMaisVendidos.length"
+                            [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list1': currentViewType=='list' ? true : false}">
+                            <div style="margin:5px  !important;" href="" id="cursos_mais_vendidos_link" class="outter">
+                                <div class="box-shadow cursos-first-square yellow-background item">
+                                    <span class="title">Cursos mais vendidos</span>
+                                </div>
+                            </div>
+                            <app-card-cursos-remotos style="margin:5px;" class="card-remoto" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list1': currentViewType=='list' ? true : false}"
+                                [favorites]="favorites" [curso]="curso" [cursosAluno]="cursosAluno" *ngFor="let curso of cursosMaisVendidos"></app-card-cursos-remotos>
+                        </div>
+                        <div class="absolute" *ngIf="cursosMaisVendidos != undefined && cursosMaisVendidos.length">
+                            <a id="mais_vendidos_link" routerLink="/todos-os-cursos/4/3" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                                <span>
+                                    <i class="icon-next-filled"></i> Veja todos os cursos mais vendidos</span>
+                            </a>
+                        </div>
+                        <div class="row" style="margin-top:50px;width:100%;">
+                            <a id="see_all_courses_remotos_link" routerLink="/todos-os-cursos/4" class="col-lg-12 col-md-12 col-sm-12 see-others">
+                                <span class="orange-font-color">
+                                    <i class="icon-phone-computer"></i>
+                                    <i class="icon-user-check"></i>
+                                    <span class="text orange-font-color">Veja todos os cursos remotos</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+    <script>
+        var rangeSlider = document.getElementById("rs-range-line");
+        var rangeBullet = document.getElementById("rs-bullet");
+        rangeSlider.addEventlist1ener("input", showSliderValue, false);
+    
+        function showSliderValue() {
+            rangeBullet.innerHTML = rangeSlider.value;
+            var bulletPosition = (rangeSlider.value / rangeSlider.max);
+            rangeBullet.style.left = (bulletPosition * 80) + "px";
+        }
+    
+        function activate(el) {
+            if (el == 'grid') {
+                $(".list1").addClass('grid');
+                $(".list1").removeClass('list1');
+                $("#button_grid").addClass('active');
+                $(".view-options .icon-hamburger-menu-1").removeClass('active');
+            } else {
+                $(".grid").addClass('list1');
+                $(".grid").removeClass('grid');
+                $("#button_grid").removeClass('active');
+                $(".view-options .icon-hamburger-menu-1").addClass('active');
+            }
+        }
+    
+        var interval = setInterval(function () {
+            if ($("#topnav_cursos").length) {
+                $("#topnav_cursos").addClass("orange-font-color");
+                clearInterval(interval);
+            }
+        }, 100);
+    
+        $(window).resize(function () {
+            isMobile();
+        });
+        isMobile();
+        function isMobile() {
+            if ($(window).width() <= 991) {
+                activate('list1');
+                $(".view-options").hide();
+            } else {
+                $(".view-options").show();
+            }
+        }
+    </script>
+    <style>
+        #mobile_navbar {
+            background-color: rgba(255, 255, 255, .7) !important;
+        }
+    </style>

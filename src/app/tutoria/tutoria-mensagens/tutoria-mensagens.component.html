@@ -1,0 +1,98 @@
+<section id="page-agenda" class="page-meus-cursos page-criar-curso page-status-aprovacao page-tutoria">
+	<div id="page-cadastro">
+    <section id="main_content">
+        <div class="row" style="width:100%;">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+                <app-acesso-restrito-sidebar current1='tutoria' current2='mensagens'></app-acesso-restrito-sidebar>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12" style="max-width:810px;margin-top:80px;">
+                <div class="title orange-font-color">Tutoria
+                    <b>Mensagens</b>
+                </div>
+
+									<form id="form_info">
+											<div class="row main-row">
+													<div class="col-lg-4 col-md-4 col-sm-6 col-6 item">
+															<span>Modalidade </span>
+															<select name="modalidade" matTooltip="Modalidade do curso ao qual a mensagem pertence" [(ngModel)]="selectedModalidade">
+																	<option selected disabled value="">Selecionar Modalidade</option>
+																	<option value="0">Selecione</option>
+																	<option value="1">Online</option>
+																	<option value="2">Presencial</option>
+																	<option value="4">Remoto</option>
+															</select>
+													</div>
+													<div class="col-lg-4 col-md-4 col-sm-6 col-6 item">
+															<span>Cursos </span>
+															<select name="curso" matTooltip="Curso ao qual a mensagem pertence" [(ngModel)]="selectedCurso">
+																	<option selected disabled value="">Selecionar Curso</option>
+																	<option value="0">Selecione</option>
+																	<option *ngFor="let curso of cursos" value="{{curso.curso_id}}">{{curso.courseName}}</option>
+															</select>
+													</div>
+													<div class="col-lg-4 col-md-4 col-sm-6 col-6 item">
+														<span>Data Envio </span>
+														<input name="sended" id="birthday" matTooltip="Data de envio da mensagem" type="date" placeholder="*Data de envio" [(ngModel)]="dataEnvio"/>
+													</div>
+											</div>
+											<div class="row main-row">
+												<div class="col-lg-4 col-md-4 col-sm-6 col-6 item"></div>
+												<div class="col-lg-4 col-md-4 col-sm-6 col-6 item"></div>
+												<div class="col-lg-4 col-md-4 col-sm-6 col-6">
+													<button class="orange-background" style="width:100%;" (click)="sendPesquisa()">pesquisar</button>
+												</div>
+											</div>
+									</form>
+								<hr/>
+
+                <div class="messages" *ngIf="tutoriaMensagens != undefined">
+									<mat-accordion id="accordion">
+										<mat-expansion-panel hideToggle class="accordion-item" *ngFor="let curso of cursos">
+											<mat-expansion-panel-header matTooltip="Clique para mostrar as mensagens deste curso">
+												<mat-panel-title>
+													<h5 class="mb-0">
+														<a class="orange-font-color">
+															<i [ngClass]="verificaCursoLidas(tutoriaMensagens[curso.curso_id], false)" [matTooltip]="verificaCursoLidas(tutoriaMensagens[curso.curso_id], true)"
+																 style="padding-right: 10px;"></i> {{curso.courseName}}</a>
+													</h5>
+												</mat-panel-title>
+											</mat-expansion-panel-header>
+											<div class="card-body row messages">
+												<div style="width:100%;cursor:pointer" *ngFor="let mensagem of tutoriaMensagens | keyvalue">
+													<a routerLink="/tutoria-chat/{{mensagem.value.id}}" class="row" *ngIf="mensagem.key == curso.curso_id">
+														<div class="col-lg-1 col-md-1 col-sm-1 col-1" style="padding-top: 10px;">
+															<span [ngClass]="lidas(mensagem.value.status, false)" style="color: #F2652A;"  [matTooltip]="lidas(mensagem.value.status, true)"></span>
+														</div>
+														<div class="col-lg-6 col-md-6 col-sm-12 col-12">
+															<div class="student-name" [ngClass]="{'unread': mensagem.value.status == 2}">{{mensagem.value.name}}</div>
+															<div class="course-name" [ngClass]="{'unread': mensagem.value.status == 2}">{{mensagem.value.pergunta}}</div>
+														</div>
+														<div class="col-lg-5 col-md-5 col-sm-12 col-12 display-flex justify-content-end">
+															<div class="message-date message-date1">Enviada em
+																<span class="message-date">{{mensagem.value.sentDate}}</span>
+															</div>
+														</div>
+														<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+															<hr/>
+														</div>
+													</a>
+												</div>
+											</div>
+										</mat-expansion-panel>
+									</mat-accordion>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+
+
+    </section>
+	</div>
+
+
+
+
+</section>

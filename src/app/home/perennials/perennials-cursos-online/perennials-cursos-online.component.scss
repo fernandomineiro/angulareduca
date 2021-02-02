@@ -1,0 +1,114 @@
+::ng-deep app-mt-logotipo{
+    img{
+        max-height: 50px;
+    }
+}
+
+#main-info{
+    background-color: #DBDADA;
+    padding: 50px 0;
+    h3{
+        font-family: encodeSansCondensed-Black;
+    }   
+    h4{
+        font-size:18px; 
+    }
+    p{
+        color: black;
+    }
+    #video{
+        margin-bottom: 50px;
+    }
+    .teacher-name{
+        display: flex;
+        .dropdown-toggle:after{
+            display: none;
+        }
+        .dropdown-toggle{
+            padding: 0 10px;
+            cursor: pointer;
+        }
+        .dropdown-menu{
+            border-radius: 0;
+            border:none;           
+        }
+        .dropdown{
+            max-width: 500px;
+            width: 100%;
+        }
+        .box-shadow{
+            box-shadow: 0 0 4px 2px #a8a8a8 !important;
+        }
+    }
+    .inner-dropdown{
+        display: flex;
+        padding: 15px;
+        img{
+            max-width: 80px;
+        }
+        p{
+           padding-left:30px 
+        }
+        h6{
+            font-weight: bold;
+            padding-left: 30px;
+        }
+    }
+}
+
+#comments{
+    margin-top:50px;
+    .icon-comments{
+        color: #EE5666;
+        font-size: 50px;
+    }
+    .user-info{
+        display: flex;
+        .user-photo{
+            border-radius: 100%;
+            overflow: hidden;
+            width: 100px;
+            height: 100px;
+        }      
+        img{
+            max-width: 100px;
+        }       
+        .fa-star{
+            color: #F1CE23;
+        }
+        .user-name{
+            margin-top: 10px;
+        }
+        .user-evaluation{
+            margin-left: 20px;
+        }
+    }
+    .comment{
+        margin-top: 40px;
+    }
+    .user-comment{
+        margin-top: 15px;
+    }
+    
+}
+
+.title{
+    font-size: 30px
+}
+
+.orange-font-color{
+    color: #EE5666 !important;
+}
+
+.horizontal-line2{
+    background-color: #EE5666 !important;
+    margin-top: 60px;
+}
+
+::ng-deep .card-favorite{
+    bottom:0 !important;
+}
+
+::ng-deep app-card-cursos-online .teacher-name{
+    color: black !important;
+}

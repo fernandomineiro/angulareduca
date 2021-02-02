@@ -1,0 +1,45 @@
+#line1 .inner{
+    height: 100%;
+}
+
+#line1 .inner .img{
+    height: 67px;
+}
+
+#mobile_navbar {
+    background-color: rgba(255, 255, 255, .7) !important;
+}
+
+#see-all{
+    margin-left:-15px;
+}
+
+#show-category-name{
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    margin-top: 20px;
+    margin-bottom: 40px;
+    display: none;
+}
+
+#show-category-name .current_category{
+    border-bottom: solid 2px #f8762a;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(0,0,0,.87);
+    text-align: left;
+    padding-left: 0;
+    font-family: encodeSansCondensed-Regular;
+}
+
+#show-category-name .current_category #category-name{
+    padding: 10px 0 10px 0;
+    float: left;
+}
+
+@media (max-width:992px){
+    #professores-container{
+        justify-content: space-around;
+    }
+}
+

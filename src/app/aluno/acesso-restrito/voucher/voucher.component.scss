@@ -1,0 +1,41 @@
+@import "./src/assets/scss/mixins/_variables";
+
+.voucher{
+    .instructions{
+        .voucher{
+            border: 1px solid rgba(112, 112, 112, 0.102);
+            box-shadow: 0 0 4px 2px #f0efef !important;
+            display: flex;
+            padding: 15px;
+            .imageCourse{
+                max-width: 200px;
+                width:100%;
+                img{
+                    width:100%;
+                    height: auto;
+                }
+                
+                
+            }
+            .info{
+                display: flex;
+                width: 100%;
+                margin-left: 20px !important;
+                margin: auto;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                .icons{
+                    display: flex;
+                    justify-content: flex-end;
+                    a span{
+                        font-size: 30px;
+                        color:$default-color-theme;
+                        
+            
+                    }
+                } 
+            }
+        }
+    }
+   
+}

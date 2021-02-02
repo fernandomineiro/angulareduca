@@ -1,0 +1,33 @@
+footer {
+  font-family: $encode-Sans-Condesed-Regular;
+  background-color: $footer-background-color !important;
+  padding: 20px 0;
+  margin-top: 50px;
+
+  & a {
+    line-height: 1.8;
+  }
+
+  & #footer {
+    &_social_media{
+      margin-top: 20%;
+      font-size: 30px;
+    }
+
+    &_column {
+      &1_links, &4_links {
+        position: relative;
+        min-height: 200px;
+      }
+    }
+  }
+
+  & #burnit_logo{
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+.bold {
+  font-family: $encode-Sans-Condesed-SemiBold;
+}

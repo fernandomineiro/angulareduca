@@ -1,0 +1,30 @@
+<div class="navbar-custom-menu" style="margin-top:0">
+    <ul class="nav navbar-nav">
+      <li class="user user-menu">
+          <span *ngIf="isLoggedIn(); else notLoggedIn" class="user-link nav-link" style="padding:0 !important;">
+
+              <span *ngIf="perfilLogado() == '14'; else otherProfile">
+                <a *ngIf="configuracoes.layoutHome != 4" style="color:black !important;font-size:14px;padding:0;" routerLink="/perfil">{{ nomeLogado() }}</a>
+                <a *ngIf="configuracoes.layoutHome == 4" style="color:black !important;font-size:14px;padding:0;" routerLink="/editar">{{ nomeLogado() }}</a>
+              </span>
+<!--              <span *ngIf="perfilLogado() == '1' ">-->
+<!--                <a routerLink="/acesso-restrito">{{ nomeLogado() }} - {{ perfilNomeLogado() }}</a>-->
+<!--              </span>-->
+              <ng-template #otherProfile>
+                  <span>
+                      <a style="color:black !important;font-size:14px;padding:0;" routerLink="/acesso-restrito">{{ nomeLogado() }}
+                          <ng-template [ngIf]="perfilNomeLogado() !== 'undefined'"> - {{ perfilNomeLogado() }} </ng-template>
+                      </a>
+                  </span>
+              </ng-template>
+               | <a (click)="logout()" style="cursor:pointer;color:black !important;font-size:14px">Sair</a>
+          </span>
+          <ng-template #notLoggedIn>
+            <a class="nav-link" id="topnav_users" href="#" data-toggle="modal" data-target="#loginModal" (click)="setLogin()" >
+                <span class="icon-user" style="font-size:25px;"></span>
+            </a>
+                   
+          </ng-template>
+      </li> 
+    </ul>
+  </div>  

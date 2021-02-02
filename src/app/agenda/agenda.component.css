@@ -1,0 +1,4 @@
+.select-month-year {
+    display: flex;
+    justify-content: space-between;
+}

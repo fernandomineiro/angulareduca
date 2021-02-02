@@ -1,0 +1,157 @@
+<section id="page-cursos" class="page-teacher">
+
+    <section id="section_content">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="sort-order" style="display:flex;flex-wrap:wrap;justify-content:space-between;">
+                        <div id="sort" style="width:200px">
+                            <div class="dropdown">
+                                <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                                    <span class="caret"></span>
+                                </button>
+                                <div class="dropdown-menu" style="height:200px;">
+                                    <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                                        <div class="radio">
+                                            <input (change)="ordenarAZ(false)" id="sort_az" name="sort" type="radio">
+                                            <label for="sort_az" class="radio-label">A-Z</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input (change)="ordenarAZ(true)" id="sort_za" name="sort" type="radio">
+                                            <label for="sort_za" class="radio-label">Z-A</label>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width:200px">
+                            <div class="" id="category">
+                                <div class="dropdown">
+                                    <button href="#" class="nav-link dropdown-toggle" data-display="static" data-toggle="dropdown" style="padding:5px 10px;">categorias
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li *ngFor="let categoria of categorias">
+                                            <a href="javascript:void(0)" (click)="exibirCategoriaSelecionada(categoria.titulo); professoresPorCategoria(categoria.id)">{{ categoria.titulo }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width:450px !important">
+                            <form id="form_curso_sort_order_search">
+                                <input placeholder="pesquisar" (keypress)="pesquisar($event)" (input)="searchTerm = $event.target.value" />
+                                <span class="icon-search" (click)="onSubmit()"></span>
+                            </form>
+                        </div>
+                        <div class="view-options hide-mobile">
+                            <button (click)="isGrid = false" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                <span [ngClass]="{'active': !isGrid, 'icon-hamburger-menu-1': 'icon-hamburger-menu-1'}"></span>
+                            </button>
+                        </div>
+                        <div class="hide-mobile">
+                            <button (click)="isGrid = true" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                                <span id="button_grid" [ngClass]="{'active': isGrid, 'icon-plus-filled': 'icon-plus-filled'}"></span>
+                            </button>
+                        </div>
+
+                    </div>
+										
+										<div class="col-xs-12 col-sm-12 col-md-12">
+											<div class="row" id="show-category-name">
+												<div class="col-xs-12 col-sm-12 col-md-12">
+													<div class="row">
+														<div class="col-xs-12 col-sm-3 col-md-3 current_category">
+															<span id="category-name">Categoria: <strong>Gestão</strong></span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+                    <div id="professores-container" [ngClass]="{ 'grid': isGrid, 'list': !isGrid, 'row': 'row'}">
+                        <h4 *ngIf="professores != undefined && !professores.length">Nenhum professor encontrado para essa categoria</h4>
+                        <a [routerLink]="['/professor',  professor.id]" class="professor-outter" *ngFor="let professor of professores">
+                            <div class="orange-light-background orange-box" style="display:flex; justify-content:center;">
+                                <img src="{{ IMG_URL }}/files/usuario/{{ professor.foto }}" onError="this.onerror = null; this.src = '/assets/img/default_avatar.jpg'; return false;"
+                                    alt="{{ IMG_URL }}/files/usuario/{{ professor.foto }}" />
+                            </div>
+                            <div class="professor-info">
+                                <div class="professor-nome" style="margin-top:10px;">
+                                    {{professor.nome_professor}} {{professor.sobrenome_professor}}
+                                </div>
+                                <div class="courses" *ngIf="professor.qtd_cursos_publicados != null">
+                                    <span class="courses-amount">{{ professor.qtd_cursos_publicados }}</span> cursos publicados
+                                    <br/>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!--<div class="row" style="padding:25px;">
+                        <div id="see-all">
+                            <a href="#/professores-categoria">
+                                <span style="font-family:encodeSansCondensed-Bold;margin:auto" class="orange-font-color">Quero ver todos os professores</span>
+                            </a>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <div data-include="footer"></div>
+
+
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script>
+
+
+    function activate(el) {
+        console.log(el);
+        if (el == 'grid') {
+            $(".list").addClass('grid');
+            $(".list").removeClass('list');
+            $("#button_grid").addClass('active');
+            $(".view-options .icon-hamburger-menu-1").removeClass('active');
+        } else {
+            $(".grid").addClass('list');
+            $(".grid").removeClass('grid');
+            $("#button_grid").removeClass('active');
+            $(".view-options .icon-hamburger-menu-1").addClass('active');
+        }
+    }
+
+    var interval = setInterval(function () {
+        if ($("#topnav_professores").length) {
+            $("#topnav_professores").addClass("orange-font-color");
+            clearInterval(interval);
+        }
+    }, 100);
+
+    $(window).resize(function () {
+        isMobile();
+    });
+    isMobile();
+    function isMobile() {
+        if ($(window).width() <= 991) {
+            activate('list');
+            $(".view-options").hide();
+        } else {
+            $(".view-options").show();
+        }
+    }
+
+</script>

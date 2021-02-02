@@ -1,0 +1,147 @@
+{
+    "projetoId": 0,
+    "titulo": "Blá Blá",
+    "descricao": "teste teste teste",
+    "teaserPath": "url endereço",
+    "imagePath": "url endereço",
+    "duracao": "20 h",
+    "preco": "R$ 150,00",
+    "precoVenda": "R$ 160,00",
+    "categoriaId": 1,
+    "certificadoId": 0,
+    "professores": [
+        {
+            "id": 0,
+            "nome": "Fulano de tal"
+        },
+        {
+            "id": 1,
+            "nome": "Ciclano de tal"
+        }
+    ],
+    "curadores": [
+        {
+            "id": 0,
+            "nome": "Fulano de tal"
+        },
+        {
+            "id": 1,
+            "nome": "Ciclano de tal"
+        }
+    ],
+    "produtoraId": 0,
+    "modulosOnline": [
+        {
+            "nome": "Modulo 1",
+            "subModulos": [
+                {
+                    "nome":"blpá blá",
+                    "codigoVimeo": "xxxxx",
+                    "duracao": "20h",
+                    "arquivoPath": "url endereço"
+                }
+            ]
+           
+        },
+        {
+            "nome": "Modulo 2",
+            "subModulos": [
+                {
+                    "nome":"blpá blá",
+                    "codigoVimeo": "xxxxx",
+                    "duracao": "20h",
+                    "arquivoPath": "url endereço"
+                }
+            ]
+           
+        }
+    ],
+    "duracaoOnline": "20h",
+    "questionario": {
+        "tipo": "multiplaescolha",
+        "questoes": [
+            {
+                "questao": "XXX XX XXXX",
+                "opcoes": [
+                    {
+                        "letra": "a",
+                        "nome": "sadad sadiusadfaoijd asodijasd"
+                    },
+                    {
+                        "letra": "b",
+                        "nome": "sadad sadiusadfaoijd asodijasd"
+                    },
+                    {
+                        "letra": "c",
+                        "nome": "sadad sadiusadfaoijd asodijasd"
+                    }
+                ],
+                "correto": "a"
+            },
+            {
+                "questao": "YYY YY YYYYYYY",
+                "opcoes": [
+                    {
+                        "letra": "a",
+                        "nome": "sadad sadiusadfaoijd asodijasd"
+                    },
+                    {
+                        "letra": "b",
+                        "nome": "sadad sadiusadfaoijd asodijasd"
+                    },
+                    {
+                        "letra": "c",
+                        "nome": "sadad sadiusadfaoijd asodijasd"
+                    }
+                ],
+                "correto": "c"
+            }
+        ]
+    },
+    "local": "Centro de Convivência de São Paulo",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "datas": [
+        {
+            "data": "2019-06-07",
+            "diaSemana": "sexta",
+            "horaInicio": "00:00",
+            "horaTermino": "01:00"
+        },
+        {
+            "data": "2019-06-08",
+            "diaSemana": "sabado",
+            "horaInicio": "00:00",
+            "horaTermino": "01:00"
+        }
+    ],
+    "modulosPresencial": [
+        {
+            "nome": "Modulo 1",
+            "subModulos":[
+                {
+                    "nome":"teste teste",
+                    "arquivoPath": "url endereço"
+                },
+                {
+                    "nome":"teste teste",
+                    "arquivoPath": "url endereço"
+                }
+            ]           
+        },
+        {
+            "nome": "Modulo 1",
+            "subModulos":[
+                {
+                    "nome":"teste teste",
+                    "arquivoPath": "url endereço"
+                },
+                {
+                    "nome":"teste teste",
+                    "arquivoPath": "url endereço"
+                }
+            ]           
+        }
+    ],
+    "duracaoPresencial": "20h"
+}

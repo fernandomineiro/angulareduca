@@ -1,0 +1,144 @@
+<div id="page-agenda">
+
+
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-3 col-md-3 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='relatorios_graficos' current2='vendas'></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-9 col-md-9 col-sm-12 col-12" id="page-cadastro">
+        <div style="max-width:1090px;width:100%;">
+          <div class="title orange-font-color" style="margin-bottom:20px;">Relatório de Vendas</div>
+
+          <form (ngSubmit)="filtrar()" [formGroup]="form">
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label for="pedido-pid">Pedido:</label>
+                <input type="text" formControlName="pedido_pid" id="pedido-pid" class="form-control" placeholder="ID do Pedido">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="pedidos-status">Status do Pagamento:</label>
+                <select formControlName="pedidos_status" id="pedidos-status" class="form-control">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let statusPagamento of status" [value]="statusPagamento.key">{{ statusPagamento.value }}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="produto-pago">
+                  Produto Pago: 
+                  <span class="bg-dark text-white p-1" matTooltip="Filtrará por produtos que foram pagos ou que serão pagos!">!</span>
+                </label>
+                <select formControlName="produto_pago" id="produto-pago" class="form-control">
+                  <option value="">Selecione</option>
+                  <option [value]="true">Pago</option>
+                  <option [value]="false">Gratuito</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3" *ngIf="perfilId === tiposPerfil.Professor">
+                <label for="ies">IES:</label>
+                <select formControlName="ies" id="ies" class="form-control">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let faculdade of faculdades" [value]="faculdade.key">{{ faculdade.value }}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="tipo-item">Modalidade do Produto:</label>
+                <select formControlName="tipo_item" id="tipo-item" class="form-control">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let modalidade of modalidades" [value]="modalidade.key">{{ modalidade.value }}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="nome-item">Produto Adquirido:</label>
+                <input type="text" formControlName="nome_item" id="nome-item" class="form-control" placeholder="Nome do Produto">
+              </div>
+              <div class="form-group col-md-3" *ngIf="perfilId !== tiposPerfil.Professor">
+                <label for="nome-professor">Professor:</label>
+                <input type="text" formControlName="nome_professor" id="nome-professor" class="form-control" placeholder="Nome do Professor">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="nome-produtora">Produtora:</label>
+                <input type="text" formControlName="nome_produtora" id="nome-produtora" class="form-control" placeholder="Nome da Produtora">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="nome-curador">Curador:</label>
+                <input type="text" formControlName="nome_curador" id="nome-curador" class="form-control" placeholder="Nome do Curador">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="data-compra-de">Data da compra dê</label>
+                <input type="date" formControlName="data_compra_de" id="data-compra-de" class="form-control" />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="data-compra-ate">Data da compra até</label>
+                <input type="date" formControlName="data_compra_ate" id="data-compra-ate" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 offset-8">
+                <button type="submit" class="btn text-white btn-block" style="background-color:#f2652a">Filtrar</button>
+              </div>
+            </div>
+          </form>
+          <hr>
+          <div class="row">
+            <div class="col-md-12 float-right">
+              <button type="button" [disabled]="total > 7000" class="btn text-white" (click)="exportarLista($event)" style="background-color:#f2652a">Exportar em XLSX</button>
+              <br>
+              <small class="text-muted" *ngIf="total > 7000">Caso não consiga exportar o seu relatório, por favor, faça mais filtros!</small>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12">
+              <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>Data de Venda</th>
+                    <th>ID do Pedido</th>
+                    <th>Produto Adquirido</th>
+                    <th *ngIf="perfilId === tiposPerfil.Professor">Nome da Faculdade</th>
+                    <th>Professor</th>
+                    <th>ID do Aluno</th>
+                    <th>Nome do aluno</th>
+                    <th>E-mail do aluno</th>
+                    <th>CPF</th>
+                    <th>Status do Pagamento</th>
+                    <th>Forma de Pagamento</th>
+                    <th>Código do Cupom</th>
+                    <th>Valor do Cupom</th>
+                    <th>Valor Bruto</th>
+                    <th>Valor Pago</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="pedidos?.length != 0">
+                  <tr *ngFor="let pedido of pedidos">
+                    <td>{{ pedido.data_venda | date:'shortDate' }}</td>
+                    <td>{{ pedido.pedido_pid }}</td>
+                    <td>{{ pedido.produto_nome ? pedido.produto_nome : '---' }}</td>
+                    <td *ngIf="perfilId === tiposPerfil.Professor">{{ pedido.faculdade_nome }}</td>
+                    <td>{{ pedido.professor_nome }} {{ pedido.professor_sobrenome }}</td>
+                    <td>{{ pedido.aluno_id }}</td>
+                    <td>{{ pedido.aluno_nome }} {{ pedido.aluno_sobrenome }}</td>
+                    <td>{{ pedido.email }}</td>
+                    <td>{{ pedido.aluno_cpf ? pedido.aluno_cpf : '---' }}</td>
+                    <td>{{ pedido.pedido_status }}</td>
+                    <td>{{ pedido.forma_pagamento ? pedido.forma_pagamento : '---' }}</td>
+                    <td>{{ pedido.cupom_codigo ? pedido.cupom_codigo : '---' }}</td>
+                    <td>{{ pedido.cupom_valor ? pedido.cupom_valor : '---' }}</td>
+                    <td>{{ pedido.valor_bruto }}</td>
+                    <td>{{ pedido.valor_pago ? pedido.valor_pago : '---' }}</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="pedidos?.length == 0">
+                  <tr>
+                    <td colspan="12" class="no-data-available">Nenhum Registro encontrado!</td>
+                  </tr>
+                <tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

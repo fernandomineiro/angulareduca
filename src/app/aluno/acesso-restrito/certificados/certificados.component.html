@@ -1,0 +1,53 @@
+<div class="courses-info">
+    <div class="certifications-info" style="width:100%;">
+        <div class="title orange-font-color">
+            <span class="fa fa-certificate"></span>
+            <span style="margin-left: 10px;">Meus certificados</span>
+        </div>
+        <div class="horizontal-line1"></div>
+        <p *ngIf="certificados != undefined && !certificados.length">
+            <br/>Não há certificados disponíveis</p>
+        <div class="">
+            <div id="autenticidade" *ngIf="certificados != undefined && certificados.length">
+                <div>
+                    <a routerLink="/autenticar-certificado">
+                        <div style="display:flex;">
+                            <i class="fas fa-qrcode" style="color:#707070;font-size:50px;"></i>
+                            <div style="margin-left:10px;">
+                                <p>Confira o código de autenticidade do seu certificado aqui.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="certificado-container" *ngFor="let certificado of certificados">
+                <div class="certificado-outter" style="flex-wrap: wrap;">
+                    <div style="display:flex;">
+                        <div class="image-container">
+                            <img src="{{IMG_URL}}{{certificado.imagem_curso}}" onError="this.onerror = null; this.src = '/assets/img/az.png'; return false;" width="100%" height="auto" />
+                        </div>
+                        <div class="certificado-info">
+                            <div class="course-name">{{ certificado.nome_curso }}</div>
+                            <div class="teacher-name">{{ certificado.nome_professor }} {{certificado.sobrenome_professor}}</div>
+                            <div class="certificado-status orange-font-color" *ngIf="certificado.certificado">certificado disponível</div>
+                        </div>
+                    </div>
+
+                    <div style="margin: auto;margin-top: 30px !important;margin-right: 0;">
+                        <a href="{{PDF_URL}}{{certificado.downloadPath}}" target="_blank" download class="orange-font-color">
+                            <span class="icon icon-download"></span>
+                        </a>
+                        <a style="cursor:pointer" (click)="sendCertificado(certificado)" class="orange-font-color">
+                            <span class="icon icon-envelope orange-font-color"></span>
+                        </a>
+                        <a href="{{PDF_URL}}{{certificado.downloadPath}}" target="_blank" class="orange-font-color" style="display: none;">
+                            <span class="icon icon-printer orange-font-color"></span>
+                        </a>
+                    </div>
+                </div>
+                <div *ngIf="certificado.showSent" class="sent">Certificado enviado com sucesso para o e-mail {{email}}</div>
+            </div>
+        </div>
+    </div>
+</div>

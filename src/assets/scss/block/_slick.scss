@@ -1,0 +1,37 @@
+.slickear1, .slickear2, .slickear3 {
+  margin-top: 20px;
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.slick-prev {
+  left: 6px !important;
+  z-index: 900;
+
+  &:before {
+    color:black !important;
+    font-size: 25px !important;
+  }
+}
+
+.slick-next {
+  right: 6px !important;
+  z-index: 900;
+
+  &:before {
+    color:black !important;
+    font-size: 25px !important;
+  }
+}
+
+.slick-slide.slick-current.slick-active div:first-child {
+  display: flex;
+}
+
+.slick-list.draggable, .slick-track {
+  width:100%;
+}
+
+.slick-slider .slick-current .course-card{
+  margin:auto;
+}

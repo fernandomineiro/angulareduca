@@ -1,0 +1,32 @@
+[
+    {
+        "id":"0",
+        "name":"Direito",
+        "icon":"../assets/modelos json/img/icone_direito.png"
+    },
+    {
+        "id":"1",
+        "name":"TI & Tecnologia",
+        "icon":"../assets/modelos json/img/icone_ti_tecnologia.png"
+    },
+    {
+        "id":"2",
+        "name":"Pedagogia",
+        "icon":"../assets/modelos json/img/icone_pedagogia.png"
+    },
+    {
+        "id":"3",
+        "name":"Gestão & Negócios",
+        "icon":"../assets/modelos json/img/icone_gestao.png"
+    },
+    {
+        "id":"4",
+        "name":"Economia",
+        "icon":"../assets/modelos json/img/icone_economia.png"
+    },
+    {
+        "id":"5",
+        "name":"Seguro",
+        "icon":"../assets/modelos json/img/icone_seguro.png"
+    }
+]

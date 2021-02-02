@@ -1,0 +1,227 @@
+<div id="page-agenda" class="page-criar-curso page-perfil-acesso-restrito" style="margin:40px 0;">
+  <section id="main_content">
+    <div class="row" style="width:100%;">
+      <div class="col-lg-4 col-md-4 col-sm-12 col-12 left-menu">
+        <app-acesso-restrito-sidebar current1='criar_conteudoOnline'></app-acesso-restrito-sidebar>
+      </div>
+      <div class="col-lg-8 col-md-8 col-sm-12 col-12" style="max-width:1090px;width:100%;" id="page-cadastro">
+        <div class="title orange-font-color">Criar conteúdo
+          <span>On-line</span>
+        </div>
+        <br/>
+        <div class="type" style="text-align:left !important;">
+
+          <mat-accordion id="accordion">
+
+            <mat-expansion-panel hideToggle class="accordion-item">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h5 class="mb-0">
+                    <a class="orange-font-color">
+                      <img style="padding:0 5px 6px" src="../assets/img/perennials/Grupo 2621.png" />
+                      <span>Rascunhos</span>
+                    </a>
+                  </h5>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="card-body row messages">
+                <div  style="width:100%;cursor:pointer" *ngFor="let rascunho of cursos | filterObj:filterStatusRascunho">
+                  <div class="course-name">{{rascunho.titulo}}</div>
+                  <div class="course-date">{{rascunho.data_criacao | date: 'dd/MM/yyyy'}}</div>
+                  <div>
+                      <span style="padding: 10px"><a style="text-decoration:underline !important;cursor:pointer" (click)="loadAndEdit(rascunho)" class="orange-font-color">editar</a></span>
+                      <span style="padding: 10px"><a style="text-decoration:underline !important;cursor:pointer" (click)="excluir(rascunho)" class="orange-font-color">excluir</a></span>
+                    </div>
+                  <hr/>
+                </div>
+               
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel hideToggle class="accordion-item">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <h5 class="mb-0">
+                    <a class="orange-font-color">
+                      <img style="padding:0 5px 6px" src="../assets/img/perennials/Grupo 2621.png" />
+                      <span>Publicados</span>
+                    </a>
+                  </h5>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="card-body row messages">
+                <div (click)="loadAndEdit(publicado)" style="width:100%;cursor:pointer" *ngFor="let publicado of cursos | filterObj:filterStatusPublicado">
+                  <div class="course-name">{{publicado.titulo}}</div>
+                  <div class="course-date">{{publicado.data_criacao | date: 'dd/MM/yyyy'}}</div>
+                  <div>
+                      <span style="padding: 10px"><a style="text-decoration:underline !important;cursor:pointer" (click)="loadAndEdit(publicado)" class="orange-font-color">editar</a></span>
+                      <span style="padding: 10px"><a style="text-decoration:underline !important;cursor:pointer" (click)="excluir(publicado)" class="orange-font-color">excluir</a></span>
+                    </div>
+                  <hr/>
+                </div>
+              
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <br/>
+
+          <br/>
+
+        </div>
+        <br/>
+        <hr/>
+        <br/>
+        <div *ngIf="!isEdit" class="title1 orange-font-color">Adicionar novo</div>
+        <div *ngIf="isEdit" class="title1 orange-font-color">Editar curso</div>
+        <div id="novo_conteudo">
+          <form (ngSubmit)="salvar('PUBLICADO')" [formGroup]="newRecord">
+            <div class="row">
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right">
+                Título*
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                <input [ngStyle]='{"border-color" :   newRecord.controls.titulo.status == "INVALID" &&   submited ? "#FC0404" : "#ddd" }'
+                  formControlName="titulo" style="width:100% !important" required placeholder="Máximo 60 caracteres" maxlength="60"
+                  type="text" />
+                <div style="color:#FC0404" *ngIf="submited && newRecord.controls.titulo.status == 'INVALID'">
+                  Este campo é obrigatório
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right">
+                Descrição*
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                <textarea [ngStyle]='{"border-color" :   newRecord.controls.descricao.status == "INVALID" &&   submited ? "#FC0404" : "#ddd" }'
+                  formControlName="descricao" placeholder="Escreva sobre o conteúdo em até 500 caracteres" maxlength="800"></textarea>
+                <div style="color:#FC0404" *ngIf="submited && newRecord.controls.descricao.status == 'INVALID'">
+                  Este campo é obrigatório
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right" *ngIf="perfil != 1">
+                Mentor*
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6 dropdown" *ngIf="perfil != 1">
+                <select formControlName="professor" style="margin-bottom:20px;" id="professor" name="professor" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                  <option selected disabled value="">Selecionar mentor</option>
+                  <option *ngFor="let professor of professores" value="{{professor.id}}">{{professor.nome_professor}} {{professor.sobrenome_professor}}</option>
+                </select>
+                <div style="color:#FC0404" *ngIf="submited && newRecord.controls.professor.status == 'INVALID'">
+                  Este campo é obrigatório
+                </div>
+              </div>
+
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right">
+                Imagem*
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                <input required (change)="onFileSelected($event.target.files)" style="width:100% !important" type="file" />
+                <div>
+                  <small>(730x377px)</small>
+                </div>
+                <div *ngIf="imagem">
+                  <img onError="this.src = '/assets/img/az.png'; return false;" src="{{IMG_URL}}{{imagem}}" style="max-width:730px;height:auto;"
+                  />
+                </div>
+              </div>
+
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right">
+                Tags*
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                <input [ngStyle]='{"border-color" : submited && !originalTags.length ? "#FC0404" : "#ddd" }' formControlName="tag" placeholder="Adicinar tag"
+                  maxlength="60" type="text" />
+                <span style="cursor:pointer" (click)="addTag()">&nbsp;
+                  <i class="fas fa-plus-square"></i>
+                </span>
+                <div style="color:#FC0404" *ngIf="submited && !originalTags.length">
+                  É necessário cadastrar ao menos uma tag
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6"  style="margin-bottom:20px;">
+
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6"  style="margin-bottom:20px;">
+                <div style="padding-top:15px;">
+                  <span *ngFor="let tag of originalTags; let i = index" style="padding: 15px 15px ; margin:5px; background-color: #dbdada;position:relative">
+                    <span style="position:absolute; top:0 ;right:5px;cursor:pointer" (click)="removeTag(i)">X</span>{{tag.tag ? tag.tag : tag.nome}}</span>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right;">
+                Categoria*
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                <select (change)="addCategoria()" formControlName="categoria" style="margin-bottom:20px;" id="categoria" name="categoria" class="col-lg-9 col-md-8 col-sm-6 col-6">
+                  <option selected disabled value="">Adicionar categoria</option>
+                  <option *ngFor="let categoria of categorias" value="{{categoria.id}}">{{categoria.nome}}</option>
+                </select>
+                <div style="color:#FC0404" *ngIf="submited && !categoriasSelecionadas.length">
+                  É necessário cadastrar ao menos uma categoria
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6">
+
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6">
+                <div style="padding-top:15px;">
+                  <span *ngFor="let categoria of categoriasSelecionadas; let i = index" style="padding: 15px 15px ; margin:5px; background-color: #dbdada;position:relative">
+                    <span style="position:absolute; top:0 ;right:5px;cursor:pointer" (click)="removeCategoria(i)">X</span>{{categoria.nome}}</span>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6" style="text-align:right;margin-top:10px;">
+                Código Vimeo*
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6" style="display:flex;margin-top:10px;">
+                <div style="width:50%;padding:0 10px 0 0">
+                  <input [ngStyle]='{"border-color" :   (newRecord.controls.teaser.status == "INVALID" &&   submited) || vimeoPluginError ? "#FC0404" : "#ddd" }'
+                    formControlName="teaser" (blur)="getVimeoDuration()" style="width:100% !important" placeholder="Código vimeo"
+                    type="text" />
+                  <div style="color:#FC0404" *ngIf="submited && newRecord.controls.teaser.status == 'INVALID'">
+                    Este campo é obrigatório
+                  </div>
+                  <div style="color:#FC0404" *ngIf="vimeoPluginError && newRecord.controls.teaser.status != 'INVALID'">
+                    Código Vimeo inválido
+                  </div>
+                </div>
+                <div style="width:50%;padding:0 0 0 10px">
+                  <input [ngStyle]='{"border-color" :   (newRecord.controls.duracao.status == "INVALID" &&   submited)  ? "#FC0404" : "#ddd" }'
+                    formControlName="duracao" style="width:100% !important" placeholder="Duração" type="text" />
+                  <div style="color:#FC0404" *ngIf="submited && newRecord.controls.duracao.status == 'INVALID'">
+                    Este campo é obrigatório
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-6">
+
+              </div>
+              <div class="col-lg-10 col-md-8 col-sm-8 col-6" *ngIf="!vimeoPluginError && newRecord.controls.teaser.status != 'INVALID' && checked">
+                <div id="video">
+                  <div class="wrapper">
+                    <iframe id="vimeoIframe" title="vimeo-player" [src]="src" width="640" height="360" frameborder="0" autoplay="false" allowfullscreen>
+                    </iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="main-row">
+              <button type="button" style="background-color:#dbdada;" (click)="limparForm()">cancelar</button>
+              <button *ngIf="newRecord.status == 'VALID'" type="button" (click)="salvar(-1)" style="background-color:#EE5666;">visualizar</button>
+              <button type="button" (click)="salvar('RASCUNHO')" style="background-color:#EE5666;">salvar rascunho</button>
+              <button *ngIf="newRecord.status == 'VALID'" type="submit" style="background-color:#EE5666;">publicar</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+
+    </div>
+
+
+  </section>
+
+
+
+
+</div>

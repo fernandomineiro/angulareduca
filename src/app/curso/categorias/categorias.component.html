@@ -1,0 +1,149 @@
+<section id="page-cursos-categoria" class="cursos-presenciais-categoria" (window:resize)="onResized($event)">
+  <section id="page-cursos-presenciais">
+    <div class="container cursos-remotos-categoria cursos-remotos" id="page-cursos">
+            <div  class="sort-order row" style="justify-content:space-between;">
+            <div id="sort" [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                <div class="dropdown">
+                    <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">ordenar
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu" style="height:200px;">
+                        <form id="form_curso_sort_order_dropdown" style="display:unset !important;background-color:unset !important;">
+                            <div class="radio">
+                                <input (change)="findCursos('sort','asc')" id="sort_az" name="sort" type="radio">
+                                <label for="sort_az" class="radio-label">A-Z</label>
+                            </div>
+                            <div class="radio">
+                                <input (change)="findCursos('sort','desc')" id="sort_za" name="sort" type="radio">
+                                <label for="sort_za" class="radio-label">Z-A</label>
+                            </div>
+                            <div class="radio">
+                                <input (change)="findCursos('sort','best-seller')" id="sort_mais_vendidos" name="sort" type="radio">
+                                <label for="sort_mais_vendidos" class="radio-label">mais vendidos</label>
+                            </div>
+                            <div class="radio">
+                                <input (change)="findCursos('sort','latest')" id="sort_mais_recente" name="sort" type="radio">
+                                <label for="sort_mais_recente" class="radio-label">mais recentes</label>
+                            </div>
+                            <div class="radio">
+                                <input (change)="findCursos('sort','promotions')" id="sort_promocoes" name="sort" type="radio">
+                                <label for="sort_promocoes" class="radio-label">promoções</label>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                <div class="dropdown">
+                    <button href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">preço
+                        <span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu" style="height:70px">
+                        <form id="form_curso_sort_price_dropdown" style="background-color:unset !important;">
+                          <div class="range-slider">
+                            <input (change)="findCursos('price',$event)" id="rs-range-line" class="rs-range" (input)="changePrice($event)" type="range" value="0" min="0" max="1000">
+                            <span id="rs-bullet" class="rs-label">{{priceValue}}</span>
+                          </div>
+                        </form>
+                      </div>
+                </div>
+            </div>
+            <div [ngClass]="{'col-sm-4 col-4' : isMobile}" [ngStyle]="{'width': isMobile ? 'unset' : '240px'}">
+                <div class="" id="category">
+                    <div class="dropdown">
+                        <button href="#" class="nav-link dropdown-toggle" data-display="static" data-toggle="dropdown" style="padding:5px 10px;">categorias
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let categoria of categorias">
+                                <!-- <a href="javascript:void(0)" routerLink="/cursos-categoria/{{categoria.id}}">{{ categoria.titulo }}</a> -->
+                                <a href="javascript:void(0)" routerLink="/cursos-categoria/{{categoria.slug_categoria}}">{{ categoria.titulo }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div [ngClass]="{'col-sm-12 col-12' : isMobile}" [ngStyle]="{'width': isMobile ? '100%' : '450px'}"> 
+                <app-caixa-de-pesquisa></app-caixa-de-pesquisa>
+            </div>
+            <div  class="view-options hide-mobile">
+                <button (click)="changeViewType('list')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                    <span class="icon-hamburger-menu-1" [ngClass]="{'active':currentViewType == 'list' ? true : false}"></span>
+                </button>
+            </div>
+            <div class="hide-mobile">
+                <button (click)="changeViewType('grid')" style="background-color:transparent;color: #DBDADA;font-size:25px;margin-top: -5px;">
+                    <span id="button_grid" class="icon-plus-filled" [ngClass]="{'active':currentViewType == 'grid' ? true : false}"></span>
+                </button>
+            </div>
+
+        </div>
+      
+      <mat-tab-group *ngIf="currentCategoria != undefined" (selectedTabChange)="tabClick($event)" >
+        <mat-tab label="Cursos Online de {{currentCategoria.titulo}}" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online">
+          <div class="row view_type" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}"  style="width:100%;padding:30px 10px;" *ngIf="cursosOnline != undefined  && cursosOnline.length">
+            <app-card-cursos-online [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}" [favorites]="favorites" [curso]="curso" [cursosAluno]="cursosOnlineAluno" *ngFor="let curso of cursosOnline"></app-card-cursos-online>
+          </div>
+          <div  *ngIf="cursosOnline != undefined && cursosOnline.length == 0" style="padding:30px 10px;">
+              Não há cursos On-line na categoria {{currentCategoria.titulo}}
+            </div>
+        </mat-tab>
+        <mat-tab label="Cursos Remotos de {{currentCategoria.titulo}}" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos">
+          <div class="row view_type" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}" style="width:100%;padding:30px 10px;" *ngIf="cursosRemotos != undefined && cursosRemotos.length">
+            <app-card-cursos-remotos [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}" [favorites]="favorites" [curso]="curso" [cursosAluno]="cursosRemotosAluno" *ngFor="let curso of cursosRemotos"></app-card-cursos-remotos>
+          </div>
+          <div  *ngIf="cursosRemotos != undefined && cursosRemotos.length == 0" style="padding:30px 10px;">
+            Não há cursos remotos na categoria {{currentCategoria.titulo}}
+          </div>
+        </mat-tab>
+        <mat-tab label="Cursos Presenciais de {{currentCategoria.titulo}}" *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais">
+          <div class="row view_type" [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}" style="width:100%;padding:30px 10px;" *ngIf="cursosPresenciais != undefined && cursosPresenciais.length">
+            <app-card-cursos-presenciais [ngClass]="{'grid': currentViewType=='grid' ? true : false, 'list': currentViewType=='list' ? true : false}" [favorites]="favorites" [curso]="curso" [cursosAluno]="cursosPresenciaisAluno" *ngFor="let curso of cursosPresenciais"></app-card-cursos-presenciais>
+          </div>
+          <div  *ngIf="cursosPresenciais != undefined && cursosPresenciais.length == 0" style="padding:30px 10px;">
+              Não há cursos Presenciais na categoria {{currentCategoria.titulo}}
+            </div>
+        </mat-tab>
+      </mat-tab-group>
+
+
+      <div class="row" id="pagination" style="display:none;">
+        <div class="col-lg-3 col-md-3 col-sm-0 col-0"></div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+          <button id="pagination_prev">página anterior</button>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+          <form id="form_pagination">
+            <input placeholder="1" name="page" />
+            <span>de</span>
+            <span id="pagination_total_pages">125</span>
+          </form>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-4">
+          <button id="pagination_next">página anterior</button>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-0 col-0"></div>
+      </div>
+      <div class="row" id="load_more" style="margin-top: 60px;">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+          <a href="">carregar mais cursos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Page Content -->
+  <section id="section_content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</section>

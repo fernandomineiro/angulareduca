@@ -1,0 +1,31 @@
+[
+    {
+        "courseId":0,
+        "courseName":"Concurso Público - Licitações e Contratos Administrativos",
+        "days":[{
+            "id":"0",
+            "name":"15 de janeiro de 2019, das 16h às 20h"
+        },
+        {
+            "id":"1",
+            "name":"16 de janeiro de 2019, das 16h às 20h"
+        }],
+        "place":["Centro de Convenções Rebouças","Av. Rebouças, 689","São Paulo - SP"]       
+        
+    },
+    {
+        "courseId":1,
+        "courseName":"Direito Penal II - Homicídio Culposo",
+        "days":[{
+            "id":"0",
+            "name":"20 de janeiro de 2019, das 16h às 20h"
+        },
+        {
+            "id":"1",
+            "name":"21 de janeiro de 2019, das 16h às 20h"
+        }],
+        "place":["Centro de Convenções Rebouças","Av. Rebouças, 689","São Paulo - SP"]
+        
+        
+    }
+]

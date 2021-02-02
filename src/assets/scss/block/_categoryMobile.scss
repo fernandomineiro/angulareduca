@@ -1,0 +1,17 @@
+#category_mobile {
+  & button {
+    width: 100%;
+    border: none;
+    background-color: #DBDADA;
+    font-family: $encode-Sans-Condesed-Medium;
+    margin: 20px 0;
+  }
+
+  & #mobile_dropdown_category {
+    max-width: 90%;
+    width: 100%;
+    padding: 25px;
+    font-family: $encode-Sans-Condesed-Regular;
+    background-color: #DBDADA;
+  }
+}

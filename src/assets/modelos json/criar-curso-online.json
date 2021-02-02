@@ -1,0 +1,82 @@
+{
+    "projetoId":0,
+    "titulo":"Blá Blá",
+    "descricao":"teste teste teste",
+    "teaserPath":"url endereço",
+    "duracao":"20 h",
+    "preco":"R$ 150,00",
+    "precoVenda":"R$ 160,00",
+    "categoriaId":1,
+    "certificadoId":0,
+    "professoresId":[0,2,5],
+    "curadoresId":[0,1,2],
+    "produtoraId":0,
+    "imagemPath":"url endereço",
+    "modulos":[
+        {
+            "nome": "Modulo 1",
+            "subModulos": [
+                {
+                    "nome":"blpá blá",
+                    "codigoVimeo": "xxxxx",
+                    "duracao": "20h",
+                    "arquivoPath": "url endereço"
+                }
+            ]
+           
+        },
+        {
+            "nome": "Modulo 2",
+            "subModulos": [
+                {
+                    "nome":"blpá blá",
+                    "codigoVimeo": "xxxxx",
+                    "duracao": "20h",
+                    "arquivoPath": "url endereço"
+                }
+            ]
+           
+        }
+    ],
+    "questionario":{
+        "tipo":"multiplaescolha",
+        "questoes":[
+            {
+                "questao":"XXX XX XXXX",
+                "opcoes":[
+                    {
+                        "letra":"a",
+                        "nome":"sadad sadiusadfaoijd asodijasd"                       
+                    },
+                    {
+                        "letra":"b",
+                        "nome":"sadad sadiusadfaoijd asodijasd"                        
+                    },
+                    {
+                        "letra":"c",
+                        "nome":"sadad sadiusadfaoijd asodijasd"                        
+                    }
+                ],
+                "correto":"a"
+            },
+            {
+                "questao":"YYY YY YYYYYYY",
+                "opcoes":[
+                    {
+                        "letra":"a",
+                        "nome":"sadad sadiusadfaoijd asodijasd"                       
+                    },
+                    {
+                        "letra":"b",
+                        "nome":"sadad sadiusadfaoijd asodijasd"                        
+                    },
+                    {
+                        "letra":"c",
+                        "nome":"sadad sadiusadfaoijd asodijasd"                        
+                    }
+                ],
+                "correto":"c"
+            }
+        ]       
+    }
+}

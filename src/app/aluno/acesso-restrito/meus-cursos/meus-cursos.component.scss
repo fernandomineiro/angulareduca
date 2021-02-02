@@ -1,0 +1,30 @@
+.horizontal-line3 {
+    height: 3px;
+    width: 100% !important;
+    position: unset!important;
+}
+
+.card-img {
+    width: 160px!important;
+    border-radius: calc(0.25rem - 1px);
+    height: 160px;
+    object-fit: contain;
+}
+
+.courses-container .card-container {
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+
+}
+
+.box-shadow {
+    padding: 8px;
+    min-height: 270px;
+}
+
+.courses-container{
+    display: block !important;
+}

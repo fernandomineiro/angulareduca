@@ -1,0 +1,271 @@
+<!-- Início do header -->
+<header (window:resize)="onResized($event)" class="background_header" *ngIf="!isQuemSomos && !krotonAccess && configuracoes.layoutHome != 1" [ngStyle]="{'background-image': bannerInfo != undefined && hasBanner, 'height':bannerHeight,'min-height':bannerHeight, 'margin-top': configuracoes.layoutHome == 4 ? '50px' : '70px'}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+    crossorigin="anonymous">
+  <nav style="position:fixed;width:100%;z-index:1;top:0;" *ngIf="isMobile && !isQuemSomos" id="mobile_navbar" [ngStyle]="{'background-color': navColor}">
+    <div class="container">
+      <div id="top_inner">
+        <div id="menu" class="dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            <i class="fas fa-bars orange-font-color"></i>
+          </a>
+          <div class="dropdown-menu" id="mobile_dropdown">
+            <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online == 1 && configuracoes.layoutHome != 1  && configuracoes.layoutHome != 4">
+              <a routerLink="/cursos-online">Cursos on-line</a>
+            </div>
+            <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+              <a routerLink="/cursos-presenciais">Cursos presenciais </a>
+            </div>
+            <div *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+              <a routerLink="/cursos-remotos">Cursos Remotos</a>
+            </div>
+            <div *ngIf="configuracoes.tiposCursosAtivos.ativar_eventos == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+              <a routerLink="/eventos">Eventos</a>
+              <!--
+                      <br />
+                      <a routerLink="/eventos">Eventos</a>
+                      -->
+            </div>
+            <div *ngIf="configuracoes.tiposCursosAtivos.ativar_membership == 1 && configuracoes.layoutHome != 1">
+              <a routerLink="/assinaturas">Assinaturas</a>
+            </div>
+            <div *ngIf="configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+              <a routerLink="/trilhas-conhecimento">Trilhas de conhecimento</a>
+            </div>
+            <div *ngIf="configuracoes.tiposCursosAtivos.ativar_membership == 1  && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+              <a [routerLink]="['/assinaturas']">Seja um assinante</a>
+            </div>
+            <div *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+              <a routerLink="/professores">Professores</a>
+            </div>
+            <div *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+              <a routerLink="/biblioteca">Biblioteca</a>
+            </div>
+            <div *ngIf="configuracoes.layoutHome != 1">
+              <a routerLink="/carrinho">Meu carrinho</a>
+            </div>
+            <div *ngIf="isLoggedIn()">
+              <a *ngIf="getPerfil() !== 14;" routerLink="/acesso-restrito">Meu perfil</a>
+              <a *ngIf="getPerfil() !== 1;" routerLink="/perfil">Meu perfil</a>
+            </div>
+            <div>
+              <a href="#" data-toggle="modal" data-target="#loginModal" (click)="setLoginAcessoRestrito()">Acesso restrito</a>
+              <br />
+            </div>
+            <div *ngIf="configuracoes.layoutHome != 4">
+              <a href="">Certificado: conferência de autenticidade</a>
+            </div>
+            <div *ngIf="configuracoes.layoutHome != 4">
+              <a href="">Dúvidas</a>
+            </div>
+            <div>
+              <br />
+              <br />
+              <a router-link="/politica-privacidade">Política de Privacidade</a>
+            </div>
+            <div>
+              <a router-link="/termos-condicoes">Termos e condições de uso</a>
+            </div>
+            <div>
+              <br />
+              <a *ngIf="environmentTemplate.faculdade_id == 7 && configuracoes.layoutHome != 1" router-link="/quem-somos">Quem somos</a>
+              <a *ngIf="configuracoes.layoutHome == 1" href="http://itv.org.br/home">Quem somos</a>
+            </div>
+
+
+          </div>
+        </div>
+        <div id="logo">
+          <a [routerLink]="['/']">
+            <app-mt-logotipo></app-mt-logotipo>
+          </a>
+        </div>
+        <div id="car">
+          <div *ngIf="isLoggedIn()" class="dropdown">
+            <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="icon-user"></i>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="nav-item">
+                <mt-user-detail style="margin:unset !important;width:100%;"></mt-user-detail>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="!isLoggedIn()">
+            <a class="nav-item">
+              <mt-user-detail style="margin:unset !important;width:100%;"></mt-user-detail>
+            </a>
+          </div>
+
+          <a *ngIf="configuracoes.layoutHome != 1" [routerLink]="['/carrinho']">
+            <span class="icon-shop-car"></span>
+          </a>
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+  </nav>
+  <div *ngIf="bannerInfo != undefined && hasBanner" [ngStyle]="{'height':bannerHeight}"  style="overflow:hidden;margin-bottom:50px;display:block"
+    id="banner_container">
+    <img [src]="bannerInfo[currentBannerIndex] != undefined ? IMG_URL + '/files/banners/'+bannerInfo[currentBannerIndex].banner_url : '' "
+      [ngStyle]="{'height':bannerHeight}" style="width:auto;" />
+    <!-- Navigation -->
+
+  </div>
+
+
+  <nav style="position:fixed;z-index:1" *ngIf="!isMobile && !isQuemSomos" id="web_navbar" class="navbar navbar-expand-lg navbar-dark fixed-top"
+    [ngStyle]="{'background-color': navColor}">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_Responsive" aria-controls="navbarResponsive"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <i class="icon-hamburger-menu-2"></i>
+      </button>
+      <a class="navbar-brand" [routerLink]="['/']">
+        <app-mt-logotipo [style]="{'width': '280px', 'height': '75px'}"></app-mt-logotipo>
+      </a>
+
+      <div class="collapse navbar-collapse" id="navbar_Responsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item" *ngIf="(configuracoes.tiposCursosAtivos.ativar_cursos_online == 1 || configuracoes.tiposCursosAtivos.ativar_cursos_presenciais == 1 || configuracoes.tiposCursosAtivos.ativar_cursos_hibridos == 1) && configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+            <div class="dropdown">
+              <a href="#" class="nav-link dropdown-toggle" id="topnav_cursos" [ngClass]="{'nav-link__active': selectedItem == 'cursos'}"
+                data-toggle="dropdown">
+                cursos
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu orange-background">
+                <li *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_online == 1">
+                  <a [routerLink]="['/cursos-online']">cursos on-line</a>
+                </li>
+                <li *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_presenciais == 1">
+                  <a [routerLink]="['/cursos-presenciais']">cursos presenciais</a>
+                </li>
+                <li *ngIf="configuracoes.tiposCursosAtivos.ativar_cursos_hibridos == 1">
+                  <a [routerLink]="['/cursos-remotos']">cursos remotos</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item" *ngIf="configuracoes.tiposCursosAtivos.ativar_eventos == 1 &&  configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+            <a class="nav-link" id="topnav_eventos" [routerLink]="['/eventos']" [ngClass]="{'nav-link__active': selectedItem == 'eventos'}">eventos</a>
+          </li>
+          <li class="nav-item" *ngIf="configuracoes.tiposCursosAtivos.ativar_trilha_conhecimento == 1 &&  configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+            <a class="nav-link" id="topnav_trilha" [routerLink]="['/trilhas-conhecimento']" [ngClass]="{'nav-link__active': selectedItem == 'trilha'}">trilha de conhecimento</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="topnav_assinaturas" *ngIf="configuracoes.tiposCursosAtivos.ativar_membership == 1 && configuracoes.layoutHome != 1"
+              [routerLink]="['/assinaturas']" [ngClass]="{'nav-link__active': selectedItem == 'assinaturas'}">assinaturas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="topnav_biblioteca" *ngIf="configuracoes.tiposCursosAtivos.ativar_biblioteca == 1 &&  configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4"
+              [routerLink]="['/biblioteca']" [ngClass]="{'nav-link__active': selectedItem == 'biblioteca'}">biblioteca</a>
+          </li>
+          <li class="nav-item" *ngIf="configuracoes.layoutHome != 1 && configuracoes.layoutHome != 4">
+            <a class="nav-link" id="topnav_trilha" [routerLink]="['/professores']" [ngClass]="{'nav-link__active': selectedItem == 'professores'}">professores</a>
+          </li>
+          <!--<li class="nav-item">
+            <div class="dropdown">
+              <a href="#" class="nav-link dropdown-toggle" id="topnav_professores" [ngClass]="{'nav-link__active': selectedItem == 'professores'}"
+                data-toggle="dropdown">professores
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu orange-background">
+                <li>
+                  <a id="topnav_professores" [routerLink]="['/professores']">nossos professores</a>
+                </li>
+                <li>
+                  <a id="topnav_seja-um-professor" [routerLink]="['/seja-um-professor']">quero ser um professor</a>
+                </li>
+              </ul>
+            </div>
+          </li>-->
+          <li class="nav-item" *ngIf="environmentTemplate.faculdade_id == 7 || configuracoes.layoutHome == 1">
+            <a class="nav-link" id="topnav_quemSomos" *ngIf="configuracoes.layoutHome != 1" routerLink="/quem-somos">quem somos</a>
+            <a class="nav-link" id="topnav_quemSomos" *ngIf="configuracoes.layoutHome == 1" style="margin-top: 7px;" target="_blank"
+              [href]="configuracoes.tiposCursosAtivos.url_quem_somos">quem somos</a>
+          </li>
+          <li class="nav-item" *ngIf="configuracoes.layoutHome != 1">
+            <a class="nav-link" id="topnav_shop" [routerLink]="['/carrinho']" [ngClass]="{'nav-link__active': selectedItem == 'shopping'}"
+              id="nav_link_shop">
+              <span class="icon-shop-car" style="font-size:25px;"></span>
+              <div *ngIf="amountCarrinho > 0" id="cart_amount" class="orange-background">{{amountCarrinho}}</div>
+            </a>
+          </li>
+          <li class="nav-item" style="display:flex;">
+            <mt-user-detail style="margin:auto !important;" [ngClass]="{'nav-link__active': selectedItem == 'user'}"></mt-user-detail>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </nav>
+
+
+  <div class="container header" *ngIf="hasBanner && bannerInfo && bannerInfo[currentBannerIndex] != undefined" style="display:flex; flex-flow: column; justify-content: center;margin-top: -20%;margin-bottom: 20%;"
+    (click)="openBanner($event, bannerInfo[currentBannerIndex].url_link)">
+
+    <div id="{{bannerInfo[currentBannerIndex].id}}">
+      <h2>{{ bannerInfo[currentBannerIndex].titulo }}</h2>
+      <h3>{{ bannerInfo[currentBannerIndex].descricao }}</h3>
+    </div>
+
+    <form id="form_header_search" *ngIf="route == 'home' && bannerInfo[currentBannerIndex].mostrar_pesquisa " style="display:none;">
+      <input type="text" placeholder="O que você está procurando?" name="input_header_search" (keypress)="pesquisar($event)" />
+    </form>
+  </div>
+
+  <mt-formulario></mt-formulario>
+
+  <app-loading-screen></app-loading-screen>
+</header>
+<!-- Fim do header -->
+
+<header (window:resize)="onResized($event)" class="background_header" *ngIf="configuracoes.layoutHome == 1" >
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top scrolled">
+    <a class="navbar-brand" [routerLink]="['/']">
+      <app-mt-logotipo [style]="{'width': 'auto', 'height': '60px', 'margin-left': '50%'}"></app-mt-logotipo>
+    </a>
+
+    <div class="logged-in">
+      <div class="userPhoto vertical-auto" *ngIf="isLoggedIn()">
+        <div class="dropdown">
+          <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton">
+            <div class="userContainer">
+              <img src="../assets/img/default-avatar.png" alt="">
+            </div>
+          </a>
+          <div class="dropdown-menu">
+            <a routerLink="/editar" class="dropdown-item">Perfil</a>
+            <a (click)="logout()" class="dropdown-item">Sair</a>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!isLoggedIn()">
+        <a class="nav-item">
+          <mt-user-detail style="margin:unset !important;width:100%; padding-top: 2px;"></mt-user-detail>
+        </a>
+      </div>
+    </div>
+    <div class="navbarCollapse collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a href="http://itv.org.br/home"><i class="fas fa-question circle"></i> Quem somos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div *ngIf="!loginService.isLoggedIn() && bannerInfo != undefined && hasBanner" [ngStyle]="{'height':bannerHeight}"  style="overflow:hidden;margin-bottom:50px;display:block" id="banner_container">
+    <img [src]="bannerInfo[currentBannerIndex] != undefined ? IMG_URL + '/files/banners/'+bannerInfo[currentBannerIndex].banner_url : '' "
+         [ngStyle]="{'height':bannerHeight}" style="width:auto;" />
+    <!-- Navigation -->
+  </div>
+</header>
+<!-- Fim do header -->

@@ -1,0 +1,128 @@
+<section id="section_content">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-12 user-info not_print">
+
+              <h3 class="course_name">{{resultado.nome_curso}}</h3>
+              <!--<span id="company_name">{{resultado.nome_faculdade}}</span>-->
+              <br>
+              <br>
+              <div class="category"> Categoria:
+                  <span id="category_name">{{resultado.categorias[0].titulo}}</span>
+              </div>
+              <br>
+              <br>
+              <div class="course-info">
+                  <div>
+                      <span class="icon icon-comments"></span>
+                      Idioma:
+                      <span id="language">{{resultado.idioma}}</span>
+                  </div>
+                  <div>
+                      <span class="icon icon-hamburger-menu-1"></span>
+                      Aulas:
+                      <span id="modules_amount">{{resultado.total_modulos}}</span>
+                  </div>
+                  <div>
+                      <span class="icon icon-clock"></span>
+                      Carga Horária:
+                      <span id="duration">{{resultado.total_minutos}}</span>hrs
+                  </div>
+                  <div>
+                      <span class="icon icon-medal"></span>
+                      Certificado:
+                      <span id="certification">?</span>
+                  </div>
+              </div>
+
+              <div class="" id="chart">
+                  <div id="progress_chart" progress="1"><canvas width="130" height="130"></canvas>
+                      <div id="inner_chart" class="orange-font-color">
+                          <span id="percent">??</span>%
+                          <br>
+                      </div>
+
+                  </div>
+                  <br>
+                  <div class="certificado-info">
+                      resultado do questionário:
+                      <div id="points">
+                          <div id="points_correct">
+                              <div style="display:flex;">
+                                  <span class="icon icon-check-filled"></span>
+                                  <span id="correct_amount">{{respostas_corretas}}</span>%
+
+                              </div>
+                              <div class="type">respostas corretas</div>
+                          </div>
+                          <br>
+                          <div id="points_incorrect">
+                              <div style="display:flex;">
+                                  <span class="icon icon-cancel-filled"></span>
+                                  <span id="incorrect_amount">{{respostas_erradas}}</span>%
+
+                              </div>
+                              <div class="type">respostas erradas</div>
+                          </div>
+
+                      </div>
+                      <div class="aprovado-info">Você foi aprovado!</div>
+                  </div>
+
+
+
+              </div>
+
+          </div>
+
+          <div class="col-lg-9 col-md-9 col-sm-12 col-12 right">
+              <h3 class="congratz orange-font-color text-center not_print">Parabéns, você foi aprovado!</h3>
+              <div class="instructions text-center not_print">
+                  Confira seu certificado abaixo. Você poderá imprimir, enviar por email e acessá-lo pela página do seu perfil
+              </div>
+
+              <div id="certificado">
+                  <h4 class="orange-font-color">Certificado</h4>
+                  <div class="logo-container">
+                      <img src="../img/educaz_logo.png" width="100%" height="auto">
+                  </div>
+                  <div class="certificado-text">
+                      A Educaz certifica que
+                      <span id="client_name">{{alunoName}}</span> concluiu o curso
+                      <span id="course_name">{{resultado.nome_curso}}</span>, em
+                      <span id="month">fevereiro</span> de
+                      <span id="year">2019</span>, com carga horária de
+                      <span id="time_amount">{{resultado.total_minutos}}</span>hrs.
+
+                  </div>
+                  <div class="footer-certificado">
+                      <div class="logo-footer-container">
+                          <img src="../img/Educaz_preto.png" width="100%" height="auto">
+                      </div>
+                      <div class="qr-footer-container">
+                          <img src="../img/teste" width="100%" height="auto">
+                      </div>
+                  </div>
+              </div>
+
+              <div id="action_icons" class="not_print">
+                  <a href=""><span class="icon icon-download orange-font-color"></span></a>
+                  <a href=""><span class="icon icon-envelope orange-font-color"></span></a>
+                  <a href=""><span class="icon icon-printer orange-font-color"></span></a>
+              </div>
+
+
+
+
+
+          </div>
+      </div>
+
+      <br>
+      <br>
+
+
+
+  </div>
+
+</section>

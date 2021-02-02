@@ -1,0 +1,108 @@
+<div id="page-eventos" class="faq">
+
+  <section id="section_content">
+    <div class="container">
+        <div style="padding: 30px 0">
+            <h2 style="font-family: encodeSansCondensed-Regular">FAQ</h2>
+            <h3 style="font-family: encodeSansCondensed-Bold">Perguntas frequentes</h3>
+
+        </div>
+      <div class="row"  id="faqWeb">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-12" id="col1">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let category of faq">
+                  <mat-expansion-panel-header class="super1">
+                    <mat-panel-title>
+                      Sou {{category.categoryName}}
+                    </mat-panel-title>
+                    
+                  </mat-expansion-panel-header>             
+                  <div class="padding-top-bottom-10"  *ngFor="let topic of category.topics">
+                      <a class="super2" (click)="perguntas = topic.perguntas">{{topic.topicName}}</a>
+                  </div>
+                    
+                  
+              
+                </mat-expansion-panel>
+                
+              </mat-accordion>
+              
+          
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let pergunta of perguntas">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{pergunta.perguntaName}}
+                    </mat-panel-title>
+                    
+                  </mat-expansion-panel-header>             
+                  <div class="padding-top-bottom-10">
+                      {{pergunta.resposta}}
+                  </div>
+                    
+                  
+              
+                </mat-expansion-panel>
+                
+              </mat-accordion>
+              <div style="margin-top: 50px" class="warning orange-font-color">Caso não tenha esclarecido suas dúvidas ainda, entre em contato
+                  conosco:</div>
+                <div class="email">sac@educaz.com.br</div>
+        </div>
+
+
+
+
+      </div>
+
+      <div class="row" id="faqMobile" style="display: none;">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <mat-accordion>
+                  <mat-expansion-panel *ngFor="let category of faq">
+                    <mat-expansion-panel-header class="super1">
+                      <mat-panel-title >
+                          Sou {{category.categoryName}}
+                      </mat-panel-title>
+                      
+                    </mat-expansion-panel-header>             
+                    <div class="padding-top-bottom-10"  *ngFor="let topic of category.topics">                       
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let pergunta of topic.perguntas">
+                              <mat-expansion-panel-header class="super2">
+                                <mat-panel-title>
+                                    <a>{{topic.topicName}}</a>
+                                </mat-panel-title>
+                                
+                              </mat-expansion-panel-header>             
+                              <div class="padding-top-bottom-10">
+                                  {{pergunta.resposta}}
+                              </div>
+                                
+                              
+                          
+                            </mat-expansion-panel>
+                            
+                          </mat-accordion>
+                    </div>
+                      
+                    
+                
+                  </mat-expansion-panel>
+                  
+                </mat-accordion>
+                <div style="margin-top: 50px" class="warning orange-font-color">Caso não tenha esclarecido suas dúvidas ainda, entre em contato
+                    conosco:</div>
+                  <div class="email">sac@educaz.com.br</div>
+          </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+         
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
